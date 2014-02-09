@@ -7,11 +7,14 @@ var Dialog = Create({
 
   initializer: function () {
     var ui = this.get('ui');
-    this.on('rendered', this._renderSections, this);
+    ui[0].anchor = '.dialog-ui';
+
+    this.set('children', ui);
+    //this.on('rendered', this._renderSections, this);
   },
 
 
-  _renderSections: function () {
+  /*_renderSections: function () {
     var container = this.get('container');
 
     var ui = this.get('ui');
@@ -25,7 +28,7 @@ var Dialog = Create({
     buttons.on('saveClicked', function () {
       console.log('dialog received click!');
     });
-  },
+  },*/
 
 
   _attrs: {
@@ -35,4 +38,4 @@ var Dialog = Create({
     ui: null
   }
 
-}, View);
+}, ParentView);
