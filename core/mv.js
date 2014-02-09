@@ -5,11 +5,11 @@
 var View = Create({
 
   initializer: function () {
-    this._children = [];
     this._createContainer();
     this._delegateEvents();
   },
 
+  /* TODO: destructors - markup, events, children etc */
 
   render: function () {
     var container = this.get('container');
@@ -33,24 +33,9 @@ var View = Create({
   },
 
 
-  addChild: function (attr) {
-    attr.parent = this;
-
-    var Type = attr.type || View;
-    var child = new Type(attr);
-
-    child.render();
-    this._children.push(child);
-
-    return child;
-  },
-
-
   _getData: function () {
-    var data = {
-      name: 'kenneth',
-      surname: 'cachia'
-    };
+    // TODO: fetch from model
+    var data = {};
 
     var mergeData = this.get('mergeData');
 
@@ -60,6 +45,7 @@ var View = Create({
       }, this);
     }
 
+    console.log(data);
     return data;
   },
 
@@ -96,6 +82,86 @@ var View = Create({
   }
 
 });
+
+
+
+/*
+ * Parent View
+ */
+var ParentView = Create({
+
+  initializer: function () {
+    this._children = [];
+    this.on('rendered', this._createChildren, this);
+  },
+
+  /* TODO: destructors - markup, events, children etc */
+
+  renderChild: function (view) {
+    var anchor = this._setAnchor(view.get('anchor'));
+    view.set('anchor', anchor);
+
+    this._renderChild(view);
+  },
+
+
+  getChild: function () {
+    // TODO
+  },
+
+
+  _createChildren: function () {
+    var children = this.get('children');
+
+    // TODO: improve - each should handle null checks
+    if (children) {
+      children.each(children, function (child) {
+        this._createChild(child);
+      }, this);
+    }
+
+    this.fire('childrenRendered');
+  },
+
+
+  _setAnchor: function (anchor) {
+    var container = this.get('container');
+
+    if (anchor) {
+      anchor = container.one(anchor);
+    } else {
+      anchor = container;
+    }
+
+    return anchor;
+  },
+
+
+  _createChild: function (attr) {
+    var container = this.get('container');
+
+    //attr.parent = this;
+    attr.anchor = this._setAnchor(attr.anchor);
+
+    var Type = attr.type || View;
+    var child = new Type(attr);
+
+    this._renderChild(child);
+    //return child;
+  },
+
+
+  _renderChild: function (child) {
+    child.render();
+    this._children.push(child);
+  },
+
+
+  _attrs: {
+    children: []
+  }
+
+}, View);
 
 
 /*
