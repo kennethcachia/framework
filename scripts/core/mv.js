@@ -75,10 +75,10 @@ var View = Create('View', {
       html: this.get('container')
     }));
 
-    var style = this.get('style');
+    var className = this.get('className');
 
-    if (style) {
-      this.get('container').addClass(style);
+    if (className) {
+      this.get('container').addClass(className);
     }
   },
 
@@ -95,7 +95,7 @@ var View = Create('View', {
 
   _attrs: {
     container: null,
-    style: null,
+    className: null,
     template: null,
     anchor: null,
     model: null,
