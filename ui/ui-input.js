@@ -2,19 +2,23 @@
 /*
  * Input
  */
-var UIInput = Create({
+var UIInput = Create('UIInput', {
 
+  // TODO: move to UIBase?
   _onChange: function(e) {
-    this.broadcast('changed', {
+    this.fire('changed', {
       val: e.target.value
     });
   },
 
 
   _attrs: {
-    template: '<input/>',
+    value: null,
+    template: '<input value="{{value}}"/>',
+    mergeData: ['value'],
+    resolveId: 'value',
 
-    events: [{
+    domEvents: [{
       selector: 'input',
       eventName: 'change',
       callback: '_onChange'

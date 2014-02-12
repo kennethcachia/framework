@@ -2,7 +2,7 @@
 /*
  * Menu
  */
-var Menu = Create({
+var Menu = Create('Menu', {
 
   _attrs: {
     container: '<div class="menu"></div>'
@@ -14,7 +14,7 @@ var Menu = Create({
 /*
  * Draggable menu
  */
-var DraggableMenu = Create({
+var DraggableMenu = Create('DraggableMenu', {
 
   initializer: function () {
 
@@ -26,7 +26,7 @@ var DraggableMenu = Create({
 /*
  * Collapsable menu
  */
-var CollapsableMenu = Create({
+var CollapsableMenu = Create('CollapsableMenu', {
 
   initializer: function () {
 

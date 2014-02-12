@@ -2,10 +2,10 @@
 /*
  * Input
  */
-var UIButton = Create({
+var UIButton = Create('UIButton', {
 
   _onClick: function() {
-    this.broadcast('clicked');
+    this.fire('clicked');
   },
 
 
@@ -14,7 +14,7 @@ var UIButton = Create({
     template: '<button>{{label}}</button>',
     mergeData: ['label'],
 
-    events: [{
+    domEvents: [{
       selector: 'button',
       eventName: 'click',
       callback: '_onClick'

@@ -3,32 +3,17 @@
  * Dialog
  */
 
-var Dialog = Create({
+var Dialog = Create('Dialog', {
 
   initializer: function () {
     var ui = this.get('ui');
-    ui[0].anchor = '.dialog-ui';
+
+    ui.each(ui, function (elem) {
+      elem.anchor = '.dialog-ui';
+    });
 
     this.set('children', ui);
-    //this.on('rendered', this._renderSections, this);
   },
-
-
-  /*_renderSections: function () {
-    var container = this.get('container');
-
-    var ui = this.get('ui');
-    ui.anchor = container.one('.dialog-ui');
-    this.addChild(ui);
-
-    var buttons = this.get('buttons');
-    buttons.anchor = container.one('.dialog-buttons');
-    buttons = this.addChild(buttons);
-
-    buttons.on('saveClicked', function () {
-      console.log('dialog received click!');
-    });
-  },*/
 
 
   _attrs: {
