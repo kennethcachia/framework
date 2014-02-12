@@ -27,7 +27,9 @@ var View = Create('View', {
       var output = Mustache.render(template, data);
 
       container.setInnerHTML(output);
+
       // TODO: don't re-append after first render?
+      // TODO: or -- keep state in 'rendered', only allow once
       anchor.appendChild(container);
 
     } else {
