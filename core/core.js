@@ -1,8 +1,12 @@
 
 /*
+  TODO: circular deps?
+ */
+
+/*
  * Extend objects
  */
-function Create(own, extension) {
+function Create(name, own, extension) {
 
   /*
    * Merge a into b
@@ -42,6 +46,11 @@ function Create(own, extension) {
   }
 
 
+  if (!name || typeof name !== 'string') {
+    throw 'No Name';
+  }
+
+
   var _initializers = [];
   var _destructors = [];
   var _attrs = own._attrs || {};
@@ -54,7 +63,17 @@ function Create(own, extension) {
 
 
   var Base = function (attrs) {
+
+    // Merge base attrs
+    attrs = attrs || {};
+    attrs.propagateEvents = attrs.propagateEvents || null;
+    attrs.id = attrs.id || null;
+
+    // Private objects
+    this._name = name;
     this._listeners = {};
+
+    // Init
     this._init(attrs);
     this._callInitializers();
 
@@ -75,6 +94,9 @@ function Create(own, extension) {
     fire: function (eventName, data) {
       var listeners = this._listeners[eventName];
 
+      data = data || {};
+      data.source = data.source || this;
+
       if (listeners) {
         var listener;
 
@@ -82,6 +104,21 @@ function Create(own, extension) {
           listener = listeners[l];
           listener.callback.call(listener.context, data);
         }
+      }
+
+      // Pass it on
+      var propagateEvents = this.get('propagateEvents');
+      var suffix = '|';
+
+      if (propagateEvents) {
+
+        if (eventName.indexOf(suffix) === -1) {
+          suffix += this.get('id') || this._name;
+          eventName = eventName + suffix;
+          //console.log(eventName);
+        }
+
+        propagateEvents.fire(eventName, data);
       }
     },
 
@@ -275,7 +312,7 @@ var DOM = {
 /*
  * Wrapper for HTML Node
  */
-var NodeElement = Create({
+var NodeElement = Create('NodeElement', {
 
   initializer: function () {
     this._setNode();
@@ -330,7 +367,7 @@ var NodeElement = Create({
   _delegator: function (e, node, selector, callback) {
     if (!this[callback]) {
       throw 'Callback does not exist - ' + callback;
-    } else if (DOM.one(selector, node) === e.target) {
+    } else if (e.target === node || DOM.one(selector, node) === e.target) {
       this[callback](e);
     }
 
@@ -361,7 +398,7 @@ var NodeElement = Create({
  * Main application
  * wrapper
  */
-var App = Create({
+var App = Create('App', {
 
   initializer: function () {
     console.log(this.get('name'));
