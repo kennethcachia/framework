@@ -404,10 +404,11 @@ var App = Create('App', {
     console.log(this.get('name'));
     console.log('(version ' + this.get('version') + ')');
 
-    var onDOMReady = this.get('onDOMReady');
+    var domReady = this.get('domReady');
+    domReady = domReady && this[domReady];
 
-    if (onDOMReady) {
-      DOM.ready(onDOMReady, this);
+    if (domReady) {
+      DOM.ready(domReady, this);
     }
   },
 
@@ -415,7 +416,7 @@ var App = Create('App', {
   _attrs: {
     name: null,
     version: '1.0.0',
-    onDOMReady: null
+    domReady: null
   }
 
 });
