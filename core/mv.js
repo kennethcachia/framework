@@ -2,11 +2,11 @@
 /*
  * View
  */
-var View = Create({
+var View = Create('View', {
 
   initializer: function () {
     this._createContainer();
-    this._delegateEvents();
+    this._delegateDOMEvents();
   },
 
   /* TODO: destructors - markup, events, children etc */
@@ -19,6 +19,11 @@ var View = Create({
 
       var template = this.get('template');
       var data = this._getData();
+
+      console.log('rendering...');
+      console.log(template);
+      console.log(data);
+
       var output = Mustache.render(template, data);
 
       container.setInnerHTML(output);
@@ -34,8 +39,12 @@ var View = Create({
 
 
   _getData: function () {
-    // TODO: fetch from model
+    var model = this.get('model');
     var data = {};
+
+    if (model) {
+      data = model.get('data');
+    }
 
     var mergeData = this.get('mergeData');
 
@@ -45,7 +54,18 @@ var View = Create({
       }, this);
     }
 
-    console.log(data);
+    var resolveId = this.get('resolveId');
+    var id = this.get('id');
+
+    if (model && resolveId && id) {
+      var value = data[id];
+
+      // Preserve attr defaults
+      if (value) {
+        data[resolveId] = value;
+      }
+    }
+
     return data;
   },
 
@@ -63,11 +83,11 @@ var View = Create({
   },
 
 
-  _delegateEvents: function () {
+  _delegateDOMEvents: function () {
     var container = this.get('container');
-    var events = this.get('events');
+    var domEvents = this.get('domEvents');
 
-    events.each(events, function (e) {
+    domEvents.each(domEvents, function (e) {
       container.delegate(e.selector, e.eventName, e.callback, this);
     }, this);
   },
@@ -78,7 +98,10 @@ var View = Create({
     style: null,
     template: null,
     anchor: null,
-    events: []
+    model: null,
+    mergeData: null,
+    resolveId: null,
+    domEvents: []
   }
 
 });
@@ -88,7 +111,7 @@ var View = Create({
 /*
  * Parent View
  */
-var ParentView = Create({
+var ParentView = Create('ParentView', {
 
   initializer: function () {
     this._children = [];
@@ -100,6 +123,7 @@ var ParentView = Create({
   renderChild: function (view) {
     var anchor = this._setAnchor(view.get('anchor'));
     view.set('anchor', anchor);
+    view.set('propagateEvents', this);
 
     this._renderChild(view);
   },
@@ -140,14 +164,15 @@ var ParentView = Create({
   _createChild: function (attr) {
     var container = this.get('container');
 
-    //attr.parent = this;
     attr.anchor = this._setAnchor(attr.anchor);
+    attr.propagateEvents = this;
+
+    attr.model = this.get('model');
 
     var Type = attr.type || View;
     var child = new Type(attr);
 
     this._renderChild(child);
-    //return child;
   },
 
 
@@ -167,6 +192,21 @@ var ParentView = Create({
 /*
  * Model
  */
-var Model = Create({
+var Model = Create('Model', {
+
+  setData: function (key, value) {
+    var data = this.get('data');
+    data[key] = value;
+
+    this.fire('dataChange', {
+      key: key,
+      value: value
+    });
+  },
+
+
+  _attrs: {
+    data: {}
+  }
 
 });
