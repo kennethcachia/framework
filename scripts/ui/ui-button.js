@@ -11,7 +11,7 @@ var UIButton = Create('UIButton', {
 
   _attrs: {
     label: null,
-    template: '<button>{{label}}</button>',
+    template: '<button class="ui-button">{{label}}</button>',
     mergeData: ['label'],
 
     domEvents: [{

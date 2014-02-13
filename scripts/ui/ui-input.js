@@ -13,10 +13,12 @@ var UIInput = Create('UIInput', {
 
 
   _attrs: {
-    value: null,
-    template: '<input value="{{value}}"/>',
-    mergeData: ['value'],
-    resolveId: 'value',
+    // TODO: model data?
+    //value: null,
+    //mergeData: ['value'],
+
+    template: '<input class="ui-input" value="{{value}}"/>',
+    useIdFor: 'value',
 
     domEvents: [{
       selector: 'input',
