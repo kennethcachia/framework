@@ -66,10 +66,10 @@ function Create(name, own, extension) {
 
     // Merge base attrs
     attrs = attrs || {};
-    attrs.propagateEvents = attrs.propagateEvents || null;
     attrs.id = attrs.id || null;
 
     // Private objects
+    this._propagateEvents = null;
     this._name = name;
     this._listeners = {};
 
@@ -107,7 +107,7 @@ function Create(name, own, extension) {
       }
 
       // Pass it on
-      var propagateEvents = this.get('propagateEvents');
+      var propagateEvents = this._propagateEvents;
       var suffix = '|';
 
       if (propagateEvents) {
@@ -149,6 +149,11 @@ function Create(name, own, extension) {
       }
 
       return val;
+    },
+
+
+    propagateEventsTo: function (dest) {
+      this._propagateEvents = dest;
     },
 
 
