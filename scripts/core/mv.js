@@ -56,15 +56,15 @@ var View = Create('View', {
       }, this);
     }
 
-    var resolveId = this.get('resolveId');
+    var useIdFor = this.get('useIdFor');
     var id = this.get('id');
 
-    if (model && resolveId && id) {
+    if (model && useIdFor && id) {
       var value = data[id];
 
       // Preserve attr defaults
       if (value) {
-        data[resolveId] = value;
+        data[useIdFor] = value;
       }
     }
 
@@ -102,7 +102,7 @@ var View = Create('View', {
     anchor: null,
     model: null,
     mergeData: null,
-    resolveId: null,
+    useIdFor: null,
     domEvents: []
   }
 
@@ -125,7 +125,7 @@ var ParentView = Create('ParentView', {
   renderChild: function (view) {
     var anchor = this._setAnchor(view.get('anchor'));
     view.set('anchor', anchor);
-    view.set('propagateEvents', this);
+    view.propagateEventsTo(this);
 
     this._renderChild(view);
   },
@@ -167,12 +167,12 @@ var ParentView = Create('ParentView', {
     var container = this.get('container');
 
     attr.anchor = this._setAnchor(attr.anchor);
-    attr.propagateEvents = this;
-
     attr.model = this.get('model');
 
     var Type = attr.type || View;
     var child = new Type(attr);
+
+    child.propagateEventsTo(this);
 
     this._renderChild(child);
   },
@@ -196,19 +196,20 @@ var ParentView = Create('ParentView', {
  */
 var Model = Create('Model', {
 
-  setData: function (key, value) {
-    var data = this.get('data');
-    data[key] = value;
+  toJSON: function () {
+    var data = {};
+    var attrs = this._attrs;
 
-    this.fire('dataChange', {
-      key: key,
-      value: value
-    });
+    for (var a in attrs) {
+      if (attrs.hasOwnProperty(a)) {
+        data[a] = attrs[a];
+      }
+    }
+
+    return data;
   },
 
 
-  _attrs: {
-    data: {}
-  }
+  _attrs: { }
 
 });
