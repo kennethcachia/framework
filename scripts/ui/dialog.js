@@ -2,7 +2,6 @@
 /*
  * Dialog
  */
-
 var Dialog = Create('Dialog', {
 
   initializer: function () {
