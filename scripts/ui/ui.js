@@ -1,6 +1,8 @@
 
 /*
  * UI Base
+ * Use {{data}} to render
+ * Model or ModelList data
  */
 var UI = Create('UI', {
 

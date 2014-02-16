@@ -42,33 +42,30 @@ var View = Create('View', {
 
   _getData: function () {
     var model = this.get('model');
+    var context = {};
     var data = {};
 
     if (model) {
-      data = model.get('data');
+      data = model.getData()
     }
 
     var mergeData = this.get('mergeData');
 
     if (mergeData) {
       mergeData.each(mergeData, function (merge) {
-        data[merge] = this.get(merge);
+        context[merge] = this.get(merge);
       }, this);
     }
 
-    var useIdFor = this.get('useIdFor');
     var id = this.get('id');
 
-    if (model && useIdFor && id) {
-      var value = data[id];
-
-      // Preserve attr defaults
-      if (value) {
-        data[useIdFor] = value;
-      }
+    if (data && data[id]) {
+      data = data[id];
     }
 
-    return data;
+    context.data = data;
+
+    return context;
   },
 
 
@@ -102,7 +99,6 @@ var View = Create('View', {
     anchor: null,
     model: null,
     mergeData: null,
-    useIdFor: null,
     domEvents: []
   }
 
@@ -196,14 +192,12 @@ var ParentView = Create('ParentView', {
  */
 var Model = Create('Model', {
 
-  toJSON: function () {
+  getData: function () {
     var data = {};
     var attrs = this._attrs;
 
     for (var a in attrs) {
-      if (attrs.hasOwnProperty(a)) {
-        data[a] = attrs[a];
-      }
+      data[a] = attrs[a];
     }
 
     return data;
@@ -211,5 +205,56 @@ var Model = Create('Model', {
 
 
   _attrs: { }
+
+});
+
+
+/*
+ * ModelList
+ */
+var ModelList = Create('ModelList', {
+
+  initializer: function () {
+    var Type = this.get('type');
+    var json = this.get('json');
+    var models = [];
+
+    this._data = [];
+
+    // TODO: custom type defined in json
+    json.each(json, function (attr) {
+      models.push(new Type(attr));
+    });
+
+    this._data = models;
+  },
+
+
+  getData: function () {
+    var data = [];
+
+    // TODO: use List
+    for (var d = 0; d < this._data.length; d++) {
+      data.push(this._data[d].getData());
+    }
+
+    return data;
+  },
+
+
+  add: function (json) {
+    // Add from raw data
+  },
+
+
+  remove: function (id) {
+    // Remove by id
+  },
+
+
+  _attrs: {
+    type: Model,
+    json: []
+  }
 
 });
