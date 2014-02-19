@@ -16,7 +16,6 @@ var View = Create('View', {
     var anchor = this.get('anchor');
 
     if (anchor && container) {
-
       var template = this.get('template');
       var data = this._getData();
 
@@ -24,9 +23,10 @@ var View = Create('View', {
       console.log(template);
       console.log(data);
 
-      var output = Mustache.render(template, data);
-
-      container.setInnerHTML(output);
+      if (template) {
+        var output = Mustache.render(template, data);
+        container.setInnerHTML(output);
+      }
 
       // TODO: don't re-append after first render?
       // TODO: or -- keep state in 'rendered', only allow once
@@ -70,9 +70,13 @@ var View = Create('View', {
 
 
   _createContainer: function () {
-    this.set('container', new NodeElement({
-      html: this.get('container')
-    }));
+    var container = this.get('container');
+
+    if (typeof container === 'string') {
+      this.set('container', new NodeElement({
+        html: this.get('container')
+      }));
+    }
 
     var className = this.get('className');
 
