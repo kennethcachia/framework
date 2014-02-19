@@ -26,7 +26,7 @@ var SVGRect = Create('SVGRect', {
 }, SVGElement);
 
 
-var SVGCanvas = Create('SVG', {
+var SVGCanvas = Create('SVGCanvas', {
 
   addShape: function (shape) {
     this.get('container').appendChild(shape);
