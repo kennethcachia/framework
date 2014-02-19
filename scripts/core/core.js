@@ -254,8 +254,11 @@ var DOM = {
   },*/
 
 
-  create: function (html) {
-    var wrapper = document.createElement('div');
+  create: function (html, namespaceURI) {
+    namespaceURI = namespaceURI || 'http://www.w3.org/1999/xhtml';
+
+    // TODO: Can we avoid 'div' here?
+    var wrapper = document.createElementNS(namespaceURI, 'div');
     wrapper.innerHTML = html;
 
     return wrapper.firstChild;
@@ -328,6 +331,8 @@ var NodeElement = Create('NodeElement', {
 
   one: function (selector) {
     var node = DOM.one(selector, this._node);
+
+    // TODO: use this constructor
     var elem = new NodeElement();
 
     elem.fromNode(node);
@@ -380,19 +385,21 @@ var NodeElement = Create('NodeElement', {
 
 
   _setNode: function () {
-    var selector = this.get('selector');
+    //var selector = this.get('selector');
+    var ns = this.get('namespaceURI');
     var html = this.get('html');
 
     if (html) {
-      this._node = DOM.create(html);
-    } else {
+      this._node = DOM.create(html, ns);
+    }/* else {
       this._node = DOM.one(selector);
-    }
+    }*/
   },
 
 
   _attrs: {
-    selector: null,
+    namespaceURI: null,
+    //selector: null,
     html: null
   }
 
