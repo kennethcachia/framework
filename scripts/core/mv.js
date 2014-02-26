@@ -19,10 +19,6 @@ var View = Create('View', {
       var template = this.get('template');
       var data = this._getData();
 
-      console.log('rendering...');
-      console.log(template);
-      console.log(data);
-
       if (template) {
         var output = Mustache.render(template, data);
         container.setInnerHTML(output);
