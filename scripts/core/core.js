@@ -78,7 +78,7 @@ function Create(name, own, extension) {
     this._callInitializers();
 
     for (var a in attrs) {
-      this.fire(a + 'Change');
+      this._fireAttrChange(a);
     }
   };
 
@@ -137,7 +137,7 @@ function Create(name, own, extension) {
 
     set: function (key, value) {
       this._attrs[key] = value;
-      this.fire(key + 'Change');
+      this._fireAttrChange(key);
     },
 
 
@@ -183,6 +183,15 @@ function Create(name, own, extension) {
       for (var f = 0; f < fns.length; f++) {
         fns[f].apply(this);
       }
+    },
+
+
+    _fireAttrChange: function (attr) {
+      var data = {
+        attr: attr
+      };
+
+      this.fire(attr + 'Change', data);
     }
   };
 
