@@ -1,4 +1,7 @@
 
+/*
+ * SVGElement
+ */
 var SVGElement = Create('SVGElement', {
 
   _attrs: {
@@ -8,6 +11,9 @@ var SVGElement = Create('SVGElement', {
 }, NodeElement);
 
 
+/*
+ * SVG
+ */
 var SVG = Create('SVG', {
 
   _attrs: {
@@ -17,15 +23,9 @@ var SVG = Create('SVG', {
 }, SVGElement);
 
 
-var SVGRect = Create('SVGRect', {
-
-  _attrs: {
-    html: '<rect x="10" y="10" width="100" height="100"/>'
-  }
-
-}, SVGElement);
-
-
+/*
+ * SVG Canvas
+ */
 var SVGCanvas = Create('SVGCanvas', {
 
   addShape: function (shape) {
