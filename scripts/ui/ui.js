@@ -1,13 +1,21 @@
 
-/*
- * UI Base
- * Use {{data}} to render
- * Model or ModelList data
- */
-var UI = Create('UI', {
+define(['core/create', 'mv/view'], function (Create, View) {
 
-  _attrs: {
-    container: '<div class="ui"></div>'
-  }
+  /**
+   * UI Base
+   * 
+   * Use {{data}} to render
+   * Model or ModelList data
+   */
+  var UI = Create('UI', {
 
-}, View);
+    _attrs: {
+      container: '<div class="ui"></div>'
+    }
+
+  }, View);
+
+
+  return UI;
+
+});

@@ -1,22 +1,29 @@
 
-/*
- * Grid
- */
-var UIGrid = Create('UIGrid', {
+define(['core/create', 'ui/ui'], function (Create, UI) {
 
-  _attrs: {
-    gridType: 'square',
-    mergeData: ['gridType'],
+  /**
+   * Grid
+   */
+  var UIGrid = Create('UIGrid', {
 
-    template: '<div class="ui-grid">' +
-                '{{#data}}' +
-                  '<div id="{{id}}" class="ui-grid-item{{#gridType}} ui-grid-item--{{gridType}}{{/gridType}}">' +
-                    '<div class="ui-grid-item-ratio">' +
-                      '<div class="ui-grid-item-content"></div>' +
+    _attrs: {
+      gridType: 'square',
+      mergeData: ['gridType'],
+
+      template: '<div class="ui-grid">' +
+                  '{{#data}}' +
+                    '<div id="{{id}}" class="ui-grid-item{{#gridType}} ui-grid-item--{{gridType}}{{/gridType}}">' +
+                      '<div class="ui-grid-item-ratio">' +
+                        '<div class="ui-grid-item-content"></div>' +
+                      '</div>' +
                     '</div>' +
-                  '</div>' +
-                '{{/data}}' +
-              '</div>'
-  }
+                  '{{/data}}' +
+                '</div>'
+    }
 
-}, UI);
+  }, UI);
+
+
+  return UIGrid;
+
+});

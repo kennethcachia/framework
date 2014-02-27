@@ -1,19 +1,24 @@
 
+define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
+
+  /**
+   * Menu
+   */
+  var Menu = Create('Menu', {
+
+    _attrs: {
+      container: '<div class="menu"></div>'
+    }
+
+  }, ParentView);
+
+
+  return Menu;
+
+});
+
+
 /*
- * Menu
- */
-var Menu = Create('Menu', {
-
-  _attrs: {
-    container: '<div class="menu"></div>'
-  }
-
-}, ParentView);
-
-
-/*
- * Draggable menu
- */
 var DraggableMenu = Create('DraggableMenu', {
 
   initializer: function () {
@@ -23,9 +28,6 @@ var DraggableMenu = Create('DraggableMenu', {
 }, Menu);
 
 
-/*
- * Collapsable menu
- */
 var CollapsableMenu = Create('CollapsableMenu', {
 
   initializer: function () {
@@ -33,3 +35,4 @@ var CollapsableMenu = Create('CollapsableMenu', {
   }
 
 }, Menu);
+*/

@@ -1,39 +1,18 @@
 
-/*
- * SVGElement
- */
-var SVGElement = Create('SVGElement', {
+define(['core/create', 'svg/svg-element'], function (Create, SVGElement) {
 
-  _attrs: {
-    namespaceURI: 'http://www.w3.org/2000/svg'
-  }
+  /**
+   * SVG
+   */
+  var SVG = Create('SVG', {
 
-}, NodeElement);
+    _attrs: {
+      html: '<svg></svg>'
+    }
 
-
-/*
- * SVG
- */
-var SVG = Create('SVG', {
-
-  _attrs: {
-    html: '<svg></svg>'
-  }
-
-}, SVGElement);
+  }, SVGElement);
 
 
-/*
- * SVG Canvas
- */
-var SVGCanvas = Create('SVGCanvas', {
+  return SVG;
 
-  addShape: function (shape) {
-    this.get('container').appendChild(shape);
-  },
-
-  _attrs: {
-    container: new SVG()
-  }
-
-}, View);
+});

@@ -1,25 +1,32 @@
 
-/*
- * Dialog
- */
-var Dialog = Create('Dialog', {
+define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
-  initializer: function () {
-    var ui = this.get('ui');
+  /**
+   * Dialog
+   */
+  var Dialog = Create('Dialog', {
 
-    ui.each(ui, function (elem) {
-      elem.anchor = '.dialog-ui';
-    });
+    initializer: function () {
+      var ui = this.get('ui');
 
-    this.set('children', ui);
-  },
+      ui.each(ui, function (elem) {
+        elem.anchor = '.dialog-ui';
+      });
+
+      this.set('children', ui);
+    },
 
 
-  _attrs: {
-    label: null,
-    container: '<div class="dialog"></div>',
-    template: '<div class="dialog-ui"></div><div class="dialog-buttons"></div>',
-    ui: []
-  }
+    _attrs: {
+      label: null,
+      container: '<div class="dialog"></div>',
+      template: '<div class="dialog-ui"></div><div class="dialog-buttons"></div>',
+      ui: []
+    }
 
-}, ParentView);
+  }, ParentView);
+
+
+  return Dialog;
+
+});
