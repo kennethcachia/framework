@@ -7,6 +7,17 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
   var Dialog = Create('Dialog', {
 
     initializer: function () {
+      this._initChildren();
+      this.on('anchorChange', this._setCloseAction, this);
+    },
+
+
+    close: function (e) {
+      console.log('closing dialog...');
+    },
+
+
+    _initChildren: function () {
       var ui = this.get('ui');
 
       ui.each(ui, function (elem) {
@@ -14,6 +25,12 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
       });
 
       this.set('children', ui);
+    },
+
+
+    _setCloseAction: function () {
+      var anchor = this.get('anchor');
+      anchor.delegate(null, 'click', 'close', this);
     },
 
 
