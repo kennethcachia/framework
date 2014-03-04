@@ -1,7 +1,7 @@
 
 define(['core/create', 'core/node-element'], function (Create, NodeElement) {
 
-  /*
+  /**
    * SVGElement
    */
   var SVGElement = Create('SVGElement', {

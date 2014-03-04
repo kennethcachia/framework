@@ -124,21 +124,20 @@ define(['core/create'], function (Create) {
 
 
     delegate: function (selector, eventName, callback, context) {
-
       DOM.on(this._node, eventName, function (e) {
         this._delegator.call(context, e, this._node, selector, callback);
       }, this);
-
     },
 
 
     _delegator: function (e, node, selector, callback) {
-      if (!this[callback]) {
+      callback = this[callback];
+
+      if (!callback) {
         throw 'Callback does not exist - ' + callback;
       } else if (e.target === node || DOM.one(selector, node) === e.target) {
-        this[callback](e);
+        callback.call(this, e);
       }
-
     },
 
 
