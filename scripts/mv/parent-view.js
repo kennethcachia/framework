@@ -15,9 +15,9 @@ define(['core/create', 'mv/view'], function (Create, View) {
 
     renderChild: function (view) {
       var anchor = this._setAnchor(view.get('anchor'));
-      view.set('anchor', anchor);
-      view.propagateEventsTo(this);
 
+      view.propagateEventsTo(this);
+      view.set('anchor', anchor);
       this._renderChild(view);
     },
 
