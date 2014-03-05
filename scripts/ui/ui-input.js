@@ -18,7 +18,7 @@ define(['core/create', 'core/ui'], function (Create, UI) {
       template: '<input class="ui-input" value="{{data}}"/>',
 
       domEvents: [{
-        selector: 'input',
+        delegate: 'input',
         eventName: 'change',
         callback: '_onChange'
       }]

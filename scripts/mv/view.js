@@ -12,7 +12,13 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
     },
 
 
-    /* TODO: destructors - markup, events, children etc */
+    destructor: function () {
+      var anchor = this.get('anchor');
+      var container = this.get('container');
+
+      anchor.removeChild(container);
+      container.destroy();
+    },
 
 
     render: function () {
@@ -90,8 +96,10 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
       var container = this.get('container');
       var domEvents = this.get('domEvents');
 
+
       domEvents.each(domEvents, function (e) {
-        container.delegate(e.selector, e.eventName, e.callback, this);
+        e.context = this;
+        container.addDOMEvent(e);
       }, this);
     },
 

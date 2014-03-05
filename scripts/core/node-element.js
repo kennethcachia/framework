@@ -1,79 +1,5 @@
 
-define(['core/create'], function (Create) {
-
-  /**
-   * DOM interactions
-   */
-  var DOM = {
-
-    /*body: function () {
-      var b = new NodeElement();
-      b.fromNode(document.body);
-      return b;
-    },*/
-
-    create: function (html, namespaceURI) {
-      namespaceURI = namespaceURI || 'http://www.w3.org/1999/xhtml';
-
-      // TODO: Can we avoid 'div' here?
-      var wrapper = document.createElementNS(namespaceURI, 'div');
-      wrapper.innerHTML = html;
-
-      return wrapper.firstChild;
-    },
-
-
-    appendChild: function (parent, child) {
-      parent.appendChild(child);
-    },
-
-
-    one: function (selector, parent) {
-      return this._query(selector, parent);
-    },
-
-
-    all: function (selector, parent) {
-      return this._query(selector, parent, true);
-    },
-
-
-    ready: function (callback, context) {
-      this.on(document, 'DOMContentLoaded', callback, context);
-    },
-
-
-    on: function (element, eventName, callback, context) {
-      var pointer = callback.bind(context);
-      element.addEventListener(eventName, pointer, true);
-      return pointer;
-    },
-
-
-    off: function () {
-      // todo
-    },
-
-
-    addClass: function (element, className) {
-      element.classList.add(className);
-    },
-
-
-    _query: function (selector, parent, list) {
-      var operation = 'querySelector';
-
-      parent = parent || document;
-
-      if (list === true) {
-        operation += 'All';
-      }
-
-      return parent.querySelector(selector);
-    }
-
-  };
-
+define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOMEvent) {
 
   /**
    * Wrapper for an HTML Node
@@ -82,8 +8,19 @@ define(['core/create'], function (Create) {
 
     initializer: function () {
       this._setNode();
+
       this.on('selectorChange', this._setNode, this);
       this.on('htmlChange', this._setNode, this);
+
+      this._domEvents = [];
+    },
+
+
+    destructor: function () {
+      this._destroyDOMEvents();
+      this._node = null;
+
+      // TODO: Kill children?
     },
 
 
@@ -92,14 +29,19 @@ define(['core/create'], function (Create) {
 
       // TODO: use _this_ constructor
       var elem = new NodeElement();
-
       elem.fromNode(node);
+
       return elem;
     },
 
 
     appendChild: function (child) {
       DOM.appendChild(this._node, child._node);
+    },
+
+
+    removeChild: function (child) {
+      DOM.removeChild(this._node, child._node);
     },
 
 
@@ -123,20 +65,26 @@ define(['core/create'], function (Create) {
     },
 
 
-    delegate: function (selector, eventName, callback, context) {
-      DOM.on(this._node, eventName, function (e) {
-        this._delegator.call(context, e, this._node, selector, callback);
-      }, this);
+    addDOMEvent: function (e) {
+      var domEvent = new DOMEvent({
+        source: this._node,
+        delegate: e.delegate,
+        eventName: e.eventName,
+        callback: e.callback,
+        context: e.context
+      });
+
+      this._domEvents.push(domEvent);
+
+      return domEvent;
     },
 
 
-    _delegator: function (e, node, selector, callback) {
-      callback = this[callback];
+    _destroyDOMEvents: function () {
+      var events = this._domEvents;
 
-      if (!callback) {
-        throw 'Callback does not exist - ' + callback;
-      } else if (e.target === node || DOM.one(selector, node) === e.target) {
-        callback.call(this, e);
+      for (var e = 0; e < events.length; e++) {
+        events[e].destroy();
       }
     },
 

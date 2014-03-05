@@ -26,7 +26,7 @@ define(['core/create', 'mv/view'], function (Create, View) {
       template: '<div class="menu-item-title">{{label}}</div>',
 
       domEvents: [{
-        selector: '.menu-item',
+        delegate: '.menu-item',
         eventName: 'click',
         callback: '_onClick'
       }]
