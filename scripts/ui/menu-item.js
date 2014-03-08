@@ -9,16 +9,24 @@ define(['core/create', 'mv/view'], function (Create, View) {
     _onClick: function () {
       var action = this.get('action');
 
-      if (action) {
-        action();
-      }
+      if (action && action.type) {
+        var config = action.config;
+        var object = new action.type(config);
 
-      this.fire('action');
+        var data = {
+          action: object
+        };
+
+        this.fire('action', data);
+      }
     },
 
 
     _attrs: {
-      action: null,
+      action: {
+        type: null,
+        config: null
+      },
       label: null,
       mergeData: ['label'],
 
