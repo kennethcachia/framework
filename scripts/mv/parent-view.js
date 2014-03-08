@@ -7,7 +7,7 @@ define(['core/create', 'mv/view'], function (Create, View) {
   var ParentView = Create('ParentView', {
 
     initializer: function () {
-      this._children = [];
+      this._renderedChildren = [];
       this.on('rendered', this._createChildren, this);
     },
 
@@ -22,8 +22,8 @@ define(['core/create', 'mv/view'], function (Create, View) {
     },
 
 
-    getChild: function () {
-      // TODO
+    getRenderedChildren: function () {
+      return this._renderedChildren;
     },
 
 
@@ -71,7 +71,7 @@ define(['core/create', 'mv/view'], function (Create, View) {
 
     _renderChild: function (child) {
       child.render();
-      this._children.push(child);
+      this._renderedChildren.push(child);
     },
 
 
