@@ -74,7 +74,7 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
 
       /**
        * Match elements by class
-       * and/or avoid any element 
+       * and/or avoid any elements
        */
       matchClass: null,
       excludeClass: null,
