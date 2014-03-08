@@ -8,19 +8,13 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
     initializer: function () {
       this._initChildren();
-      this.on('anchorChange', this._setCloseAction, this);
+      //this.on('anchorChange', this._setCloseAction, this);
     },
 
 
     destructor: function () {
-      this._closeEvent.destroy();
-      console.log('bye');
-    },
-
-
-    close: function (e) {
-      console.log('closing dialog...');
-      this.destroy();
+      //this._closeEvent.destroy();
+      console.log('Dialog destroyed');
     },
 
 
@@ -41,7 +35,7 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
       this._closeEvent = anchor.addDOMEvent({
         excludeClass: '.dialog',
         eventName: 'click',
-        callback: 'close',
+        callback: 'destroy',
         context: this
       });
     },
