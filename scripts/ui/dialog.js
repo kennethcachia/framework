@@ -39,8 +39,9 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
       var anchor = this.get('anchor');
 
       this._closeEvent = anchor.addDOMEvent({
+        excludeClass: '.dialog',
         eventName: 'click',
-        callback: this.close,
+        callback: 'close',
         context: this
       });
     },

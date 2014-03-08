@@ -59,6 +59,29 @@ define(['core/create'], function (Create) {
     },
 
 
+    hasClass: function (element, className) {
+      return element.classList.contains(className);
+    },
+
+
+    getAncestor: function (element, className) {
+      var parent = element.parentNode;
+      var parentIsRoot = parent === document.documentElement;
+
+      if (className) {
+        if (!parentIsRoot && !DOM.hasClass(parent, className)) {
+          return DOM.getAncestor(parent, className);
+        }
+      }
+
+      if (parentIsRoot) {
+        parent = null;
+      }
+
+      return parent;
+    },
+
+
     _query: function (selector, parent, list) {
       var operation = 'querySelector';
 

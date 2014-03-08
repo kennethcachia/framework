@@ -96,7 +96,6 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
       var container = this.get('container');
       var domEvents = this.get('domEvents');
 
-
       domEvents.each(domEvents, function (e) {
         e.context = this;
         container.addDOMEvent(e);

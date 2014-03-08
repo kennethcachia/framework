@@ -7,13 +7,7 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
   var DOMEvent = Create('DOMEvent', {
 
     initializer: function () {
-      var delegate = this.get('delegate');
-
-      if (delegate) {
-        this._delegate();
-      } else {
-        this._addListener();
-      }
+      this._delegate();
     },
 
 
@@ -25,18 +19,7 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
     },
 
 
-    _addListener: function () {
-      var source = this.get('source');
-      var eventName = this.get('eventName');
-      var callback = this.get('callback');
-      var context = this.get('context');
-
-      this._pointer = DOM.on(source, eventName, callback, context)
-    },
-
-
     _delegate: function () {
-      var selector = this.get('delegate');
       var source = this.get('source');
       var eventName = this.get('eventName');
 
@@ -48,34 +31,56 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
     },
 
 
+    _isTargetOrChild: function (element, attr, reverse) {
+      var className = this.get(attr);
+      var match = null;
+
+      if (className) {
+        className = className.replace('.', '');
+
+        var isTarget = DOM.hasClass(element, className);
+        var isChild = DOM.getAncestor(element, className);
+
+        match = (isTarget || isChild);
+        match = reverse ? !match : match;
+      }
+
+      return match;
+    },
+
+
     _delegator: function (e) {
       var source = this.get('source');
-      var selector = this.get('delegate');
-      var child = DOM.one(selector, source);
-      var callback = this.get('callback');
       var context = this.get('context');
 
+      var filterMatch = this._isTargetOrChild(e.target, 'matchClass');
+      var excludeMatch = this._isTargetOrChild(e.target, 'excludeClass', true);
+
+      var callback = this.get('callback');
       callback = context[callback];
 
-      if (!callback) {
-        throw 'Callback does not exist - ' + callback;
-      } else if (e.target === source || e.target === child) {
-        callback.call(context, e);
+      if (filterMatch || excludeMatch) {
+        if (!callback) {
+          throw 'Callback does not exist - ' + callback;
+        } else {
+          callback.call(context, e);
+        }
       }
     },
 
 
     _attrs: {
       source: null,
-      delegate: null,
-      eventName: null,
 
       /**
-       * String in delegating,
-       * Function otherwise
+       * Match elements by class
+       * and/or avoid any element 
        */
-      callback: null,
+      matchClass: null,
+      excludeClass: null,
 
+      eventName: null,
+      callback: null,
       context: null
     }
 

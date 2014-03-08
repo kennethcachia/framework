@@ -17,7 +17,7 @@ define(['core/create', 'ui/ui'], function (Create, UI) {
       mergeData: ['label'],
 
       domEvents: [{
-        delegate: 'button',
+        matchClass: '.ui-button',
         eventName: 'click',
         callback: '_onClick'
       }]

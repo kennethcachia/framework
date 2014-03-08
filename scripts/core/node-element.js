@@ -66,14 +66,9 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
 
 
     addDOMEvent: function (e) {
-      var domEvent = new DOMEvent({
-        source: this._node,
-        delegate: e.delegate,
-        eventName: e.eventName,
-        callback: e.callback,
-        context: e.context
-      });
+      e.source = this._node;
 
+      var domEvent = new DOMEvent(e);
       this._domEvents.push(domEvent);
 
       return domEvent;
