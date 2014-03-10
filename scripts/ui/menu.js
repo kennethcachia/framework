@@ -23,26 +23,24 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
     _registerActions: function () {
       var children = this.getRenderedChildren();
-
       var child;
-      var id;
 
       for (var c = 0; c < children.length; c++) {
-
         child = children[c];
-        id = child.get('id');
-
-        child.on('action', this._fireAction, this);
+        child.on('action', this._renderDialog, this);
       }
     },
 
 
-    _fireAction: function (e) {
+    _renderDialog: function (e) {
       var item = e.source;
 
       if (item !== this._activeItem) {
 
-        this.fire('action', e);
+        this.destroyActiveAction();
+
+        // TODO: improve this
+        this._propagateEvents.renderChild(e.action);
 
         this._activeItem = item;
         this._activeAction = e.action;
