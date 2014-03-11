@@ -6,7 +6,6 @@ define(['core/create', 'core/ui'], function (Create, UI) {
    */
   var UIInput = Create('UIInput', {
 
-    // TODO: move to UIBase?
     _onChange: function(e) {
       this.fire('changed', {
         val: e.target.value

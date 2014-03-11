@@ -10,6 +10,7 @@ define(['core/create', 'svg/svg', 'mv/view'], function (Create, SVG, View) {
       this.get('container').appendChild(shape);
     },
 
+
     _attrs: {
       container: new SVG()
     }
