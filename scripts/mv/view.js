@@ -27,7 +27,7 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
 
       if (anchor && container) {
         var template = this.get('template');
-        var data = this._getData();
+        var data = this._mergeData();
 
         if (template) {
           var output = Mustache.render(template, data);
@@ -46,7 +46,39 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
     },
 
 
-    _getData: function () {
+    // TODO: View doing too much?
+    getData: function (eventData) {
+      var nodeElement = eventData.element;
+
+      var id = nodeElement.getAttribute('data-id');
+      var data = this._getDataByID(id);
+
+      return data;
+    },
+
+
+    _getDataByID: function (id) {
+      var data = this._mergeData().data;
+      var required;
+
+      if (Array.isArray(data)) {
+
+        for (var d = 0; d < data.length; d++) {
+          if (data[d].id === id) {
+            required = data[d];
+            break;
+          }
+        }
+
+      } else {
+        required = data[id];
+      }
+
+      return required;
+    },
+
+
+    _mergeData: function () {
       var model = this.get('model');
       var context = {};
       var data = {};
