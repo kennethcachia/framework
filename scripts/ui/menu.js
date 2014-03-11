@@ -14,10 +14,18 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
     },
 
 
-    destroyActiveAction: function () {
+    destructor: function () {
+      this.reset();
+    },
+
+
+    reset: function () {
       if (this._activeAction) {
         this._activeAction.destroy();
       }
+
+      this._activeAction = null;
+      this._activeItem = null;
     },
 
 
@@ -27,32 +35,40 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
       for (var c = 0; c < children.length; c++) {
         child = children[c];
-        child.on('action', this._renderDialog, this);
+        child.on('action', this._renderView, this);
       }
     },
 
 
-    _renderDialog: function (e) {
-      var item = e.source;
+    _renderView: function (e) {
+      var viewParent = this.get('viewParent');
 
-      if (item !== this._activeItem) {
-
-        this.destroyActiveAction();
-
-        // TODO: improve this
-        this._propagateEvents.renderChild(e.action);
-
-        this._activeItem = item;
-        this._activeAction = e.action;
-
+      if (!viewParent) {
+        throw 'Menu -- no parent specified';
       } else {
-        console.log('SKIPPING SAME ACTION!');
+
+        var menuItem = e.source;
+        var view = e.action;
+
+        if (menuItem !== this._activeItem) {
+          this.reset();
+          viewParent.renderChild(view);
+
+          this._activeItem = menuItem;
+          this._activeAction = view;
+
+          this._activeAction.propagateEventsTo(this);
+        } else {
+          console.log('Same action -- SKIPPING.');
+        }
+
       }
     },
 
 
     _attrs: {
-      container: '<div class="menu"></div>'
+      container: '<div class="menu"></div>',
+      viewParent: null
     }
 
   }, ParentView);
