@@ -63,9 +63,28 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
         if (!callback) {
           throw 'Callback does not exist - ' + callback;
         } else {
-          callback.call(context, e);
+          this._executeCallback(callback, context, e);
         }
       }
+    },
+
+
+    _executeCallback: function (callback, context, e) {
+      var className = this.get('matchClass');
+      var data = {};
+
+      if (className) {
+        className = className.replace('.', '');
+
+        var element = e.target;
+        var isTarget = DOM.hasClass(element, className);
+        var parent = DOM.getAncestor(element, className);
+
+        element = isTarget ? element : parent;
+        data.element = element;
+      }
+
+      callback.call(context, e, data);
     },
 
 
