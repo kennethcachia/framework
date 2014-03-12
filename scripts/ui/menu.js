@@ -20,6 +20,7 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
 
     reset: function () {
+
       if (this._activeAction) {
         this._activeAction.destroy();
       }
@@ -51,13 +52,14 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
         var view = e.action;
 
         if (menuItem !== this._activeItem) {
+
           this.reset();
           viewParent.renderChild(view);
 
           this._activeItem = menuItem;
           this._activeAction = view;
-
           this._activeAction.propagateEventsTo(this);
+
         } else {
           console.log('Same action -- SKIPPING.');
         }
