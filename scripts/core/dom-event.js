@@ -53,19 +53,28 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
       var source = this.get('source');
       var context = this.get('context');
 
+      var noClass = !this._hasClass();
       var filterMatch = this._isTargetOrChild(e.target, 'matchClass');
       var excludeMatch = this._isTargetOrChild(e.target, 'excludeClass', true);
 
       var callback = this.get('callback');
       callback = context[callback];
 
-      if (filterMatch || excludeMatch) {
+      if (noClass || (filterMatch || excludeMatch)) {
         if (!callback) {
           throw 'Callback does not exist - ' + callback;
         } else {
           this._executeCallback(callback, context, e);
         }
       }
+    },
+
+
+    _hasClass: function () {
+      var matchClass = this.get('matchClass');
+      var excludeClass = this.get('excludeClass');
+
+      return matchClass || excludeClass;
     },
 
 
