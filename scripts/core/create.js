@@ -15,7 +15,9 @@ define(function () {
       b = Object.create(b);
 
       for (var o in a) {
-        b[o] = a[o];
+        if (a[o]) {
+          b[o] = a[o];
+        }
       }
 
       return b;
