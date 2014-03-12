@@ -24,6 +24,12 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
     },
 
 
+    setStyle: function (key, value) {
+      // TODO: allow object
+      DOM.setStyle(this._node, key, value);
+    },
+
+
     one: function (selector) {
       var node = DOM.one(selector, this._node);
 

@@ -82,6 +82,12 @@ define(['core/create'], function (Create) {
     },
 
 
+    setStyle: function(element, key, value) {
+      // TODO: allow objects, default units
+      element.style[key] = value;
+    },
+
+
     _query: function (selector, parent, list) {
       var operation = 'querySelector';
 
