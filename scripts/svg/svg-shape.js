@@ -34,6 +34,7 @@ define(['core/create', 'svg/svg-element'], function (Create, SVGElement) {
     _attrs: {
       x: null,
       y: null,
+      style: null,
       html: null
     }
 
