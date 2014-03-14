@@ -1,9 +1,18 @@
 
 /* ==========================================================================
+   Z-indexes
+   ========================================================================== */
+
+@dialogZIndex:    10001;
+@crosshairZIndex: 10000;
+
+
+/* ==========================================================================
    Dialog
    ========================================================================== */
 
 .dialog {
+  z-index: @dialogZIndex;
   position: absolute;
   width: 500px;
   height: 600px;
@@ -69,5 +78,24 @@
     .ui-grid-item-ratio {
       padding-bottom: 100%;
     }
+  }
+}
+
+
+/* ==========================================================================
+   Transformations
+   ========================================================================== */
+
+.crosshair {
+  display: none;
+  z-index: @crosshairZIndex;
+  position: fixed;
+  border: 2px solid cyan;
+  pointer-events: none;
+
+  .box-sizing();
+
+  &--active {
+    display: block;
   }
 }
