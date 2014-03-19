@@ -60,6 +60,7 @@ define(['core/create'], function (Create) {
 
 
     hasClass: function (element, className) {
+      className = className.replace('.', '');
       return element.classList.contains(className);
     },
 
@@ -97,7 +98,7 @@ define(['core/create'], function (Create) {
         operation += 'All';
       }
 
-      return parent.querySelector(selector);
+      return parent[operation](selector);
     }
   };
 
