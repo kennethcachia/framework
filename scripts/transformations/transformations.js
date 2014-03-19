@@ -16,6 +16,9 @@ define([
       this._body = new NodeElement();
       this._body.fromNode(document.body);
 
+      var boundingElement = this.get('boundingElement');
+      this._boundingBox = boundingElement.get('container');
+
       this._render();
       this._bindEvents();
     },
@@ -36,17 +39,16 @@ define([
 
     _bindEvents: function (nodeElement) {
       var targets = this.get('targets');
-
       this._events = [];
 
-      this._events.push(this._body.addDOMEvent({
+      this._events.push(this._boundingBox.addDOMEvent({
         matchClass: targets,
         eventName: 'mousedown',
         callback: '_onTargetMouseDown',
         context: this
       }));
 
-      this._events.push(this._body.addDOMEvent({
+      this._events.push(this._boundingBox.addDOMEvent({
         eventName: 'mouseup',
         callback: '_onTargetMouseUp',
         context: this
@@ -65,7 +67,7 @@ define([
 
 
     _registerMouseMove: function () {
-      this._mouseMoveEvent = this._body.addDOMEvent({
+      this._mouseMoveEvent = this._boundingBox.addDOMEvent({
         eventName: 'mousemove',
         callback: '_onTargetMouseMove',
         context: this
@@ -142,6 +144,7 @@ define([
 
 
     _attrs: {
+      boundingElement: null,
       targets: null,
       crosshair: new Crosshair(),
 
