@@ -1,5 +1,11 @@
 
-define(['core/create', 'core/DOM'], function (Create, DOM) {
+define([
+
+  'core/create',
+  'core/DOM',
+  'core/dom-query'
+
+], function (Create, DOM, DOMQuery) {
 
   /**
    * DOM Event
@@ -8,6 +14,7 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
 
     initializer: function () {
       this._delegate();
+      this._createQuery();
     },
 
 
@@ -16,6 +23,21 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
       var eventName = this.get('eventName');
 
       DOM.off(source, eventName, this._pointer);
+
+      if (this._query) {
+        this._query.destroy();
+      }
+    },
+
+
+    _createQuery: function () {
+      var matchClass = this.get('matchClass');
+
+      if (matchClass) {
+        this._query = new DOMQuery({
+          query: matchClass
+        });
+      }
     },
 
 
@@ -31,42 +53,46 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
     },
 
 
-    _isTargetOrChild: function (element, attr, reverse) {
-      var className = this.get(attr);
-      var match = null;
-
-      if (className) {
-        className = className.replace('.', '');
-
-        var isTarget = DOM.hasClass(element, className);
-        var isChild = DOM.getAncestor(element, className);
-
-        match = (isTarget || isChild);
-        match = reverse ? !match : match;
-      }
-
-      return match;
-    },
-
-
     _delegator: function (e) {
-      var source = this.get('source');
+      var callback = this.get('callback');
       var context = this.get('context');
+      var source = this.get('source');
 
       var noClass = !this._hasClass();
-      var filterMatch = this._isTargetOrChild(e.target, 'matchClass');
-      var excludeMatch = this._isTargetOrChild(e.target, 'excludeClass', true);
+      var currentTarget;
 
-      var callback = this.get('callback');
+      if (!noClass) {
+        var isTarget = this._query.matches(e.target);
+        var parent = false;
+
+        if (!isTarget) {
+          parent = this._query.getMatchingAncestor(e.target);
+        }
+
+        currentTarget = isTarget || parent;
+      }
+
       callback = context[callback];
 
-      if (noClass || (filterMatch || excludeMatch)) {
+      if (noClass || currentTarget) {
         if (!callback) {
           throw 'Callback does not exist - ' + callback;
         } else {
-          this._executeCallback(callback, context, e);
+          this._executeCallback(callback, context, e, currentTarget);
         }
       }
+    },
+
+
+    _executeCallback: function (callback, context, e, currentTarget) {
+      var className = this.get('matchClass');
+      var data = {};
+
+      if (className) {
+        data.element = currentTarget;
+      }
+
+      callback.call(context, e, data);
     },
 
 
@@ -75,25 +101,6 @@ define(['core/create', 'core/DOM'], function (Create, DOM) {
       var excludeClass = this.get('excludeClass');
 
       return matchClass || excludeClass;
-    },
-
-
-    _executeCallback: function (callback, context, e) {
-      var className = this.get('matchClass');
-      var data = {};
-
-      if (className) {
-        className = className.replace('.', '');
-
-        var element = e.target;
-        var isTarget = DOM.hasClass(element, className);
-        var parent = DOM.getAncestor(element, className);
-
-        element = isTarget ? element : parent;
-        data.element = element;
-      }
-
-      callback.call(context, e, data);
     },
 
 
