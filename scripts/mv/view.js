@@ -8,7 +8,6 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
 
     initializer: function () {
       this._createContainer();
-      this._delegateDOMEvents();
     },
 
 
@@ -42,6 +41,7 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
         throw 'View has no container or anchor for rendering';
       }
 
+      this._delegateDOMEvents();
       this.fire('rendered');
     },
 
