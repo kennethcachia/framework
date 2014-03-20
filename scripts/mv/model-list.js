@@ -9,16 +9,13 @@ define(['core/Create', 'mv/model'], function (Create, Model) {
     initializer: function () {
       var Type = this.get('type');
       var json = this.get('json');
-      var models = [];
 
       this._data = [];
 
       // TODO: custom type defined in json -- makes sense?
       json.each(json, function (attr) {
-        models.push(new Type(attr));
-      });
-
-      this._data = models;
+        this._data.push(new Type(attr));
+      }, this);
     },
 
 

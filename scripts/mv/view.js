@@ -47,10 +47,8 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
 
 
     // TODO: View doing too much?
-    getData: function (eventData) {
-      var nodeElement = eventData.element;
-
-      var id = nodeElement.getAttribute('data-id');
+    getData: function (element) {
+      var id = element.getAttribute('data-id');
       var data = this._getDataByID(id);
 
       return data;

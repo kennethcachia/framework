@@ -6,7 +6,7 @@ define(['core/create', 'svg/svg', 'mv/view'], function (Create, SVG, View) {
    */
   var SVGView = Create('SVGView', {
 
-    addShape: function (shape) {
+    renderSVGShape: function (shape) {
       var shapeClass = this.get('shapeClass');
       shape.addClass(shapeClass);
 
