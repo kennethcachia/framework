@@ -48,7 +48,7 @@ define([
         context: this
       }));
 
-      this._events.push(this._boundingBox.addDOMEvent({
+      this._events.push(this._body.addDOMEvent({
         eventName: 'mouseup',
         callback: '_onTargetMouseUp',
         context: this
