@@ -56,11 +56,12 @@ define(['core/create', 'mv/view'], function (Create, View) {
 
     _createChild: function (attr) {
       var container = this.get('container');
+      var defaultChildType = this.get('defaultChildType');
 
       attr.anchor = this._setAnchor(attr.anchor);
       attr.model = this.get('model');
 
-      var Type = attr.type || View;
+      var Type = attr.type || defaultChildType;
       var child = new Type(attr);
 
       child.propagateEventsTo(this);
@@ -76,6 +77,7 @@ define(['core/create', 'mv/view'], function (Create, View) {
 
 
     _attrs: {
+      defaultChildType: View,
       children: []
     }
 
