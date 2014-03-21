@@ -7,26 +7,11 @@ define(['core/create', 'mv/view'], function (Create, View) {
   var MenuItem = Create('MenuItem', {
 
     _onClick: function () {
-      var action = this.get('action');
-
-      if (action && action.type) {
-        var config = action.config;
-        var object = new action.type(config);
-
-        var data = {
-          action: object
-        };
-
-        this.fire('action', data);
-      }
+      this.fire('click');
     },
 
 
     _attrs: {
-      action: {
-        type: null,
-        config: null
-      },
       label: null,
       mergeData: ['label'],
 

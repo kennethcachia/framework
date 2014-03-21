@@ -1,5 +1,11 @@
 
-define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
+define([
+
+  'core/create',
+  'mv/parent-view',
+  'ui/menu-item'
+
+], function (Create, ParentView, MenuItem) {
 
   /**
    * Menu
@@ -8,8 +14,6 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
     initializer: function () {
       this._activeItem = null;
-      this._activeAction = null;
-
       this.on('childrenRendered', this._registerActions, this);
     },
 
@@ -20,12 +24,7 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
 
     reset: function () {
-
-      if (this._activeAction) {
-        this._activeAction.destroy();
-      }
-
-      this._activeAction = null;
+      this.fire('resetAction');
       this._activeItem = null;
     },
 
@@ -36,41 +35,36 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
 
       for (var c = 0; c < children.length; c++) {
         child = children[c];
-        child.on('action', this._renderView, this);
+        child.on('click', this._onMenuItemClick, this);
       }
     },
 
 
-    _renderView: function (e) {
-      var viewParent = this.get('viewParent');
+    _onMenuItemClick: function (e) {
+      var menuItem = e.source;
 
-      if (!viewParent) {
-        throw 'Menu -- no parent specified';
+      if (menuItem !== this._activeItem) {
+        this._fireNewAction(menuItem);
       } else {
-
-        var menuItem = e.source;
-        var view = e.action;
-
-        if (menuItem !== this._activeItem) {
-
-          this.reset();
-          viewParent.renderChild(view);
-
-          this._activeItem = menuItem;
-          this._activeAction = view;
-          this._activeAction.propagateEventsTo(this);
-
-        } else {
-          console.log('Same action -- SKIPPING.');
-        }
-
+        console.log('Same action -- SKIPPING.');
       }
+    },
+
+
+    _fireNewAction: function (menuItem) {
+      this.reset();
+
+      this.fire('newAction', {
+        menuItem: menuItem
+      });
+
+      this._activeItem = menuItem;
     },
 
 
     _attrs: {
-      container: '<div class="menu"></div>',
-      viewParent: null
+      defaultChildType: MenuItem,
+      container: '<div class="menu"></div>'
     }
 
   }, ParentView);
@@ -79,23 +73,3 @@ define(['core/create', 'mv/parent-view'], function (Create, ParentView) {
   return Menu;
 
 });
-
-
-/*
-var DraggableMenu = Create('DraggableMenu', {
-
-  initializer: function () {
-
-  }
-
-}, Menu);
-
-
-var CollapsableMenu = Create('CollapsableMenu', {
-
-  initializer: function () {
-
-  }
-
-}, Menu);
-*/
