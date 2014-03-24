@@ -88,32 +88,40 @@ define(function () {
 
       fire: function (eventName, data) {
         var listeners = this._listeners[eventName];
+        var stopPropagation = false;
 
         data = data || {};
         data.source = data.source || this;
 
         if (listeners) {
           var listener;
+          var resumePropagation;
 
           for (var l = 0; l < listeners.length; l++) {
             listener = listeners[l];
-            listener.callback.call(listener.context, data);
+
+            resumePropagation = listener.callback.call(listener.context, data);
+
+            if (resumePropagation === false) {
+              stopPropagation = true;
+            }
           }
         }
 
         // Pass it on
-        var propagateEvents = this._propagateEvents;
-        var suffix = '|';
+        if (stopPropagation !== true) {
+          var propagateEvents = this._propagateEvents;
+          var suffix = '|';
 
-        if (propagateEvents) {
+          if (propagateEvents) {
 
-          if (eventName.indexOf(suffix) === -1) {
-            suffix += this.get('id') || this._name;
-            eventName = eventName + suffix;
-            //console.log(eventName);
+            if (eventName.indexOf(suffix) === -1) {
+              suffix += this.get('id') || this._name;
+              eventName = eventName + suffix;
+            }
+
+            propagateEvents.fire(eventName, data);
           }
-
-          propagateEvents.fire(eventName, data);
         }
       },
 
