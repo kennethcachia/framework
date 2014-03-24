@@ -2,10 +2,10 @@
 define([
 
   'core/create',
-  'core/node-element',
+  'core/dom-element',
   'transformations/crosshair'
 
-], function (Create, NodeElement, Crosshair) {
+], function (Create, DOMElement, Crosshair) {
 
   /**
    * Transformations
@@ -13,7 +13,7 @@ define([
   var Transformations = Create('Transformations', {
 
     initializer: function () {
-      this._body = new NodeElement();
+      this._body = new DOMElement();
       this._body.fromNode(document.body);
 
       var boundingElement = this.get('boundingElement');
@@ -37,12 +37,11 @@ define([
     },
 
 
-    _bindEvents: function (nodeElement) {
+    _bindEvents: function (domElement) {
       var targets = this.get('targets');
       this._events = [];
 
       this._events.push(this._boundingBox.addDOMEvent({
-        matchClass: targets,
         eventName: 'mousedown',
         callback: '_onTargetMouseDown',
         context: this
@@ -80,13 +79,21 @@ define([
     },
 
 
-    _activateCrosshair: function (e) {
+    _activateCrosshair: function (domElement) {
       var crosshair = this.get('crosshair');
-      crosshair.activate(e.target);
+      crosshair.activate(domElement);
 
-      this.fire('active', {
-        target: e.target
+      this.fire('selected', {
+        target: domElement
       });
+    },
+
+
+    _deactivateCrosshair: function () {
+      var crosshair = this.get('crosshair');
+      crosshair.deactivate();
+
+      this.fire('unselected');
     },
 
 
@@ -102,20 +109,28 @@ define([
     },
 
 
-    _onTargetMouseDown: function (e) {
-      if (!this._isActive) {
-        this._isActive = e.target;
-        this._registerMouseMove();
+    _onTargetMouseDown: function (domElement, e) {
+      var targets = this.get('targets');
 
-        var coords = this._getPos();
+      if (domElement.hasClass(targets)) {
 
-        this._offset = {
-          x: e.layerX - coords.x,
-          y: e.layerY - coords.y
-        };
+        if (!this._isActive) {
+          this._isActive = domElement;
+          this._registerMouseMove();
 
-        this._activateCrosshair(e);
-        console.log('down');
+          var coords = this._getPos();
+
+          this._offset = {
+            x: e.layerX - coords.x,
+            y: e.layerY - coords.y
+          };
+
+          this._activateCrosshair(domElement);
+          console.log('down');
+        }
+
+      } else {
+        this._deactivateCrosshair();
       }
     },
 
@@ -129,10 +144,10 @@ define([
     },
 
 
-    _onTargetMouseMove: function (e) {
+    _onTargetMouseMove: function (domElement, e) {
       var crosshair = this.get('crosshair');
 
-      if (this._isActive === e.target) {
+      if (this._isActive.isEqualTo(domElement)) {
         console.log('move');
         var x = e.layerX - this._offset.x;
         var y = e.layerY - this._offset.y;
