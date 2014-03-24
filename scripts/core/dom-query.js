@@ -1,5 +1,10 @@
 
-define(['core/create', 'core/dom'], function (Create, DOM) {
+define([
+
+  'core/create',
+  'core/dom'
+
+], function (Create, DOM) {
 
   // TODO: extend to support ID's and attributes
 
