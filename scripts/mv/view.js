@@ -1,5 +1,11 @@
 
-define(['core/Create', 'core/node-element', 'third-party/mustache'], function (Create, NodeElement, Mustache) {
+define([
+
+  'core/Create',
+  'core/dom-element',
+  'third-party/mustache'
+
+], function (Create, DOMElement, Mustache) {
 
   /**
    * View
@@ -8,6 +14,9 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
 
     initializer: function () {
       this._createContainer();
+
+      this._rendered = false;
+      this._visible = false;
     },
 
 
@@ -15,43 +24,89 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
       var anchor = this.get('anchor');
       var container = this.get('container');
 
+      this._rendered = true;
+
       anchor.removeChild(container);
       container.destroy();
     },
 
 
-    render: function () {
+    show: function () {
       var container = this.get('container');
-      var anchor = this.get('anchor');
+      var hiddenClassName = this.get('hiddenClassName');
 
-      if (anchor && container) {
-        var template = this.get('template');
-        var data = this._mergeData();
+      if (this._rendered) {
 
-        if (template) {
-          var output = Mustache.render(template, data);
-          container.setInnerHTML(output);
-        }
-
-        // TODO: don't re-append after first render?
-        // TODO: or -- keep state in 'rendered', only allow once
-        anchor.appendChild(container);
+        this._visible = true;
+        container.removeClass(hiddenClassName);
 
       } else {
-        throw 'View has no container or anchor for rendering';
+        console.log('View not rendered yet - cannot show');
       }
+    },
 
-      this._delegateDOMEvents();
-      this.fire('rendered');
+
+    hide: function () {
+      var container = this.get('container');
+      var hiddenClassName = this.get('hiddenClassName');
+
+      this._visible = false;
+      container.addClass(hiddenClassName);
+    },
+
+
+    render: function () {
+      if (!this._rendered) {
+
+        var container = this.get('container');
+        var anchor = this.get('anchor');
+
+        if (anchor && container) {
+          var template = this.get('template');
+          var data = this._mergeData();
+
+          if (template) {
+            var output = Mustache.render(template, data);
+            container.setInnerHTML(output);
+          }
+
+          this._visible = true;
+          this._checkVisibility();
+
+          anchor.appendChild(container);
+
+        } else {
+          throw 'View has no container or anchor for rendering';
+        }
+
+        this._delegateDOMEvents();
+        this._rendered = true;
+        this.fire('rendered');
+
+      } else {
+        console.log('View already rendered -- Skipping');
+      }
     },
 
 
     // TODO: View doing too much?
-    getData: function (element) {
-      var id = element.getAttribute('data-id');
+    getData: function (domElement) {
+      var dataAttr = this.get('dataAttr');
+
+      var id = domElement.getAttribute(dataAttr);
       var data = this._getDataByID(id);
 
       return data;
+    },
+
+
+    _checkVisibility: function (element) {
+      var container = this.get('container');
+      var hiddenClassName = this.get('hiddenClassName');
+
+      if (!this._visible) {
+        container.addClass(hiddenClassName);
+      }
     },
 
 
@@ -109,7 +164,7 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
       var container = this.get('container');
 
       if (typeof container === 'string') {
-        this.set('container', new NodeElement({
+        this.set('container', new DOMElement({
           html: this.get('container')
         }));
       }
@@ -134,8 +189,10 @@ define(['core/Create', 'core/node-element', 'third-party/mustache'], function (C
 
 
     _attrs: {
+      dataAttr: 'data-id',
       container: null,
       className: null,
+      hiddenClassName: 'view--hidden',
       template: null,
       anchor: null,
       model: null,
