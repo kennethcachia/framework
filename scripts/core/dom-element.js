@@ -1,10 +1,16 @@
 
-define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOMEvent) {
+define([
+
+  'core/create',
+  'core/dom',
+  'core/dom-event'
+
+], function (Create, DOM, DOMEvent) {
 
   /**
    * Wrapper for an HTML Node
    */
-  var NodeElement = Create('NodeElement', {
+  var DOMElement = Create('DOMElement', {
 
     initializer: function () {
       this._setNode();
@@ -19,13 +25,10 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
     destructor: function () {
       this._destroyDOMEvents();
       this._node = null;
-
-      // TODO: Kill children?
     },
 
 
     setStyle: function (key, value) {
-      // TODO: allow object
       DOM.setStyle(this._node, key, value);
     },
 
@@ -33,8 +36,7 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
     one: function (selector) {
       var node = DOM.one(selector, this._node);
 
-      // TODO: use _this_ constructor
-      var elem = new NodeElement();
+      var elem = new DOMElement();
       elem.fromNode(node);
 
       return elem;
@@ -71,6 +73,16 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
     },
 
 
+    removeClass: function (className) {
+      DOM.removeClass(this._node, className);
+    },
+
+
+    hasClass: function (className) {
+      return DOM.hasClass(this._node, className);
+    },
+
+
     addDOMEvent: function (e) {
       e.source = this._node;
 
@@ -78,6 +90,30 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
       this._domEvents.push(domEvent);
 
       return domEvent;
+    },
+
+
+    getFromNode: function (getter, key) {
+      getter = getter[0].toUpperCase() + getter.slice(1);
+      getter = 'get' + getter;
+
+      return this._node[getter](key);
+    },
+
+
+
+    getAttribute: function (key) {
+      return this.getFromNode('attribute', key);
+    },
+
+
+    setAttribute: function (key, value) {
+      this._node.setAttribute(key, value);
+    },
+
+
+    isEqualTo: function (check) {
+      return (this._node === check._node);
     },
 
 
@@ -108,6 +144,6 @@ define(['core/create', 'core/dom', 'core/dom-event'], function (Create, DOM, DOM
   });
 
 
-  return NodeElement;
+  return DOMElement;
 
 });
