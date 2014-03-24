@@ -2,9 +2,9 @@
 define([
 
   'core/create',
-  'core/node-element'
+  'core/dom-element'
 
-], function (Create, NodeElement) {
+], function (Create, DOMElement) {
 
   /**
    * Crosshair
@@ -23,7 +23,7 @@ define([
 
 
     setBoundary: function (element) {
-      var rect = element.getBoundingClientRect();
+      var rect = element.getFromNode('boundingClientRect');
 
       this.setStyle('top', rect.top + 'px');
       this.setStyle('left', rect.left + 'px');
@@ -36,7 +36,7 @@ define([
       html: '<div class="crosshair"></div>'
     }
 
-  }, NodeElement);
+  }, DOMElement);
 
 
   return Crosshair;
