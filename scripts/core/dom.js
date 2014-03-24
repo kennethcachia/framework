@@ -59,6 +59,11 @@ define(['core/create'], function (Create) {
     },
 
 
+    removeClass: function (element, className) {
+      element.classList.remove(className);
+    },
+
+
     hasClass: function (element, className) {
       className = className.replace('.', '');
       return element.classList.contains(className);
@@ -86,6 +91,11 @@ define(['core/create'], function (Create) {
     setStyle: function(element, key, value) {
       // TODO: allow objects, default units
       element.style[key] = value;
+    },
+
+
+    getAttribute: function(element, key) {
+      return element.getAttribute(key);
     },
 
 
