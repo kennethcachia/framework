@@ -6,9 +6,8 @@ define(['core/create', 'ui/ui'], function (Create, UI) {
    */
   var UIGrid = Create('UIGrid', {
 
-    _clickItem: function (e, eventData) {
-      var element = eventData.element;
-      var data = this.getData(element);
+    _clickItem: function (domElement) {
+      var data = this.getData(domElement);
 
       this.fire('selected', {
         data: data
