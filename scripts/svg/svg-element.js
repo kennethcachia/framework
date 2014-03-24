@@ -1,5 +1,10 @@
 
-define(['core/create', 'core/node-element'], function (Create, NodeElement) {
+define([
+
+  'core/create',
+  'core/dom-element'
+
+], function (Create, DOMElement) {
 
   /**
    * SVGElement
@@ -10,7 +15,7 @@ define(['core/create', 'core/node-element'], function (Create, NodeElement) {
       namespaceURI: 'http://www.w3.org/2000/svg'
     }
 
-  }, NodeElement);
+  }, DOMElement);
 
 
   return SVGElement;
