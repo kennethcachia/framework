@@ -15,8 +15,15 @@ define(function () {
       b = Object.create(b);
 
       for (var o in a) {
-        if (a[o]) {
-          b[o] = a[o];
+        if (a[o] !== undefined && a[o] !== null) {
+
+          // TODO: fix this - required but breaks Nodes
+          /*if (typeof a[o] === 'object' && !Array.isArray(a[o]) &&
+              typeof b[o] === 'object' && !Array.isArray(b[o])) {
+            b[o] = mergeObjects(a[o], b[o]);
+          } else {*/
+            b[o] = a[o];
+          //}
         }
       }
 
@@ -139,8 +146,26 @@ define(function () {
 
 
       set: function (key, value) {
-        this._attrs[key] = value;
+
+        if (key.indexOf('.') === -1) {
+
+          this._attrs[key] = value;
+
+        } else {
+
+          var pos = key.indexOf('.');
+          var obj = key.substr(0, pos);
+          var index = key.substr(pos + 1);
+
+          this._attrs[obj][index] = value;
+
+          // Fire event on key name
+          key = obj;
+
+        }
+
         this._fireAttrChange(key);
+
       },
 
 
