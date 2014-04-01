@@ -1,5 +1,10 @@
 
-define(['core/create', 'mv/view'], function (Create, View) {
+define([
+
+  'core/create',
+  'mv/view'
+
+], function (Create, View) {
 
   /**
    * Parent View
@@ -8,76 +13,67 @@ define(['core/create', 'mv/view'], function (Create, View) {
 
     initializer: function () {
       this._renderedChildren = [];
-      this.on('rendered', this._createChildren, this);
-    },
-
-    /* TODO: destructors - markup, events, children etc */
-
-    renderChild: function (view) {
-      var anchor = this._setAnchor(view.get('anchor'));
-
-      view.propagateEventsTo(this);
-      view.set('anchor', anchor);
-      this._renderChild(view);
+      this.on('rendered', this._renderChildren, this);
     },
 
 
-    getRenderedChildren: function () {
-      return this._renderedChildren;
-    },
-
-
-    _createChildren: function () {
+    destructor: function () {
       var children = this.get('children');
 
-      // TODO: improve - each should handle null checks
-      if (children) {
-        children.each(children, function (child) {
-          this._createChild(child);
-        }, this);
-      }
+      children.each(children, function (child) {
+        child.destroy();
+      }, this);
+
+      this._renderedChildren = null;
+    },
+
+
+    _renderChildren: function () {
+      var children = this.get('children');
+      var container = this.get('container');
+      var childContainer = this.get('childContainer');
+      var data = this.get('data');
+
+      var childView;
+      var attrs;
+
+      children.each(children, function (child) {
+
+        attrs = child.attrs || {};
+
+        // TODO: avoid data mapping by disallowing
+        // children [] and force child rendering through
+        // seperate method after init?
+
+        attrs.data = data[attrs.id];
+        attrs.container = childContainer;
+        attrs.anchor = container;
+
+        childView = new child.view(attrs);
+
+        childView.render();
+        childView.on('dataChange', this._propagateChildDataChange, this);
+
+        this._renderedChildren.push(childView);
+
+      }, this);
 
       this.fire('childrenRendered');
     },
 
 
-    _setAnchor: function (anchor) {
-      var container = this.get('container');
+    _propagateChildDataChange: function (e) {
+      var source = e.source;
 
-      if (anchor) {
-        anchor = container.one(anchor);
-      } else {
-        anchor = container;
-      }
-
-      return anchor;
-    },
-
-
-    _createChild: function (attr) {
-      var container = this.get('container');
-      var defaultChildType = this.get('defaultChildType');
-
-      attr.anchor = this._setAnchor(attr.anchor);
-      attr.model = this.get('model');
-
-      var Type = attr.type || defaultChildType;
-      var child = new Type(attr);
-
-      child.propagateEventsTo(this);
-
-      this._renderChild(child);
-    },
-
-
-    _renderChild: function (child) {
-      child.render();
-      this._renderedChildren.push(child);
+      this.fire('childDataChange', {
+        childID: source.get('id'),
+        data: source.get('data')
+      })
     },
 
 
     _attrs: {
-      defaultChildType: View,
+      childContainer: '<div class="view-child"></div>',
       children: []
     }
 

@@ -1,26 +1,19 @@
 
-define(['core/create', 'core/ui'], function (Create, UI) {
+define([
+
+  'core/create',
+  'ui/ui',
+  'views/input'
+
+], function (Create, UI, ViewInput) {
 
   /**
    * Input
    */
   var UIInput = Create('UIInput', {
 
-    _onChange: function(e) {
-      this.fire('changed', {
-        val: e.target.value
-      });
-    },
-
-
-    _attrs: {
-      template: '<input class="ui-input" value="{{data}}"/>',
-
-      domEvents: [{
-        matchClass: '.ui-input',
-        eventName: 'change',
-        callback: '_onChange'
-      }]
+    createDefaultView: function () {
+      return new ViewInput();
     }
 
   }, UI);

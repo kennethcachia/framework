@@ -1,22 +1,29 @@
 
-define(['core/create', 'svg/svg', 'mv/view'], function (Create, SVG, View) {
+define([
+
+  'core/create',
+  'svg/svg', 
+  'mv/view'
+
+], function (Create, SVG, View) {
 
   /**
    * SVG View
    */
   var SVGView = Create('SVGView', {
 
-    renderSVGShape: function (shape) {
-      var shapeClass = this.get('shapeClass');
-      shape.addClass(shapeClass);
+    initializer: function () {
+      var container = this.get('container');
 
-      this.get('container').appendChild(shape);
+      if (!container) {
+        container = new SVG();
+        this.set('container', container);
+      }
     },
 
 
     _attrs: {
-      container: new SVG(),
-      shapeClass: 'svg-shape'
+      container: null
     }
 
   }, View);

@@ -13,7 +13,8 @@ define([
   var View = Create('View', {
 
     initializer: function () {
-      this._createContainer();
+      this.on('dataChange', this._onDataChange, this);
+      this.on('rendered', this._appendElements, this);
 
       this._rendered = false;
       this._visible = false;
@@ -24,139 +25,135 @@ define([
       var anchor = this.get('anchor');
       var container = this.get('container');
 
-      this._rendered = true;
-
       anchor.removeChild(container);
       container.destroy();
+
+      this._rendered = false;
+      this._visible = false;
     },
 
 
     show: function () {
-      var container = this.get('container');
-      var hiddenClassName = this.get('hiddenClassName');
-
       if (this._rendered) {
 
+        this._toggleVisibility('remove');
         this._visible = true;
-        container.removeClass(hiddenClassName);
 
       } else {
-        console.log('View not rendered yet - cannot show');
+        console.log('View not rendered yet');
       }
     },
 
 
     hide: function () {
-      var container = this.get('container');
-      var hiddenClassName = this.get('hiddenClassName');
-
+      this._toggleVisibility('add');
       this._visible = false;
-      container.addClass(hiddenClassName);
     },
 
 
     render: function () {
+
       if (!this._rendered) {
 
-        var container = this.get('container');
-        var anchor = this.get('anchor');
-
-        if (anchor && container) {
-          var template = this.get('template');
-          var data = this._mergeData();
-
-          if (template) {
-            var output = Mustache.render(template, data);
-            container.setInnerHTML(output);
-          }
-
-          this._visible = true;
-          this._checkVisibility();
-
-          anchor.appendChild(container);
-
-        } else {
-          throw 'View has no container or anchor for rendering';
-        }
-
-        this._delegateDOMEvents();
-        this._rendered = true;
-        this.fire('rendered');
+        this._createContainer();
+        this._render();
 
       } else {
         console.log('View already rendered -- Skipping');
       }
+
     },
 
 
-    // TODO: View doing too much?
-    getData: function (domElement) {
-      var dataAttr = this.get('dataAttr');
-
-      var id = domElement.getAttribute(dataAttr);
-      var data = this._getDataByID(id);
-
-      return data;
+    getSourceDOMElement: function () {
+      return this._sourceDOMElement;
     },
 
 
-    _checkVisibility: function (element) {
+    updateData: function () {
+      var data = this.get('data');
+      var source = this.getSourceDOMElement();
+
+      var value;
+
+      for (var d in data) {
+        value = source.getFromNode(d);
+        data[d] = value;
+      }
+
+      console.log('--update form UI');
+      this.set('data', data);
+    },
+
+
+    _appendElements: function () {
+      var elements = this.get('elements');
       var container = this.get('container');
-      var hiddenClassName = this.get('hiddenClassName');
 
-      if (!this._visible) {
-        container.addClass(hiddenClassName);
+      var childElement;
+      var attrs;
+
+      elements.each(elements, function (element) {
+        
+        attrs = element.attrs;
+        childElement = new element.element(attrs);
+
+        container.appendChild(childElement);
+
+      });
+    },
+
+
+    _updateSource: function () {
+      var data = this.get('data');
+      var source = this.getSourceDOMElement();
+
+      for (var d in data) {
+        source.setOnNode(d, data[d]);
+      }
+
+      console.log('--update from set()');
+    },
+
+
+    _onDataChange: function () {
+      if (this._rendered) {
+        this._updateSource();
       }
     },
 
 
-    _getDataByID: function (id) {
-      var data = this._mergeData().data;
-      var required;
+    _render: function () {
+      var container = this.get('container');
+      var anchor = this.get('anchor');
+      var data = this.get('data');
 
-      if (Array.isArray(data)) {
+      if (!anchor) {
+        anchor = new DOMElement();
+        anchor.fromNode(document.body);
+      }
 
-        for (var d = 0; d < data.length; d++) {
-          if (data[d].id === id) {
-            required = data[d];
-            break;
-          }
+      if (container) {
+
+        var template = this.get('template');
+
+        if (template) {
+          var output = Mustache.render(template, data);
+          container.setInnerHTML(output);
         }
 
+        anchor.appendChild(container);
+
+        this._delegateDOMEvents();
+        this._rendered = true;
+
+        this._sourceDOMElement = container.one('[data-source]');
+
+        this.fire('rendered');
+
       } else {
-        required = data[id];
+        throw 'View has no container for rendering.';
       }
-
-      return required;
-    },
-
-
-    _mergeData: function () {
-      var model = this.get('model');
-      var context = {};
-      var data = {};
-
-      if (model) {
-        data = model.getData()
-      }
-
-      var mergeData = this.get('mergeData');
-
-      if (mergeData) {
-        mergeData.each(mergeData, function (merge) {
-          context[merge] = this.get(merge);
-        }, this);
-      }
-
-      var id = this.get('id');
-
-      if (data && data[id]) {
-        data = data[id];
-      }
-
-      context.data = data;
-
-      return context;
     },
 
 
@@ -177,9 +174,18 @@ define([
     },
 
 
-    _delegateDOMEvents: function () {
+    _toggleVisibility: function (mode) {
       var container = this.get('container');
+      var hiddenClassName = this.get('hiddenClassName');
+
+      var action = mode + 'Class';
+      container[action](hiddenClassName);
+    },
+
+
+    _delegateDOMEvents: function () {
       var domEvents = this.get('domEvents');
+      var container = this.get('container');
 
       domEvents.each(domEvents, function (e) {
         e.context = this;
@@ -189,15 +195,14 @@ define([
 
 
     _attrs: {
-      dataAttr: 'data-id',
-      container: null,
+      elements: [],
+      container: null, //'<div class="view"></div>',
+      data: {},
+      domEvents: [],
+      anchor: null,
       className: null,
       hiddenClassName: 'view--hidden',
-      template: null,
-      anchor: null,
-      model: null,
-      mergeData: null,
-      domEvents: []
+      template: null
     }
 
   });

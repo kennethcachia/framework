@@ -1,19 +1,18 @@
 
-define(['core/create', 'mv/view'], function (Create, View) {
+define([
+
+  'core/create',
+  'mv/controller'
+
+], function (Create, Controller) {
 
   /**
    * UI Base
-   * 
-   * Use {{data}} to render
-   * Model or ModelList data
    */
   var UI = Create('UI', {
 
-    _attrs: {
-      container: '<div class="ui"></div>'
-    }
 
-  }, View);
+  }, Controller);
 
 
   return UI;

@@ -1,5 +1,9 @@
 
-define(['core/create'], function (Create) {
+define([
+
+  'core/create'
+
+], function (Create) {
 
   /**
    * Model

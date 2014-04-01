@@ -1,5 +1,10 @@
 
-define(['core/create', 'mv/view'], function (Create, View) {
+define([
+
+  'core/create',
+  'mv/view'
+
+], function (Create, View) {
 
   /**
    * Menu Item
@@ -12,8 +17,9 @@ define(['core/create', 'mv/view'], function (Create, View) {
 
 
     _attrs: {
-      label: null,
-      mergeData: ['label'],
+      data: {
+        label: null
+      },
 
       container: '<div class="menu-item"></div>',
       template: '<div class="menu-item-title">{{label}}</div>',

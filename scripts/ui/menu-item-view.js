@@ -1,5 +1,10 @@
 
-define(['core/create', 'ui/menu-item'], function (Create, MenuItem) {
+define([
+
+  'core/create',
+  'ui/menu-item'
+
+], function (Create, MenuItem) {
 
   /**
    * Menu Item that has a View

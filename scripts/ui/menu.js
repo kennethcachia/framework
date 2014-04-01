@@ -14,6 +14,8 @@ define([
 
     initializer: function () {
       this._activeItem = null;
+
+      this.on('rendered', this._onRendered, this);
       this.on('childrenRendered', this._registerActions, this);
     },
 
@@ -36,6 +38,16 @@ define([
       for (var c = 0; c < children.length; c++) {
         child = children[c];
         child.on('click', this._onMenuItemClick, this);
+      }
+    },
+
+
+    _onRendered: function () {
+      var inlineItems = this.get('inlineItems');
+      var container = this.get('container');
+
+      if (inlineItems === true) {
+        container.addClass('menu--inline');
       }
     },
 
@@ -63,6 +75,7 @@ define([
 
 
     _attrs: {
+      inlineItems: false,
       defaultChildType: MenuItem,
       container: '<div class="menu"></div>'
     }
