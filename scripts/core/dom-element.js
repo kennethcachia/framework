@@ -94,16 +94,17 @@ define([
 
 
     getFromNode: function (getter, key) {
-      getter = getter[0].toUpperCase() + getter.slice(1);
-      getter = 'get' + getter;
-
-      return this._node[getter](key);
+      return this._node[getter];
     },
 
 
+    setOnNode: function (key, value) {
+      this._node[key] = value;
+    },
+
 
     getAttribute: function (key) {
-      return this.getFromNode('attribute', key);
+      return this._node.getAttribute(key);
     },
 
 
