@@ -23,7 +23,7 @@ define([
 
 
     setBoundary: function (element) {
-      var rect = element.getFromNode('boundingClientRect');
+      var rect = element.getArea();
 
       this.setStyle('top', rect.top + 'px');
       this.setStyle('left', rect.left + 'px');
