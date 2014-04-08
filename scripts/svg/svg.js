@@ -7,7 +7,7 @@ define(['core/create', 'svg/svg-element'], function (Create, SVGElement) {
   var SVG = Create('SVG', {
 
     _attrs: {
-      html: '<svg></svg>'
+      html: '<svg class="svg"></svg>'
     }
 
   }, SVGElement);
