@@ -23,9 +23,12 @@ define([
       }
 
       view = this.get('view');
+      model = this.get('model');
 
-      view.on('childDataChange', this.updateModel, this);
+      model.on('updated', this.updateView, this);
       view.on('dataChange', this.updateModel, this);
+
+      // TODO: view.on('childDataChange', this.updateModel, this); ?
     },
 
 
@@ -40,6 +43,11 @@ define([
 
     updateModel: function () {
       throw 'This is an abstract method - updateModel';
+    },
+
+
+    updateView: function () {
+      throw 'This is an abstract method - updateView';
     },
 
 
