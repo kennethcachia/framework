@@ -16,6 +16,16 @@ define([
       this.on('dataChange', this._onDataChange, this);
       this.on('rendered', this._appendElements, this);
 
+      this.on('elementsChange', this._elementsChange, this);
+
+      var anchor = this.get('anchor');
+
+      if (!anchor) {
+        anchor = new DOMElement();
+        anchor.fromNode(document.body);
+        this.set('anchor', anchor);
+      }
+
       this._rendered = false;
       this._visible = false;
     },
@@ -70,7 +80,7 @@ define([
     },
 
 
-    updateData: function () {
+    /*updateData: function () {
       var data = this.get('data');
       var source = this.getSourceDOMElement();
 
@@ -83,7 +93,7 @@ define([
 
       console.log('--update form UI');
       this.set('data', data);
-    },
+    },*/
 
 
     _appendElements: function () {
@@ -100,7 +110,11 @@ define([
 
         container.appendChild(childElement);
 
-      });
+        this.fire('appendedChild', {
+          child: childElement
+        });
+
+      }, this);
     },
 
 
@@ -123,15 +137,23 @@ define([
     },
 
 
+    _elementsChange: function () {
+      console.log('View elements changed - rerender');
+
+      if (!this._rendered) {
+        this.render();
+      } else {
+
+        this._render();
+
+      }
+    },
+
+
     _render: function () {
       var container = this.get('container');
       var anchor = this.get('anchor');
       var data = this.get('data');
-
-      if (!anchor) {
-        anchor = new DOMElement();
-        anchor.fromNode(document.body);
-      }
 
       if (container) {
 
