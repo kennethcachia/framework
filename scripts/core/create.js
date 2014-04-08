@@ -36,7 +36,7 @@ define(function () {
         if (s === 'initializer') {
           _initializers.push(src[s]);
         } else if (s === 'destructor') {
-          _destructors.push(src[s]);
+          _destructors.unshift(src[s]);
         } else if (src.hasOwnProperty(s)) {
 
           if (dest[s]) {
@@ -93,7 +93,7 @@ define(function () {
       },
 
 
-      fire: function (eventName, data) {
+      fire: function (eventName, data, propagate) {
         var listeners = this._listeners[eventName];
         var stopPropagation = false;
 
@@ -116,18 +116,18 @@ define(function () {
         }
 
         // Pass it on
-        if (stopPropagation !== true) {
+        if (propagate == true && stopPropagation !== true) {
           var propagateEvents = this._propagateEvents;
-          var suffix = '|';
+          //var suffix = '|';
 
           if (propagateEvents) {
 
-            if (eventName.indexOf(suffix) === -1) {
+            /*if (eventName.indexOf(suffix) === -1) {
               suffix += this.get('id') || this._name;
               eventName = eventName + suffix;
-            }
+            }*/
 
-            propagateEvents.fire(eventName, data);
+            propagateEvents.fire(eventName, data, propagate);
           }
         }
       },
