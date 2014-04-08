@@ -19,6 +19,11 @@ define([
         container = new SVG();
         this.set('container', container);
       }
+
+      this.on('appendedChild', function (e) {
+        var child = e.child;
+        child.addClass('svg-shape');
+      });
     },
 
 
