@@ -2,71 +2,83 @@
 define([
 
   'core/create',
-  'ui/menu',
-  'ui/menu-item-view'
+  'mv/parent-view'
 
-], function (Create, Menu, MenuItemView) {
+], function (Create, ParentView) {
 
   /**
-   * A Menu that renders views
+   * Menu
    */
   var MenuView = Create('MenuView', {
 
     initializer: function () {
-      this._activeView = null;
+      this._activeItem = null;
 
-      this.on('newAction', this._onNewAction, this);
-      this.on('resetAction', this._onResetView, this);
+      this.on('rendered', this._onRendered, this);
+      this.on('childrenRendered', this._registerActions, this);
     },
 
 
-    _onNewAction: function (e) {
-      var viewParent = this.get('viewParent');
+    destructor: function () {
+      this.reset();
+    },
 
-      if (viewParent) {
 
-        var menuItem = e.menuItem;
-        var view = this._createView(menuItem);
+    reset: function () {
+      this.fire('resetAction');
+      this._activeItem = null;
+    },
 
-        viewParent.renderChild(view);
 
-        this._activeView = view;
-        this._activeView.propagateEventsTo(this);
+    _registerActions: function () {
+      var children = this.getRenderedChildren();
+      var child;
 
+      for (var c = 0; c < children.length; c++) {
+        child = children[c];
+        child.on('click', this._onMenuItemClick, this);
+      }
+    },
+
+
+    _onRendered: function () {
+      var inlineItems = this.get('inlineItems');
+      var container = this.get('container');
+
+      if (inlineItems === true) {
+        container.addClass('menu--inline');
+      }
+    },
+
+
+    _onMenuItemClick: function (e) {
+      var menuItem = e.source;
+
+      if (menuItem !== this._activeItem) {
+        this._fireNewAction(menuItem);
       } else {
-        throw 'Menu -- no parent specified';
+        console.log('Same action -- SKIPPING.');
       }
     },
 
 
-    _onResetView: function () {
-      if (this._activeView) {
-        this._activeView.destroy();
-      }
+    _fireNewAction: function (menuItem) {
+      this.reset();
 
-      this._activeView = null;
-    },
+      this.fire('newAction', {
+        menuItem: menuItem
+      });
 
-
-    _createView: function (menuItem) {
-      var view = menuItem.get('view');
-      var object;
-
-      if (view && view.type) {
-        var config = view.config;
-        object = new view.type(config);
-      }
-
-      return object;
+      this._activeItem = menuItem;
     },
 
 
     _attrs: {
-      defaultChildType: MenuItemView,
-      viewParent: null
+      inlineItems: false,
+      container: '<div class="menu"></div>'
     }
 
-  }, Menu);
+  }, ParentView);
 
 
   return MenuView;

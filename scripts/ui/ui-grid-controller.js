@@ -3,7 +3,7 @@ define([
 
   'core/create',
   'ui/ui',
-  'views/input'
+  'ui/grid-view'
 
 ], function (Create, UI, ViewGrid) {
 

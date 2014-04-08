@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'views/input'
+  'ui/input'
 
 ], function (Create, ViewInput) {
 

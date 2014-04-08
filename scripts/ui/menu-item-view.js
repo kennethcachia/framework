@@ -2,23 +2,36 @@
 define([
 
   'core/create',
-  'ui/menu-item'
+  'mv/view'
 
-], function (Create, MenuItem) {
+], function (Create, View) {
 
   /**
-   * Menu Item that has a View
+   * Menu Item
    */
   var MenuItemView = Create('MenuItemView', {
 
+    _onClick: function () {
+      this.fire('click');
+    },
+
+
     _attrs: {
-      view: {
-        type: null,
-        config: null
-      }
+      data: {
+        label: null
+      },
+
+      container: '<div class="menu-item"></div>',
+      template: '<div class="menu-item-title">{{label}}</div>',
+
+      domEvents: [{
+        matchClass: '.menu-item',
+        eventName: 'click',
+        callback: '_onClick'
+      }]
     }
 
-  }, MenuItem);
+  }, View);
 
 
   return MenuItemView;
