@@ -18,20 +18,24 @@ define([
 
 
     destructor: function () {
-      var children = this.get('children');
+      var children = this.getRenderedChildren();
 
-      children.each(children, function (child) {
-        child.destroy();
-      }, this);
+      for (var c = 0; c < children.length; c++) {
+        children[c].destroy();
+      }
 
       this._renderedChildren = null;
+    },
+
+
+    getRenderedChildren: function () {
+      return this._renderedChildren;
     },
 
 
     _renderChildren: function () {
       var children = this.get('children');
       var container = this.get('container');
-      var childContainer = this.get('childContainer');
       var data = this.get('data');
 
       var childView;
@@ -45,14 +49,16 @@ define([
         // children [] and force child rendering through
         // seperate method after init?
 
-        attrs.data = data[attrs.id];
-        attrs.container = childContainer;
+        // TODO: ?
+        //attrs.data = data[attrs.id];
+
         attrs.anchor = container;
 
         childView = new child.view(attrs);
 
         childView.render();
-        childView.on('dataChange', this._propagateChildDataChange, this);
+        childView.propagateEventsTo(this);
+        //childView.on('dataChange', this._propagateChildDataChange, this);
 
         this._renderedChildren.push(childView);
 
@@ -62,18 +68,17 @@ define([
     },
 
 
-    _propagateChildDataChange: function (e) {
+    /*_propagateChildDataChange: function (e) {
       var source = e.source;
 
       this.fire('childDataChange', {
         childID: source.get('id'),
         data: source.get('data')
       })
-    },
+    },*/
 
 
     _attrs: {
-      childContainer: '<div class="view-child"></div>',
       children: []
     }
 
