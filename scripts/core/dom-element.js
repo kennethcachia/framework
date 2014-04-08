@@ -93,8 +93,8 @@ define([
     },
 
 
-    getFromNode: function (getter, key) {
-      return this._node[getter];
+    getArea: function () {
+      return this._node.getBoundingClientRect;
     },
 
 
