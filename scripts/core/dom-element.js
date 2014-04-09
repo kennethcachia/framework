@@ -24,7 +24,7 @@ define([
 
     destructor: function () {
       this._destroyDOMEvents();
-      this._node = null;
+      this._node.remove();
     },
 
 
