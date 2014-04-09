@@ -1,4 +1,5 @@
 
+
 define([
 
   'core/Create',
@@ -13,6 +14,8 @@ define([
   var View = Create('View', {
 
     initializer: function () {
+      this._appendedElements = [];
+
       this.on('dataChange', this._onDataChange, this);
       this.on('rendered', this._appendElements, this);
 
@@ -35,11 +38,12 @@ define([
       var anchor = this.get('anchor');
       var container = this.get('container');
 
-      anchor.removeChild(container);
       container.destroy();
 
       this._rendered = false;
       this._visible = false;
+
+      this._appendedElements = null;
     },
 
 
@@ -109,12 +113,22 @@ define([
         childElement = new element.element(attrs);
 
         container.appendChild(childElement);
+        this._appendedElements.push(childElement);
 
         this.fire('appendedChild', {
           child: childElement
         });
 
       }, this);
+    },
+
+
+    _removeElements: function () {
+      var elements = this._appendedElements;
+
+      for (var e = 0; e < elements.length; e++) {
+        elements[e].destroy();
+      }
     },
 
 
@@ -143,9 +157,8 @@ define([
       if (!this._rendered) {
         this.render();
       } else {
-
+        this._removeElements();
         this._render();
-
       }
     },
 
