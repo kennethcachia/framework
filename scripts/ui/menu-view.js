@@ -13,9 +13,10 @@ define([
 
     initializer: function () {
       this._activeItem = null;
+      this._currentAction = null;
 
       this.on('rendered', this._onRendered, this);
-      this.on('childrenRendered', this._registerActions, this);
+      this.on('menuItemClick', this._onMenuItemClick, this);
     },
 
 
@@ -25,18 +26,10 @@ define([
 
 
     reset: function () {
-      this.fire('resetAction');
       this._activeItem = null;
-    },
 
-
-    _registerActions: function () {
-      var children = this.getRenderedChildren();
-      var child;
-
-      for (var c = 0; c < children.length; c++) {
-        child = children[c];
-        child.on('click', this._onMenuItemClick, this);
+      if (this._currentAction) {
+        this._currentAction.destroy();
       }
     },
 
@@ -53,23 +46,25 @@ define([
 
     _onMenuItemClick: function (e) {
       var menuItem = e.source;
+      var data = e.data;
 
       if (menuItem !== this._activeItem) {
-        this._fireNewAction(menuItem);
+
+        this.reset();
+        this._activeItem = menuItem;
+
+        var action = data.action;
+
+        if (typeof action === 'function') {
+          // TODO: auto execute when calling get() on a function (global change)
+          this._currentAction = action.call(this);
+        }
+
       } else {
         console.log('Same action -- SKIPPING.');
       }
-    },
 
-
-    _fireNewAction: function (menuItem) {
-      this.reset();
-
-      this.fire('newAction', {
-        menuItem: menuItem
-      });
-
-      this._activeItem = menuItem;
+      return false;
     },
 
 

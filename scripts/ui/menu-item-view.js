@@ -12,7 +12,11 @@ define([
   var MenuItemView = Create('MenuItemView', {
 
     _onClick: function () {
-      this.fire('click');
+      var data = this.get('data');
+
+      this.fire('menuItemClick', {
+        data: data
+      }, true);
     },
 
 
