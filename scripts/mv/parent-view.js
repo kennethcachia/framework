@@ -20,8 +20,10 @@ define([
     destructor: function () {
       var children = this.getRenderedChildren();
 
-      for (var c = 0; c < children.length; c++) {
-        children[c].destroy();
+      if (children) {
+        for (var c = 0; c < children.length; c++) {
+          children[c].destroy();
+        }
       }
 
       this._renderedChildren = null;
