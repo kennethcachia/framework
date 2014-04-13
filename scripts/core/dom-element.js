@@ -94,7 +94,7 @@ define([
 
 
     getArea: function () {
-      return this._node.getBoundingClientRect;
+      return this._node.getBoundingClientRect();
     },
 
 
