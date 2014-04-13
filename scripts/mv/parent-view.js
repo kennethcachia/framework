@@ -13,11 +13,31 @@ define([
 
     initializer: function () {
       this._renderedChildren = [];
+
       this.on('rendered', this._renderChildren, this);
+      this.on('childrenChange', this._onChildrenChange, this);
     },
 
 
     destructor: function () {
+      this._destroyChildren();
+    },
+
+
+    getRenderedChildren: function () {
+      return this._renderedChildren;
+    },
+
+
+    _onChildrenChange: function () {
+      if (this._rendered) {
+        this._destroyChildren();
+        this._renderChildren();
+      }
+    },
+
+
+    _destroyChildren: function () {
       var children = this.getRenderedChildren();
 
       if (children) {
@@ -26,12 +46,7 @@ define([
         }
       }
 
-      this._renderedChildren = null;
-    },
-
-
-    getRenderedChildren: function () {
-      return this._renderedChildren;
+      this._renderedChildren = [];
     },
 
 
@@ -41,10 +56,12 @@ define([
       var data = this.get('data');
 
       var childView;
+      var child;
       var attrs;
 
-      children.each(children, function (child) {
+      for (var c = 0; c < children.length; c++) {
 
+        child = children[c];
         attrs = child.attrs || {};
 
         // TODO: avoid data mapping by disallowing
@@ -64,7 +81,11 @@ define([
 
         this._renderedChildren.push(childView);
 
-      }, this);
+        this.fire('appendedView', {
+          child: childView
+        });
+
+      }
 
       this.fire('childrenRendered');
     },
