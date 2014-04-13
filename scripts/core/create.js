@@ -75,11 +75,15 @@ define(function () {
       this._name = name;
       this._listeners = {};
 
-      // Init
-      this._init(attrs);
+      // Merge attributes
+      if (attrs) {
+        this._attrs = mergeObjects(attrs, this._attrs);
+      }
+
       this._callInitializers();
 
-      for (var a in attrs) {
+      // TODO: this._attrs as opposed to attrs?
+      for (var a in this._attrs) {
         this._fireAttrChange(a);
       }
     };
@@ -182,13 +186,6 @@ define(function () {
 
       propagateEventsTo: function (dest) {
         this._propagateEvents = dest;
-      },
-
-
-      _init: function (attrs) {
-        if (attrs) {
-          this._attrs = mergeObjects(attrs, this._attrs);
-        }
       },
 
 
