@@ -163,16 +163,12 @@ define([
       targets: null,
       crosshair: new Crosshair(),
 
-      getPos: function (element) {
-        return {
-          x: element.getStyle('left'),
-          y: element.getStyle('top')
-        };
+      getPos: function () {
+        throw 'Abstract method - attrs.getPos()';
       },
 
-      setPos: function (element, x, y) {
-        element.setStyle('left', x + 'px');
-        element.setStyle('top', y + 'px');
+      setPos: function () {
+        throw 'Abstract method - attrs.setPos()';
       }
     }
 
