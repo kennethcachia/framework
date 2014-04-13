@@ -2,10 +2,10 @@
 define([
 
   'core/create',
-  'svg/svg', 
-  'mv/view'
+  'svg/svg-element', 
+  'mv/parent-view'
 
-], function (Create, SVG, View) {
+], function (Create, SVG, ParentView) {
 
   /**
    * SVG View
@@ -20,9 +20,11 @@ define([
         this.set('container', container);
       }
 
-      this.on('appendedChild', function (e) {
+      this.on('appendedView', function (e) {
         var child = e.child;
-        child.addClass('svg-shape');
+        var container = child.get('container');
+
+        container.addClass('svg-shape');
       });
     },
 
@@ -31,7 +33,7 @@ define([
       container: null
     }
 
-  }, View);
+  }, ParentView);
 
 
   return SVGView;

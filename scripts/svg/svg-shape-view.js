@@ -1,12 +1,18 @@
 
-define(['core/create', 'svg/svg-element'], function (Create, SVGElement) {
+define([
+
+  'core/create',
+  'mv/view',
+  'svg/svg-element'
+
+], function (Create, View, SVGElement) {
 
   /**
    * SVGShape
    */
   var SVGShape = Create('SVGShape', {
 
-    initializer: function () {
+    /*initializer: function () {
       this._syncAttributes();
     },
 
@@ -36,9 +42,20 @@ define(['core/create', 'svg/svg-element'], function (Create, SVGElement) {
       y: null,
       style: null,
       html: null
+    }*/
+
+    _attrs: {
+      data: {
+        x: null,
+        y: null,
+        style: null
+      },
+
+      container: null,
+      containerType: SVGElement
     }
 
-  }, SVGElement);
+  }, View);
 
 
   return SVGShape;

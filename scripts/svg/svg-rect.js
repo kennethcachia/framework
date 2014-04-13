@@ -1,5 +1,10 @@
 
-define(['core/create', 'svg/svg-shape'], function (Create, SVGShape) {
+define([
+
+  'core/create',
+  'svg/svg-shape-view'
+
+], function (Create, SVGShape) {
 
   /**
    * SVGRect
@@ -7,9 +12,7 @@ define(['core/create', 'svg/svg-shape'], function (Create, SVGShape) {
   var SVGRect = Create('SVGRect', {
 
     _attrs: {
-      width: null,
-      height: null,
-      html: '<rect/>'
+      container: '<rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" style="{{style}}"></rect>',
     }
 
   }, SVGShape);
