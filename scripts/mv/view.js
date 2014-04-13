@@ -1,5 +1,4 @@
 
-
 define([
 
   'core/Create',
@@ -14,12 +13,12 @@ define([
   var View = Create('View', {
 
     initializer: function () {
-      this._appendedElements = [];
+      //this._appendedElements = [];
 
       this.on('dataChange', this._onDataChange, this);
-      this.on('rendered', this._appendElements, this);
+      //this.on('rendered', this._appendElements, this);
 
-      this.on('elementsChange', this._elementsChange, this);
+      //this.on('elementsChange', this._elementsChange, this);
 
       var anchor = this.get('anchor');
 
@@ -43,7 +42,7 @@ define([
       this._rendered = false;
       this._visible = false;
 
-      this._appendedElements = null;
+      //this._appendedElements = null;
     },
 
 
@@ -100,7 +99,7 @@ define([
     },*/
 
 
-    _appendElements: function () {
+    /*_appendElements: function () {
       var elements = this.get('elements');
       var container = this.get('container');
 
@@ -120,16 +119,16 @@ define([
         });
 
       }, this);
-    },
+    },*/
 
 
-    _removeElements: function () {
+    /*_removeElements: function () {
       var elements = this._appendedElements;
 
       for (var e = 0; e < elements.length; e++) {
         elements[e].destroy();
       }
-    },
+    },*/
 
 
     _updateSource: function () {
@@ -151,7 +150,7 @@ define([
     },
 
 
-    _elementsChange: function () {
+    /*_elementsChange: function () {
       console.log('View elements changed - rerender');
 
       if (!this._rendered) {
@@ -160,20 +159,19 @@ define([
         this._removeElements();
         this._render();
       }
-    },
+    },*/
 
 
     _render: function () {
       var container = this.get('container');
       var anchor = this.get('anchor');
-      var data = this.get('data');
 
       if (container) {
 
         var template = this.get('template');
 
         if (template) {
-          var output = Mustache.render(template, data);
+          var output = this._renderFromTemplate(template);
           container.setInnerHTML(output);
         }
 
@@ -192,12 +190,25 @@ define([
     },
 
 
+    _renderFromTemplate: function (template) {
+      var data = this.get('data');
+      return Mustache.render(template, data);
+    },
+
+
     _createContainer: function () {
       var container = this.get('container');
+      var containerType = this.get('containerType');
+
+      if (!containerType) {
+        containerType = DOMElement;
+      }
 
       if (typeof container === 'string') {
-        this.set('container', new DOMElement({
-          html: this.get('container')
+        var output = this._renderFromTemplate(container);
+
+        this.set('container', new containerType({
+          html: output
         }));
       }
 
@@ -230,8 +241,12 @@ define([
 
 
     _attrs: {
-      elements: [],
-      container: null, //'<div class="view"></div>',
+      //elements: [],
+      container: null,
+
+      // TODO: encapsulate within a fn
+      containerType: null,
+
       data: {},
       domEvents: [],
       anchor: null,
