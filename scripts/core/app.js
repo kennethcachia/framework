@@ -1,5 +1,10 @@
 
-define(['core/create', 'third-party/domready'], function (Create, DomReady) {
+define([
+
+  'core/create',
+  'third-party/domready'
+
+], function (Create, DomReady) {
 
   /**
    * Main Application wrapper
