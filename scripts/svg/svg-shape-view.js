@@ -12,37 +12,13 @@ define([
    */
   var SVGShape = Create('SVGShape', {
 
-    /*initializer: function () {
-      this._syncAttributes();
+    initializer: function () {
+      // TODO: implement
+      //this.on('xChange', this._setX, this);
+      //this.on('yChange', this._setY, this);
+      //this.on('styleChange', this._setStyle, this);
     },
 
-
-    _syncAttributes: function () {
-      for (var a in this._attrs) {
-        if (this._node[a]) {
-          this.on(a + 'Change', this._triggerUpdate, this);
-        }
-      }
-    },
-
-
-    _triggerUpdate: function (e) {
-      this._sync(e.attr);
-    },
-
-
-    _sync: function (attr) {
-      var value = this.get(attr);
-      this._node.setAttribute(attr, value);
-    },
-
-
-    _attrs: {
-      x: null,
-      y: null,
-      style: null,
-      html: null
-    }*/
 
     _attrs: {
       data: {
