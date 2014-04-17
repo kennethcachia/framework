@@ -5,9 +5,10 @@ define([
   'svg/svg-element', 
   'mv/parent-view',
   'svg/svg-types',
-  'svg/svg-rect'
+  'svg/svg-rect',
+  'svg/svg-circle'
 
-], function (Create, SVG, ParentView, SVGTypes, SVGRect) {
+], function (Create, SVG, ParentView, SVGTypes, SVGRect, SVGCircle) {
 
   /**
    * SVG View
@@ -27,7 +28,8 @@ define([
         var container = child.get('container');
 
         container.addClass('svg-shape');
-      });
+        this._positionShape(child);
+      }, this);
     },
 
 
@@ -35,11 +37,15 @@ define([
       var data = shape.data;
       var view;
 
-      if (data.type === SVGTypes.RECT) {
-        view = SVGRect;
-      }
+      switch (data.type) {
+        case SVGTypes.RECT:
+          view = SVGRect;
+          break;
 
-      this._positionShape(data);
+        case SVGTypes.CIRCLE:
+          view = SVGCircle;
+          break;
+      }
 
       this.addChild({
         view: view,
@@ -50,15 +56,16 @@ define([
     },
 
 
-    _positionShape: function (data) {
+    _positionShape: function (child) {
       var container = this.get('container');
 
       var size = container.getSize();
-      var x = (size.width - data.width) / 2;
-      var y = (size.height - data.height) / 2;
+      var childSize = child.getSize();
 
-      data.x = x;
-      data.y = y;
+      var x = (size.width - childSize.width) / 2;
+      var y = (size.height - childSize.height) / 2;
+
+      child.setPosition(x, y);
     },
 
 

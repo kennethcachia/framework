@@ -18,24 +18,21 @@ define([
 
 
     _syncAttribute: function () {
+      var container = this.get('container');
+      var data = this.get('data');
+
       if (this._rendered) {
-        var x = this.get('data').x;
-        var y = this.get('data').y;
-        var style = this.get('data').style;
-
-        var container = this.get('container');
-
-        container.setAttribute('x', x);
-        container.setAttribute('y', y);
-        container.setAttribute('style', style);
+        for (var d in data) {
+          if (container._node.hasOwnProperty(d)) {
+            container.setAttribute(d, data[d]);
+          }
+        }
       }
     },
 
 
     _attrs: {
       data: {
-        x: null,
-        y: null,
         style: null,
         type: null
       },

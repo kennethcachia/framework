@@ -64,9 +64,6 @@ define([
         childContainer = child.get('container');
 
         if (childContainer.isEqualTo(domElement)) {
-          x = child.get('data').x;
-          y = child.get('data').y;
-
           console.log('down');
           this._activeView = child;
           break;
@@ -88,8 +85,7 @@ define([
         var x = e.layerX;
         var y = e.layerY;
 
-        this._activeView.set('data.x', x);
-        this._activeView.set('data.y', y);
+        this._activeView.setPosition(x, y)
       }
     }
 
