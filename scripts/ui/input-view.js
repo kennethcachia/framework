@@ -13,10 +13,7 @@ define([
 
     _attrs: {
       domEvents: [{
-        eventName: 'change',
-
-        // TODO: updateData is currently disabled
-        callback: 'updateData'
+        eventName: 'change'
       }],
 
       data: {
