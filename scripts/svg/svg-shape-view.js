@@ -36,7 +36,8 @@ define([
       data: {
         x: null,
         y: null,
-        style: null
+        style: null,
+        type: null
       },
 
       container: null,

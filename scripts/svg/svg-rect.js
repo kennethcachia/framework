@@ -2,9 +2,10 @@
 define([
 
   'core/create',
-  'svg/svg-shape-view'
+  'svg/svg-shape-view',
+  'svg/svg-types'
 
-], function (Create, SVGShape) {
+], function (Create, SVGShape, SVGTypes) {
 
   /**
    * SVGRect
@@ -13,6 +14,7 @@ define([
 
     _attrs: {
       container: '<rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" style="{{style}}"></rect>',
+      type: SVGTypes.RECT
     }
 
   }, SVGShape);

@@ -2,10 +2,9 @@
 define([
 
   'core/create',
-  'core/enum',
-  'svg/svg-rect'
+  'core/enum'
 
-], function (Create, Enum, SVGRect) {
+], function (Create, Enum) {
 
   /**
    * SVGTypes
@@ -13,8 +12,7 @@ define([
   var SVGTypes = Create('SVGTypes', {
 
     _attrs: {
-      keys: ['RECT'],
-      values: [SVGRect]
+      keys: ['RECT']
     }
 
   }, Enum);
