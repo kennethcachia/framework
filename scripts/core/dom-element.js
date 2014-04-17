@@ -93,6 +93,17 @@ define([
     },
 
 
+    getSize: function () {
+      var width = this._node.clientWidth;
+      var height = this._node.clientHeight;
+
+      return {
+        width: width,
+        height: height
+      };
+    },
+
+
     getArea: function () {
       return this._node.getBoundingClientRect();
     },
