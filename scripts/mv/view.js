@@ -13,13 +13,6 @@ define([
   var View = Create('View', {
 
     initializer: function () {
-      //this._appendedElements = [];
-
-      this.on('dataChange', this._onDataChange, this);
-      //this.on('rendered', this._appendElements, this);
-
-      //this.on('elementsChange', this._elementsChange, this);
-
       var anchor = this.get('anchor');
 
       if (!anchor) {
@@ -41,8 +34,6 @@ define([
 
       this._rendered = false;
       this._visible = false;
-
-      //this._appendedElements = null;
     },
 
 
@@ -81,85 +72,6 @@ define([
     getSourceDOMElement: function () {
       return this._sourceDOMElement;
     },
-
-
-    /*updateData: function () {
-      var data = this.get('data');
-      var source = this.getSourceDOMElement();
-
-      var value;
-
-      for (var d in data) {
-        value = source.getFromNode(d);
-        data[d] = value;
-      }
-
-      console.log('--update form UI');
-      this.set('data', data);
-    },*/
-
-
-    /*_appendElements: function () {
-      var elements = this.get('elements');
-      var container = this.get('container');
-
-      var childElement;
-      var attrs;
-
-      elements.each(elements, function (element) {
-        
-        attrs = element.attrs;
-        childElement = new element.element(attrs);
-
-        container.appendChild(childElement);
-        this._appendedElements.push(childElement);
-
-        this.fire('appendedChild', {
-          child: childElement
-        });
-
-      }, this);
-    },*/
-
-
-    /*_removeElements: function () {
-      var elements = this._appendedElements;
-
-      for (var e = 0; e < elements.length; e++) {
-        elements[e].destroy();
-      }
-    },*/
-
-
-    _updateSource: function () {
-      var data = this.get('data');
-      var source = this.getSourceDOMElement();
-
-      for (var d in data) {
-        source.setOnNode(d, data[d]);
-      }
-
-      console.log('--update from set()');
-    },
-
-
-    _onDataChange: function () {
-      if (this._rendered) {
-        this._updateSource();
-      }
-    },
-
-
-    /*_elementsChange: function () {
-      console.log('View elements changed - rerender');
-
-      if (!this._rendered) {
-        this.render();
-      } else {
-        this._removeElements();
-        this._render();
-      }
-    },*/
 
 
     _render: function () {
@@ -241,7 +153,6 @@ define([
 
 
     _attrs: {
-      //elements: [],
       container: null,
 
       // TODO: encapsulate within a fn
