@@ -71,7 +71,6 @@ define([
     },
 
 
-
     _cloneData: function () {
       var data = this.get('data');
       var clone = Object.create(data);
