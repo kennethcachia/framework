@@ -93,22 +93,3 @@
     background: white;
   }
 }
-
-
-/* ==========================================================================
-   Transformations
-   ========================================================================== */
-
-.crosshair {
-  display: none;
-  z-index: @crosshairZIndex;
-  position: fixed;
-  border: 2px solid cyan;
-  pointer-events: none;
-
-  .box-sizing();
-
-  &--active {
-    display: block;
-  }
-}
