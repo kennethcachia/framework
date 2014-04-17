@@ -60,7 +60,6 @@ define([
 
       childView.render();
       childView.propagateEventsTo(this);
-
       childView.on('dataChange', this._propagateChildDataChange, this);
 
       this._renderedChildren.push(childView);
