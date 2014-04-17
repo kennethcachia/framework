@@ -18,6 +18,7 @@ define([
       }
     },
 
+
     _updated: function () {
       console.log('model updated');
       this.fire('updated');

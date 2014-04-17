@@ -50,55 +50,60 @@ define([
     },
 
 
-    _renderChildren: function () {
-      var children = this.get('children');
+    addChild: function (child) {
       var container = this.get('container');
-      var data = this.get('data');
+      var attrs = child.attrs || {};
 
-      var childView;
+      attrs.anchor = container;
+
+      var childView = new child.view(attrs);
+
+      childView.render();
+      childView.propagateEventsTo(this);
+
+      childView.on('dataChange', this._propagateChildDataChange, this);
+
+      this._renderedChildren.push(childView);
+
+      this.fire('appendedView', {
+        child: childView
+      });
+    },
+
+
+    getData: function () {
+      var children = this.getRenderedChildren();
+
+      var childData = [];
       var child;
-      var attrs;
 
       for (var c = 0; c < children.length; c++) {
-
         child = children[c];
-        attrs = child.attrs || {};
 
-        // TODO: avoid data mapping by disallowing
-        // children [] and force child rendering through
-        // seperate method after init?
+        childData.push(child.get('data'));
+      }
 
-        // TODO: ?
-        //attrs.data = data[attrs.id];
+      return {
+        own: this.get('data'),
+        children: childData
+      };
+    },
 
-        attrs.anchor = container;
 
-        childView = new child.view(attrs);
+    _renderChildren: function () {
+      var children = this.get('children');
 
-        childView.render();
-        childView.propagateEventsTo(this);
-        //childView.on('dataChange', this._propagateChildDataChange, this);
-
-        this._renderedChildren.push(childView);
-
-        this.fire('appendedView', {
-          child: childView
-        });
-
+      for (var c = 0; c < children.length; c++) {
+        this.addChild(children[c]);
       }
 
       this.fire('childrenRendered');
     },
 
 
-    /*_propagateChildDataChange: function (e) {
-      var source = e.source;
-
-      this.fire('childDataChange', {
-        childID: source.get('id'),
-        data: source.get('data')
-      })
-    },*/
+    _propagateChildDataChange: function (e) {
+      this.fire('childDataChange');
+    },
 
 
     _attrs: {

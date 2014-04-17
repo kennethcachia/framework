@@ -71,10 +71,6 @@ define([
     },
 
 
-    getSourceDOMElement: function () {
-      return this._sourceDOMElement;
-    },
-
 
     _cloneData: function () {
       var data = this.get('data');
@@ -101,9 +97,6 @@ define([
 
         this._delegateDOMEvents();
         this._rendered = true;
-
-        this._sourceDOMElement = container.one('[data-source]');
-
         this.fire('rendered');
 
       } else {

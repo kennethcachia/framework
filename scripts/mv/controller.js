@@ -25,10 +25,8 @@ define([
       view = this.get('view');
       model = this.get('model');
 
-      model.on('updated', this.updateView, this);
-      view.on('dataChange', this.updateModel, this);
-
-      // TODO: view.on('childDataChange', this.updateModel, this); ?
+      view.on('appendedView', this.updateModel, this);
+      view.on('childDataChange', this.updateModel, this);
     },
 
 
@@ -41,23 +39,9 @@ define([
     },
 
 
+
     updateModel: function () {
-      throw 'This is an abstract method - updateModel';
-    },
-
-
-    updateView: function () {
-      throw 'This is an abstract method - updateView';
-    },
-
-
-    createDefaultView: function () {
-      throw 'This is an abstract method - createDefaultView';
-    },
-
-
-    createDefaultModel: function () {
-      throw 'This is an abstract method - createDefaultModel';
+      console.log('This is an abstract method - updateModel');
     },
 
 
