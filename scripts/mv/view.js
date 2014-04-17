@@ -13,6 +13,8 @@ define([
   var View = Create('View', {
 
     initializer: function () {
+      this.on('dataChange', this._cloneData, this);
+
       var anchor = this.get('anchor');
 
       if (!anchor) {
@@ -71,6 +73,14 @@ define([
 
     getSourceDOMElement: function () {
       return this._sourceDOMElement;
+    },
+
+
+    _cloneData: function () {
+      var data = this.get('data');
+      var clone = Object.create(data);
+
+      this._attrs.data = clone;
     },
 
 
