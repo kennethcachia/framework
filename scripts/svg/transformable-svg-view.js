@@ -8,7 +8,7 @@ define([
 ], function (Create, SVGView, DOMElement) {
 
   /**
-   * SVG View
+   * Transformable SVG View
    */
   var TransformableSVGView = Create('TransformableSVGView', {
 
@@ -36,11 +36,7 @@ define([
         context: this
       }));
 
-      var body = new DOMElement();
-
-      body.fromNode(document.body);
-
-      this._events.push(body.addDOMEvent({
+      this._events.push(container.addDOMEvent({
         eventName: 'mouseup',
         callback: '_onTargetMouseUp',
         context: this
