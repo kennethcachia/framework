@@ -39,12 +39,26 @@ define([
         view = SVGRect;
       }
 
+      this._positionShape(data);
+
       this.addChild({
         view: view,
         attrs: {
           data: data
         }
       });
+    },
+
+
+    _positionShape: function (data) {
+      var container = this.get('container');
+
+      var size = container.getSize();
+      var x = (size.width - data.width) / 2;
+      var y = (size.height - data.height) / 2;
+
+      data.x = x;
+      data.y = y;
     },
 
 
