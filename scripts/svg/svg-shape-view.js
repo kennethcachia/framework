@@ -13,10 +13,22 @@ define([
   var SVGShape = Create('SVGShape', {
 
     initializer: function () {
-      // TODO: implement
-      //this.on('xChange', this._setX, this);
-      //this.on('yChange', this._setY, this);
-      //this.on('styleChange', this._setStyle, this);
+      this.on('dataChange', this._syncAttribute, this);
+    },
+
+
+    _syncAttribute: function () {
+      if (this._rendered) {
+        var x = this.get('data').x;
+        var y = this.get('data').y;
+        var style = this.get('data').style;
+
+        var container = this.get('container');
+
+        container.setAttribute('x', x);
+        container.setAttribute('y', y);
+        container.setAttribute('style', style);
+      }
     },
 
 
