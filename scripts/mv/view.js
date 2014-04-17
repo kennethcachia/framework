@@ -13,7 +13,7 @@ define([
   var View = Create('View', {
 
     initializer: function () {
-      this.on('dataChange', this._cloneData, this);
+      this._cloneData();
 
       var anchor = this.get('anchor');
 
