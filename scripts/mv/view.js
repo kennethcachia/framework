@@ -137,10 +137,13 @@ define([
       var domEvents = this.get('domEvents');
       var container = this.get('container');
 
-      domEvents.each(domEvents, function (e) {
-        e.context = this;
-        container.addDOMEvent(e);
-      }, this);
+      var domEvent;
+
+      for (var d = 0; d < domEvents.length; d++) {
+        domEvent = domEvents[d];
+        domEvent.context = this;
+        container.addDOMEvent(domEvent);
+      }
     },
 
 
