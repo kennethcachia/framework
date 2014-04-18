@@ -23,7 +23,7 @@ define([
 
       if (this._rendered) {
         for (var d in data) {
-          if (container._node.hasOwnProperty(d)) {
+          if (data[d] && container._node.hasOwnProperty(d)) {
             container.setAttribute(d, data[d]);
           }
         }
@@ -33,12 +33,19 @@ define([
 
     _attrs: {
       data: {
-        style: null,
-        type: null
+        value: {
+          style: null,
+          type: null
+        }
       },
 
-      container: null,
-      containerType: SVGElement
+      container: {
+        value: null
+      },
+
+      containerType: {
+        value: SVGElement
+      }
     }
 
   }, View);

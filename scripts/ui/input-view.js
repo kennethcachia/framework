@@ -12,15 +12,21 @@ define([
   var ViewInput = Create('ViewInput', {
 
     _attrs: {
-      domEvents: [{
-        eventName: 'change'
-      }],
-
-      data: {
-        value: null
+      domEvents: {
+        value: [{
+          eventName: 'change'
+        }]
       },
 
-      template: '<input data-source="true" type="text" {{#value}}value="{{value}}"{{/value}} />'
+      data: {
+        value: {
+          text: null
+        }
+      },
+
+      template: {
+        value: '<input data-source="true" type="text" {{#text}}value="{{text}}"{{/text}} />'
+      }
     }
 
   }, View);

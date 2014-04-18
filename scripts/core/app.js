@@ -25,9 +25,17 @@ define([
 
 
     _attrs: {
-      name: null,
-      version: '1.0.0',
-      domReady: null
+      name: {
+        value: null
+      },
+
+      version: {
+        value: '1.0.0'
+      },
+
+      domReady: {
+        value: null
+      }
     }
 
   });

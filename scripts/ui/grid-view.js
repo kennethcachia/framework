@@ -12,7 +12,9 @@ define([
   var ViewGrid = Create('ViewGrid', {
 
     _attrs: {
-      container: '<div class="ui-grid"></div>'
+      container: {
+        value: '<div class="ui-grid"></div>'
+      }
     }
 
   }, ParentView);

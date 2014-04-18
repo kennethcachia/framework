@@ -12,7 +12,9 @@ define([
   var SVGTypes = Create('SVGTypes', {
 
     _attrs: {
-      keys: ['RECT', 'CIRCLE']
+      keys: {
+        value: ['RECT', 'CIRCLE']
+      }
     }
 
   }, Enum);

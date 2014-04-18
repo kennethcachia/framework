@@ -21,16 +21,23 @@ define([
 
 
     _attrs: {
-      domEvents: [{
-        matchClass: '.ui-grid-item',
-        eventName: 'click',
-        callback: '_clickItem'
-      }],
+      domEvents: {
+        value: [{
+          matchClass: '.ui-grid-item',
+          eventName: 'click',
+          callback: '_clickItem'
+        }],
+      },
 
-      container: '<div class="ui-grid-item"></div>',
-      template: '<div class="ui-grid-item-ratio">' +
+      container: {
+        value: '<div class="ui-grid-item"></div>'
+      },
+
+      template: {
+        value: '<div class="ui-grid-item-ratio">' +
                   '<div class="ui-grid-item-content"></div>' +
                 '</div>'
+      }
     }
 
   }, View);

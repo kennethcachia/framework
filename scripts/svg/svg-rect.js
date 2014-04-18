@@ -30,14 +30,21 @@ define([
 
     _attrs: {
       data: {
-        x: null,
-        y: null,
-        width: null,
-        height: null
+        value: {
+          x: null,
+          y: null,
+          width: null,
+          height: null
+        }
       },
 
-      container: '<rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" style="{{style}}"></rect>',
-      type: SVGTypes.RECT
+      container: {
+        value: '<rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" style="{{style}}"></rect>'
+      },
+
+      type: {
+        value: SVGTypes.RECT
+      }
     }
 
   }, SVGShapeView);

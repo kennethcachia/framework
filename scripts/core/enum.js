@@ -27,8 +27,13 @@ define([
 
 
     _attrs: {
-      keys: [],
-      values: []
+      keys: {
+        value: []
+      },
+
+      values: {
+        value: []
+      }
     }
 
   });

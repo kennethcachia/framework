@@ -13,8 +13,6 @@ define([
   var View = Create('View', {
 
     initializer: function () {
-      this._cloneData();
-
       var anchor = this.get('anchor');
 
       if (!anchor) {
@@ -68,14 +66,6 @@ define([
         console.log('View already rendered -- Skipping');
       }
 
-    },
-
-
-    _cloneData: function () {
-      var data = this.get('data');
-      var clone = Object.create(data);
-
-      this._attrs.data = clone;
     },
 
 
@@ -155,17 +145,37 @@ define([
 
 
     _attrs: {
-      container: null,
+      container: {
+        value: null
+      },
 
-      // TODO: encapsulate within a fn
-      containerType: null,
+      containerType: {
+        value: null
+      },
 
-      data: {},
-      domEvents: [],
-      anchor: null,
-      className: null,
-      hiddenClassName: 'view--hidden',
-      template: null
+      data: {
+        value: {}
+      },
+
+      domEvents: {
+        value: []
+      },
+
+      anchor: {
+        value: null
+      },
+
+      className: {
+        value: null
+      },
+
+      hiddenClassName: {
+        value: 'view--hidden'
+      },
+
+      template: {
+        value: null
+      }
     }
 
   });

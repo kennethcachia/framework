@@ -12,8 +12,13 @@ define([
   var SVGElement = Create('SVGElement', {
 
     _attrs: {
-      namespaceURI: 'http://www.w3.org/2000/svg',
-      html: '<svg class="svg"></svg>'
+      namespaceURI: {
+        value: 'http://www.w3.org/2000/svg'
+      },
+
+      html: {
+        value: '<svg class="svg"></svg>'
+      }
     }
 
   }, DOMElement);

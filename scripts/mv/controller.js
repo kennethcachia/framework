@@ -52,8 +52,13 @@ define([
 
 
     _attrs: {
-      view: null,
-      model: null
+      view: {
+        value: null
+      },
+
+      model: {
+        value: null
+      }
     }
 
   });

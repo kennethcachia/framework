@@ -13,11 +13,15 @@ define([
 
     _attrs: {
       data: {
-        value: null,
-        checked: false
+        value: {
+          value: null,
+          checked: false
+        }
       },
 
-      template: '<input data-source="true" type="checkbox" {{#value}}value="{{value}}"{{/value}} {{#checked}}checked{{/checked}}/>'
+      template: {
+        value: '<input data-source="true" type="checkbox" {{#value}}value="{{value}}"{{/value}} {{#checked}}checked{{/checked}}/>'
+      }
     }
 
   }, ViewInput);

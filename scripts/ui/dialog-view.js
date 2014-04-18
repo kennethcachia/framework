@@ -12,13 +12,19 @@ define([
   var ViewDialog = Create('ViewDialog', {
 
     _attrs: {
-      container: '<div class="dialog"></div>',
-
-      data: {
-        title: null
+      container: {
+        value: '<div class="dialog"></div>'
       },
 
-      template: '<div class="dialog-title">Title:{{title}}</div>'
+      data: {
+        value: {
+          title: null
+        }
+      },
+
+      template: {
+        value: '<div class="dialog-title">Title:{{title}}</div>'
+      }
     }
 
   }, ParentView);

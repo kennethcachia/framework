@@ -91,11 +91,25 @@ define([
 
 
     _attrs: {
-      source: null,
-      matchClass: null,
-      eventName: null,
-      callback: null,
-      context: null
+      source: {
+        value: null
+      },
+
+      matchClass: {
+        value: null
+      },
+
+      eventName: {
+        value: null
+      },
+
+      callback: {
+        value: null
+      },
+
+      context: {
+        value: null
+      }
     }
 
   });

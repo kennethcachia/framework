@@ -69,8 +69,13 @@ define([
 
 
     _attrs: {
-      inlineItems: false,
-      container: '<div class="menu"></div>'
+      inlineItems: {
+        value: false
+      },
+
+      container: {
+        value: '<div class="menu"></div>'
+      }
     }
 
   }, ParentView);

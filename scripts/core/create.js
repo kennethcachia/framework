@@ -2,32 +2,48 @@
 define(function () {
 
   /**
-   * OOP
-   * 
-   * @param {String} name
-   * @param {Object} own
-   * @param {Object} extension
+   * Create
    */
   function Create(name, own, extension) {
 
-    function mergeObjects(a, b) {
-      a = Object.create(a);
-      b = Object.create(b);
+    function clone(object) {
+      var output = {};
 
-      for (var o in a) {
-        if (a[o] !== undefined && a[o] !== null) {
+      for (var key in object) {
 
-          // TODO: fix this - required but breaks Nodes
-          /*if (typeof a[o] === 'object' && !Array.isArray(a[o]) &&
-              typeof b[o] === 'object' && !Array.isArray(b[o])) {
-            b[o] = mergeObjects(a[o], b[o]);
-          } else {*/
-            b[o] = a[o];
-          //}
+        if (object.hasOwnProperty(key)) {
+          if (object[key] && !object[key]._name && object[key].constructor.name === 'Object') {
+            output[key] = clone(object[key]);
+          } else {
+            output[key] = object[key]
+          }
         }
+
       }
 
-      return b;
+      return output;
+    }
+
+
+    function mergeObjects(a, b) {
+      var na = clone(a);
+      var nb = clone(b);
+
+      var merged = nb;
+
+      for (var key in na) {
+
+        if (na.hasOwnProperty(key)) {
+          if (na[key] && !na[key]._name && na[key].constructor.name === 'Object') {
+            merged[key] = mergeObjects(na[key], merged[key]);
+          } else {
+            merged[key] = na[key];
+          }
+        }
+
+      }
+
+      return merged;
     }
 
 
@@ -67,8 +83,15 @@ define(function () {
 
     var Base = function (attrs) {
       // Merge base attrs
-      attrs = attrs || {};
+      attrs = clone(attrs) || {};
       attrs.id = attrs.id || null;
+
+      // Convert to value: {..}
+      for (var a in attrs) {
+        attrs[a] = {
+          value: attrs[a]
+        };
+      }
 
       // Private objects
       this._propagateEvents = null;
@@ -82,7 +105,6 @@ define(function () {
 
       this._callInitializers();
 
-      // TODO: this._attrs as opposed to attrs?
       for (var a in this._attrs) {
         this._fireAttrChange(a);
       }
@@ -122,15 +144,8 @@ define(function () {
         // Pass it on
         if (propagate == true && stopPropagation !== true) {
           var propagateEvents = this._propagateEvents;
-          //var suffix = '|';
 
           if (propagateEvents) {
-
-            /*if (eventName.indexOf(suffix) === -1) {
-              suffix += this.get('id') || this._name;
-              eventName = eventName + suffix;
-            }*/
-
             propagateEvents.fire(eventName, data, propagate);
           }
         }
@@ -153,7 +168,7 @@ define(function () {
 
         if (key.indexOf('.') === -1) {
 
-          this._attrs[key] = value;
+          this._attrs[key].value = value;
 
         } else {
 
@@ -161,7 +176,7 @@ define(function () {
           var obj = key.substr(0, pos);
           var index = key.substr(pos + 1);
 
-          this._attrs[obj][index] = value;
+          this._attrs[obj].value[index] = value;
 
           // Fire event on key name
           key = obj;
@@ -174,7 +189,7 @@ define(function () {
 
 
       get: function (key) {
-        var val = this._attrs[key];
+        var val = this._attrs[key].value;
 
         if (Array.isArray(val) && val.each === undefined) {
           val.each = List.each;

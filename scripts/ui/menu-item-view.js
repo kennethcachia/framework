@@ -22,17 +22,26 @@ define([
 
     _attrs: {
       data: {
-        label: null
+        value: {
+          label: null
+        }
       },
 
-      container: '<div class="menu-item"></div>',
-      template: '<div class="menu-item-title">{{label}}</div>',
+      container: {
+        value: '<div class="menu-item"></div>'
+      },
 
-      domEvents: [{
-        matchClass: '.menu-item',
-        eventName: 'click',
-        callback: '_onClick'
-      }]
+      template: {
+        value: '<div class="menu-item-title">{{label}}</div>'
+      },
+
+      domEvents: {
+        value: [{
+          matchClass: '.menu-item',
+          eventName: 'click',
+          callback: '_onClick'
+        }]
+      }
     }
 
   }, View);

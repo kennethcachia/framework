@@ -25,7 +25,6 @@ define([
 
 
     _bindEvents: function () {
-      var targets = this.get('selector');
       var container = this.get('container');
 
       this._events = [];

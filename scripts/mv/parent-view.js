@@ -106,7 +106,9 @@ define([
 
 
     _attrs: {
-      children: []
+      children: {
+        value: []
+      }
     }
 
   }, View);

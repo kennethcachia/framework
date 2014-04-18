@@ -41,8 +41,13 @@ define([
 
 
     _attrs: {
-      query: null,
-      parent: null
+      query: {
+        value: null
+      },
+
+      parent: {
+        value: null
+      }
     }
 
   });

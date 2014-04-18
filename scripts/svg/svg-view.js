@@ -70,7 +70,9 @@ define([
 
 
     _attrs: {
-      container: null
+      container: {
+        value: null
+      }
     }
 
   }, ParentView);

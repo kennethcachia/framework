@@ -149,8 +149,13 @@ define([
 
 
     _attrs: {
-      namespaceURI: null,
-      html: null
+      namespaceURI: {
+        value: null
+      },
+
+      html: {
+        value: null
+      }
     }
 
   });

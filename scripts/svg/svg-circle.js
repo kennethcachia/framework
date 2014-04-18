@@ -30,13 +30,20 @@ define([
 
     _attrs: {
       data: {
-        cx: null,
-        cy: null,
-        radius: null
+        value: {
+          cx: null,
+          cy: null,
+          radius: null
+        }
       },
 
-      container: '<circle cx="{{cx}}" cy="{{cy}}" r="{{radius}}" style="{{style}}"></circle>',
-      type: SVGTypes.CIRCLE
+      container: {
+        value: '<circle cx="{{cx}}" cy="{{cy}}" r="{{radius}}" style="{{style}}"></circle>'
+      },
+
+      type: {
+        value: SVGTypes.CIRCLE
+      }
     }
 
   }, SVGShape);
