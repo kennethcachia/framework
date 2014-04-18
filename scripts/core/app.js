@@ -16,7 +16,6 @@ define([
       console.log('(version ' + this.get('version') + ')');
 
       var readyFn = this.get('domReady');
-      readyFn = readyFn && this[readyFn];
 
       if (readyFn) {
         DomReady(readyFn.bind(this));
