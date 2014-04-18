@@ -182,7 +182,7 @@ define(function () {
 
         if (key.indexOf('.') === -1) {
 
-          this._attrs[key].value = value;
+          this._set(this._attrs, key, value);
 
         } else {
 
@@ -202,11 +202,23 @@ define(function () {
       },
 
 
-      get: function (key) {
-        var val = this._attrs[key].value;
+      _set: function (attrs, key, value) {
+        if (attrs[key].setter) {
+          attrs[key].value = attrs[key].setter.call(this, value);
+        } else {
+          attrs[key].value = value;
+        }
+      },
 
-        if (Array.isArray(val) && val.each === undefined) {
-          val.each = List.each;
+
+      get: function (key) {
+        var getter = this._attrs[key].getter;
+        var val;
+
+        if (getter) {
+          val = getter.call(this);
+        } else {
+          val = this._attrs[key].value;
         }
 
         return val;
