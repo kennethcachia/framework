@@ -12,18 +12,6 @@ define([
 
     initializer: function () {
       var view = this.get('view');
-      var model = this.get('model');
-
-      if (!model) {
-        this.createDefaultModel();
-      }
-
-      if (!view) {
-        this.createDefaultView();
-      }
-
-      view = this.get('view');
-      model = this.get('model');
 
       view.on('appendedView', this.updateModel, this);
       view.on('childDataChange', this.updateModel, this);
@@ -39,8 +27,8 @@ define([
     },
 
 
-
     updateModel: function () {
+      // TODO: convert to event
       console.log('This is an abstract method - updateModel');
     },
 

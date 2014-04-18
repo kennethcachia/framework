@@ -82,6 +82,7 @@ define(function () {
 
 
     var Base = function (attrs) {
+
       // Merge base attrs
       attrs = clone(attrs) || {};
       attrs.id = attrs.id || null;
@@ -101,6 +102,19 @@ define(function () {
       // Merge attributes
       if (attrs) {
         this._attrs = mergeObjects(attrs, this._attrs);
+      }
+
+      // Call default() if not defined
+      var attrValue;
+      var attrDefault;
+
+      for (var a in this._attrs) {
+        attrValue = this._attrs[a].value;
+        attrDefault = this._attrs[a].default;
+
+        if (attrDefault && (attrValue === null || attrValue === undefined)) {
+          this._attrs[a].value = this._attrs[a].default.call(this);
+        }
       }
 
       this._callInitializers();
