@@ -12,28 +12,28 @@ define([
    */
   var SVGCircle = Create('SVGCircle', {
 
-    // TODO: replace by attr fn
-    getSize: function () {
-      return {
-        width: this.get('data').radius * 2,
-        height: this.get('data').radius * 2
-      };
-    },
-
-
-    // TODO: replace by attr fn
-    setPosition: function (x, y) {
-      this.set('data.cx', x);
-      this.set('data.cy', y);
-    },
-
-
     _attrs: {
       data: {
         value: {
           cx: null,
           cy: null,
           radius: null
+        }
+      },
+
+      position: {
+        setter: function (pos) {
+          this.set('data.cx', pos.x);
+          this.set('data.cy', pos.y);
+        }
+      },
+
+      size: {
+        getter: function () {
+          return {
+            width: this.get('data').radius * 2,
+            height: this.get('data').radius * 2
+          };
         }
       },
 

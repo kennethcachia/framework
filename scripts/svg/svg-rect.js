@@ -12,22 +12,6 @@ define([
    */
   var SVGRect = Create('SVGRect', {
 
-    // TODO: replace by attr fn
-    getSize: function () {
-      return {
-        width: this.get('data').width,
-        height: this.get('data').height
-      };
-    },
-
-
-    // TODO: replace by attr fn
-    setPosition: function (x, y) {
-      this.set('data.x', x);
-      this.set('data.y', y);
-    },
-
-
     _attrs: {
       data: {
         value: {
@@ -35,6 +19,22 @@ define([
           y: null,
           width: null,
           height: null
+        }
+      },
+
+      position: {
+        setter: function (pos) {
+          this.set('data.x', pos.x);
+          this.set('data.y', pos.y);
+        }
+      },
+
+      size: {
+        getter: function () {
+          return {
+            width: this.get('data').width,
+            height: this.get('data').height
+          };
         }
       },
 

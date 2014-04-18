@@ -81,10 +81,10 @@ define([
       console.log('move');
 
       if (this._activeView) {
-        var x = e.layerX;
-        var y = e.layerY;
-
-        this._activeView.setPosition(x, y)
+        this._activeView.set('position', {
+          x: e.layerX,
+          y: e.layerY
+        });
       }
     }
 

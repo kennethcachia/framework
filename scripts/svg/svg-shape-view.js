@@ -39,6 +39,14 @@ define([
         }
       },
 
+      position: {
+        setter: function (pos) {}
+      },
+
+      size: {
+        getter: function () {}
+      },
+
       container: {
         value: null
       },

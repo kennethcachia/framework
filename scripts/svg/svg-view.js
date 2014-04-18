@@ -60,12 +60,15 @@ define([
       var container = this.get('container');
 
       var size = container.getSize();
-      var childSize = child.getSize();
+      var childSize = child.get('size');
 
       var x = (size.width - childSize.width) / 2;
       var y = (size.height - childSize.height) / 2;
 
-      child.setPosition(x, y);
+      child.set('position', {
+        x: x,
+        y: y
+      });
     },
 
 
