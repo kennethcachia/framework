@@ -7,7 +7,7 @@ define([
 
 ], function (Create, DOM, DOMQuery) {
 
-  // TODO: avoid this circular dep?
+  // TODO: Avoid this circular dep?
   var DOMElement;
   require(["core/dom-element"], function (domElement) {
     DOMElement = domElement;

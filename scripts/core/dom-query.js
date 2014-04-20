@@ -6,7 +6,7 @@ define([
 
 ], function (Create, DOM) {
 
-  // TODO: extend to support ID's and attributes
+  // TODO: Extend to support ID's and attributes
 
   /**
    * DOM Query

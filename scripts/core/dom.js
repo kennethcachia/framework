@@ -13,7 +13,6 @@ define([
     create: function (html, namespaceURI) {
       namespaceURI = namespaceURI || 'http://www.w3.org/1999/xhtml';
 
-      // TODO: Can we avoid 'div' here?
       var wrapper = document.createElementNS(namespaceURI, 'div');
       wrapper.innerHTML = html;
 
@@ -93,7 +92,7 @@ define([
 
 
     setStyle: function(element, key, value) {
-      // TODO: allow objects, default units
+      // TODO: Allow objects and default units
       element.style[key] = value;
     },
 
