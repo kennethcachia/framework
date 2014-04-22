@@ -15,7 +15,6 @@ define([
       this._activeItem = null;
       this._currentAction = null;
 
-      this.on('rendered', this._onRendered, this);
       this.on('menuItemClick', this._onMenuItemClick, this);
     },
 
@@ -34,16 +33,6 @@ define([
     },
 
 
-    _onRendered: function () {
-      var inlineItems = this.get('inlineItems');
-      var container = this.get('container');
-
-      if (inlineItems === true) {
-        container.addClass('menu--inline');
-      }
-    },
-
-
     _onMenuItemClick: function (e) {
       var menuItem = e.source;
       var data = e.data;
@@ -56,7 +45,6 @@ define([
         var action = data.action;
 
         if (typeof action === 'function') {
-          // TODO: auto execute when calling get() on a function (global change)
           this._currentAction = action.call(this);
         }
 
@@ -69,12 +57,14 @@ define([
 
 
     _attrs: {
-      inlineItems: {
-        value: false
+      data: {
+        value: {
+          inline: false
+        }
       },
 
       container: {
-        value: '<div class="menu"></div>'
+        value: '<div class="menu{{#inline}} menu--inline{{/inline}}"></div>'
       }
     }
 
