@@ -28,11 +28,11 @@ define([
       },
 
       container: {
-        value: '<div class="menu-item"></div>'
+        value: '<div class="menu-item" data-label="{{label}}"></div>'
       },
 
       template: {
-        value: '<div class="menu-item-title">{{label}}</div>'
+        value: '<div class="menu-item-icon"></div>'
       },
 
       domEvents: {
