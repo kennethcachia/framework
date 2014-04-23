@@ -3,9 +3,10 @@ define([
 
   'core/create',
   'svg/svg-view',
+  'svg/transformable-svg-bounding-box',
   'core/dom-element'
 
-], function (Create, SVGView, DOMElement) {
+], function (Create, SVGView, SVGTransformableBoundingBox, DOMElement) {
 
   /**
    * Transformable SVG View
@@ -21,6 +22,8 @@ define([
       for (var e = 0; e < this._events.length; e++) {
         this._events[e].destroy();
       }
+
+      this._deactivate();
     },
 
 
@@ -55,18 +58,38 @@ define([
       var child;
       var childContainer;
 
-      var x;
-      var y;
-
       for (var c = 0; c < children.length; c++) {
         child = children[c];
         childContainer = child.get('container');
 
         if (childContainer.isEqualTo(domElement)) {
-          console.log('down');
-          this._activeView = child;
+          this._activate(child);
           break;
         }
+      }
+
+      if (!this._activeView) {
+        this._deactivate();
+      }
+    },
+
+
+    _activate: function (child) {
+      console.log('down');
+
+      this._deactivate();
+      this._activeView = child;
+      this._boundingBox = this.get('boundingBox');
+
+      this.addChild(this._boundingBox);
+
+      this._boundingBox.align(child);
+    },
+
+
+    _deactivate: function () {
+      if (this._boundingBox) {
+        this._boundingBox.destroy();
       }
     },
 
@@ -85,6 +108,18 @@ define([
           x: e.layerX,
           y: e.layerY
         });
+
+        // TODO: Align automatically on data change.
+        this._boundingBox.align(this._activeView);
+      }
+    },
+
+
+    _attrs: {
+      boundingBox: {
+        getter: function () {
+          return new SVGTransformableBoundingBox();
+        }
       }
     }
 
