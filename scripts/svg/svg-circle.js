@@ -25,10 +25,23 @@ define([
         setter: function (pos) {
           this.set('data.cx', pos.x);
           this.set('data.cy', pos.y);
+        },
+
+        getter: function () {
+          var radius = this.get('data').radius;
+
+          return {
+            x: this.get('data').cx - radius,
+            y: this.get('data').cy - radius
+          };
         }
       },
 
       size: {
+        setter: function (size) {
+          this.set('data.radius', size.width / 2);
+        },
+
         getter: function () {
           return {
             width: this.get('data').radius * 2,

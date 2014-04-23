@@ -40,10 +40,12 @@ define([
       },
 
       position: {
-        setter: function (pos) {}
+        setter: function (pos) {},
+        getter: function () {}
       },
 
       size: {
+        setter: function (size) {},
         getter: function () {}
       },
 
