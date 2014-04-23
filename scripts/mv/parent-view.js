@@ -54,9 +54,15 @@ define([
       var container = this.get('container');
       var attrs = child.attrs || {};
 
-      attrs.anchor = container;
+      var childView;
 
-      var childView = new child.view(attrs);
+      if (!child._name) {
+        attrs.anchor = container;
+        childView = new child.view(attrs);
+      } else {
+        child.set('anchor', container);
+        childView = child;
+      }
 
       childView.render();
       childView.propagateEventsTo(this);
@@ -67,6 +73,8 @@ define([
       this.fire('appendedView', {
         child: childView
       });
+
+      return childView;
     },
 
 
