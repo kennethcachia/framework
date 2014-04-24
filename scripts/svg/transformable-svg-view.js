@@ -58,60 +58,108 @@ define([
       var child;
       var childContainer;
 
-      for (var c = 0; c < children.length; c++) {
-        child = children[c];
-        childContainer = child.get('container');
+      var chosen = false;
 
-        if (childContainer.isEqualTo(domElement)) {
-          this._activate(child);
-          break;
+      if (!this._isBoundingBoxSelected(domElement, e)) {
+
+        for (var c = 0; c < children.length; c++) {
+          child = children[c];
+          childContainer = child.get('container');
+
+          if (childContainer.isEqualTo(domElement)) {
+            this._calculateOffset(child, e);
+            this._activate(child);
+            chosen = true;
+            break;
+          }
         }
-      }
 
-      if (!this._activeView) {
+      } 
+
+      if (!chosen) {
         this._deactivate();
+      } else {
+        this._mouseDown = true;  
       }
     },
 
 
-    _activate: function (child) {
-      console.log('down');
+    _isBoundingBoxSelected: function (domElement, e) {
+      var isSelected = false;
 
+      if (this._boundingBox) {
+        var bbContainer = this._boundingBox.get('container');
+
+        if (bbContainer.isEqualTo(domElement)) {
+          isSelected = true;
+          this._calculateOffset(this._boundingBox, e);
+        }
+      }
+
+      return isSelected;
+    },
+
+
+    _calculateOffset: function (child, e) {
+      var coords = child.get('position');
+
+      this._offset = {
+        x: e.layerX - coords.x,
+        y: e.layerY - coords.y
+      };
+    },
+
+
+    _activate: function (child) {
       this._deactivate();
       this._activeView = child;
       this._boundingBox = this.get('boundingBox');
 
-      this.addChild(this._boundingBox);
+      this.addChild(this._boundingBox, {
+        after: child
+      });
 
-      this._boundingBox.align(child);
+      this._resizeBoundingBox();
+      this._alignBoundingBox();
     },
 
 
     _deactivate: function () {
       if (this._boundingBox) {
         this._boundingBox.destroy();
+        this._boundingBox = null;
+        this._activeView = null;
       }
     },
 
 
     _onTargetMouseUp: function () {
-      this._activeView = null;
-      console.log('up');
+      this._mouseDown = false;
     },
 
 
     _onTargetMouseMove: function (domElement, e) {
-      console.log('move');
+      if (this._mouseDown) {
+        var pos = {
+          x: e.layerX - this._offset.x,
+          y: e.layerY - this._offset.y
+        };
 
-      if (this._activeView) {
-        this._activeView.set('position', {
-          x: e.layerX,
-          y: e.layerY
-        });
-
-        // TODO: Align automatically on data change.
-        this._boundingBox.align(this._activeView);
+        this._activeView.set('position', pos);
+        this._alignBoundingBox();
       }
+    },
+
+
+    _resizeBoundingBox: function () {
+      var size = this._activeView.get('size');
+      this._boundingBox.set('size', size);
+    },
+
+
+    _alignBoundingBox: function () {
+      var pos = this._activeView.get('position');
+      this._boundingBox.set('position', pos);
     },
 
 

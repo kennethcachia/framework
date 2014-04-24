@@ -11,12 +11,6 @@ define([
    */
   var TransformableSVGBoundingBox = Create('TransformableSVGBoundingBox', {
 
-    align: function (view) {
-      this.set('position', view.get('position'));
-      this.set('size', view.get('size'));
-    },
-
-
     _attrs: {
       data: {
         value: {
