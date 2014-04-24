@@ -26,8 +26,6 @@ define([
       this.on('appendedView', function (e) {
         var child = e.child;
         var container = child.get('container');
-
-        container.addClass('svg-shape');
         this._positionShape(child);
       }, this);
     },
