@@ -23,8 +23,10 @@ define([
 
       position: {
         setter: function (pos) {
-          this.set('data.cx', pos.x);
-          this.set('data.cy', pos.y);
+          var radius = this.get('data').radius;
+
+          this.set('data.cx', pos.x + radius);
+          this.set('data.cy', pos.y + radius);
         },
 
         getter: function () {
