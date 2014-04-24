@@ -48,6 +48,11 @@ define([
     },
 
 
+    insertAfter: function (after) {
+      DOM.insertAdjacentElement(after._node, this._node, 'afterEnd');
+    },
+
+
     removeChild: function (child) {
       DOM.removeChild(this._node, child._node);
     },

@@ -25,6 +25,11 @@ define([
     },
 
 
+    insertAdjacentElement: function (target, element, mode) {
+      target.insertAdjacentElement(mode, element);
+    },
+
+
     removeChild: function (parent, child) {
       parent.removeChild(child);
     },

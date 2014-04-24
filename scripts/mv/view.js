@@ -55,12 +55,12 @@ define([
     },
 
 
-    render: function () {
+    render: function (options) {
 
       if (!this._rendered) {
 
         this._createContainer();
-        this._render();
+        this._render(options);
 
       } else {
         console.log('View already rendered -- Skipping');
@@ -69,9 +69,8 @@ define([
     },
 
 
-    _render: function () {
+    _render: function (options) {
       var container = this.get('container');
-      var anchor = this.get('anchor');
 
       if (container) {
 
@@ -82,14 +81,25 @@ define([
           container.setInnerHTML(output);
         }
 
-        anchor.appendChild(container);
-
+        this._addToAnchor(container, options);
         this._delegateDOMEvents();
         this._rendered = true;
+
         this.fire('rendered');
 
       } else {
         throw 'View has no container for rendering.';
+      }
+    },
+
+
+    _addToAnchor: function (element, options) {
+      var anchor = this.get('anchor');
+
+      if (!options) {
+        anchor.appendChild(element);
+      } else if (options.after) {
+        element.insertAfter(options.after.get('container'));
       }
     },
 

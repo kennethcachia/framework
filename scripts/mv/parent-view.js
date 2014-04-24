@@ -50,7 +50,7 @@ define([
     },
 
 
-    addChild: function (child) {
+    addChild: function (child, options) {
       var container = this.get('container');
       var attrs = child.attrs || {};
 
@@ -64,7 +64,7 @@ define([
         childView = child;
       }
 
-      childView.render();
+      childView.render(options);
       childView.propagateEventsTo(this);
       childView.on('dataChange', this._propagateChildDataChange, this);
 
