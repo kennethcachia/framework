@@ -49,6 +49,15 @@ define([
         callback: '_onTargetMouseMove',
         context: this
       }));
+
+      this.on('rendered', this._onRendered, this);
+    },
+
+
+    _onRendered: function () {
+      var container = this.get('container');
+
+      container.addClass('svg--transformable');
     },
 
 
