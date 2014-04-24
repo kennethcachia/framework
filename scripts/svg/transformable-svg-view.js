@@ -74,7 +74,9 @@ define([
           }
         }
 
-      } 
+      } else {
+        chosen = true;
+      }
 
       if (!chosen) {
         this._deactivate();
