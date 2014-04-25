@@ -132,6 +132,10 @@ define([
 
       this._resizeBoundingBox();
       this._alignBoundingBox();
+
+      this.fire('shapeSelected', {
+        shape: child
+      });
     },
 
 
@@ -140,6 +144,8 @@ define([
         this._boundingBox.destroy();
         this._boundingBox = null;
         this._activeView = null;
+
+        this.fire('shapeDeselected');
       }
     },
 
