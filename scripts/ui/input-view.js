@@ -24,8 +24,12 @@ define([
         }
       },
 
+      container: {
+        value: '<div class="ui-input"></div>'
+      },
+
       template: {
-        value: '<input data-source="true" type="text" {{#text}}value="{{text}}"{{/text}} />'
+        value: '<input type="text" {{#text}}value="{{text}}"{{/text}} />'
       }
     }
 

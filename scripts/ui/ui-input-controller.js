@@ -3,7 +3,7 @@ define([
 
   'core/create',
   'ui/ui',
-  'ui/input'
+  'ui/input-view'
 
 ], function (Create, UI, ViewInput) {
 
@@ -12,8 +12,14 @@ define([
    */
   var UIInput = Create('UIInput', {
 
-    createDefaultView: function () {
-      return new ViewInput();
+    _attrs: {
+      view: {
+        value: null,
+
+        default: function () {
+          return new ViewInput();
+        }
+      }
     }
 
   }, UI);

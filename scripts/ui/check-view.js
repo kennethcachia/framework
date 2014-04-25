@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'ui/input'
+  'ui/input-view'
 
 ], function (Create, ViewInput) {
 
@@ -19,8 +19,12 @@ define([
         }
       },
 
+      container: {
+        value: '<div class="ui-check"></div>'
+      },
+
       template: {
-        value: '<input data-source="true" type="checkbox" {{#value}}value="{{value}}"{{/value}} {{#checked}}checked{{/checked}}/>'
+        value: '<input type="checkbox" {{#value}}value="{{value}}"{{/value}} {{#checked}}checked{{/checked}}/>'
       }
     }
 

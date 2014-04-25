@@ -23,7 +23,7 @@ define([
       },
 
       template: {
-        value: '<div class="dialog-title">Title:{{title}}</div>'
+        value: null
       }
     }
 
