@@ -277,15 +277,6 @@ define(function () {
   }
 
 
-  var List = {
-    each: function (array, callback, context) {
-      for (var i = 0; i < array.length; i++) {
-        callback.call(context, array[i]);
-      }
-    }
-  };
-
-
   return Create;
 
 });
