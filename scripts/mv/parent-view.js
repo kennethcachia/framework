@@ -109,7 +109,7 @@ define([
 
 
     _propagateChildDataChange: function (e) {
-      this.fire('childDataChange');
+      this.fire('childDataChange', e);
     },
 
 
