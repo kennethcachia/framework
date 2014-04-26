@@ -13,8 +13,8 @@ define([
     initializer: function () {
       var view = this.get('view');
 
-      view.on('appendedView', this.updateModel, this);
-      view.on('childDataChange', this.updateModel, this);
+      view.on('appendedView', this._updateModel, this);
+      view.on('childDataChange', this._updateModel, this);
     },
 
 
@@ -27,9 +27,8 @@ define([
     },
 
 
-    updateModel: function () {
-      // TODO: convert to event
-      console.log('This is an abstract method - updateModel');
+    _updateModel: function (e) {
+      this.fire('updateModel', e);
     },
 
 
