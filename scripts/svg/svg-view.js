@@ -31,19 +31,29 @@ define([
     },
 
 
+    getShapeByType: function (type) {
+      var types = this.get('types');
+      var shape;
+
+      switch (type) {
+        case types.RECT:
+          shape = SVGRect;
+          break;
+
+        case types.CIRCLE:
+          shape = SVGCircle;
+          break;
+      }
+
+      return shape;
+    },
+
+
     addShape: function (shape) {
       var data = shape.data;
       var view;
 
-      switch (data.type) {
-        case SVGTypes.RECT:
-          view = SVGRect;
-          break;
-
-        case SVGTypes.CIRCLE:
-          view = SVGCircle;
-          break;
-      }
+      view = this.getShapeByType(data.type);
 
       this.addChild({
         view: view,
@@ -73,6 +83,14 @@ define([
     _attrs: {
       container: {
         value: null
+      },
+
+      types: {
+        value: null,
+
+        default: function () {
+          return SVGTypes;
+        }
       }
     }
 
