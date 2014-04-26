@@ -17,7 +17,10 @@ define([
         value: {
           cx: null,
           cy: null,
-          radius: null
+          radius: null,
+          fill: null,
+          strokeWidth: 0,
+          stroke: null
         }
       },
 
@@ -53,7 +56,11 @@ define([
       },
 
       container: {
-        value: '<circle cx="{{cx}}" cy="{{cy}}" r="{{radius}}" style="{{style}}"></circle>'
+        value: '<circle cx="{{cx}}" cy="{{cy}}" r="{{radius}}" style="' +
+                 '{{#fill}}fill:{{fill}};{{/fill}}' +
+                 '{{#strokeWidth}}stroke-width:{{strokeWidth}};{{/strokeWidth}}' +
+                 '{{#stroke}}stroke:{{stroke}};{{/stroke}}' +
+               '"></circle>'
       },
 
       type: {

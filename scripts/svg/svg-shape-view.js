@@ -34,7 +34,6 @@ define([
     _attrs: {
       data: {
         value: {
-          style: null,
           type: null
         }
       },

@@ -18,7 +18,10 @@ define([
           x: null,
           y: null,
           width: null,
-          height: null
+          height: null,
+          fill: null,
+          strokeWidth: 0,
+          stroke: null
         }
       },
 
@@ -51,7 +54,11 @@ define([
       },
 
       container: {
-        value: '<rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" style="{{style}}"></rect>'
+        value: '<rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" style="' +
+                 '{{#fill}}fill:{{fill}};{{/fill}}' +
+                 '{{#strokeWidth}}stroke-width:{{strokeWidth}};{{/strokeWidth}}' +
+                 '{{#stroke}}stroke:{{stroke}};{{/stroke}}' +
+               '"></rect>'
       },
 
       type: {
