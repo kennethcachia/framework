@@ -14,7 +14,9 @@ define([
     _attrs: {
       data: {
         value: {
-          style: 'stroke:cyan; stroke-width:5; fill:transparent'
+          stroke: 'cyan',
+          strokeWidth: 5,
+          fill: 'transparent'
         }
       }
     }

@@ -19,19 +19,8 @@ define([
     },
 
 
-    getValue: function (index) {
-      var values = this.get('values');
-
-      return values[index - 1];
-    },
-
-
     _attrs: {
       keys: {
-        value: []
-      },
-
-      values: {
         value: []
       }
     }
