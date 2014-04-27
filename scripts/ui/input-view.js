@@ -12,16 +12,21 @@ define([
   var ViewInput = Create('ViewInput', {
 
     _attrs: {
-      domEvents: {
-        value: [{
-          eventName: 'change'
-        }]
-      },
-
       data: {
         value: {
           text: null
         }
+      },
+
+      dataBindings: {
+        value: [
+          {
+            key: 'text',
+            attribute: 'value',
+            element: 'input',
+            event: 'change'
+          }
+        ]
       },
 
       container: {
