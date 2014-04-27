@@ -29,7 +29,7 @@ define([
       },
 
       version: {
-        value: '1.0.0'
+        value: '0.0.1'
       },
 
       domReady: {
