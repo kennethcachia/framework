@@ -3,9 +3,10 @@ define([
 
   'core/Create',
   'core/dom-element',
+  'mv/data-binding',
   'third-party/mustache'
 
-], function (Create, DOMElement, Mustache) {
+], function (Create, DOMElement, DataBinding, Mustache) {
 
   /**
    * View
@@ -23,6 +24,8 @@ define([
 
       this._rendered = false;
       this._visible = false;
+
+      this._dataBindings = [];
     },
 
 
@@ -34,6 +37,8 @@ define([
 
       this._rendered = false;
       this._visible = false;
+
+      this._destroyDataBindings();
     },
 
 
@@ -86,6 +91,8 @@ define([
         this._rendered = true;
 
         this.fire('rendered');
+
+        this._handleDataBindings();
 
       } else {
         throw 'View has no container for rendering.';
@@ -157,6 +164,33 @@ define([
     },
 
 
+    _handleDataBindings: function () {
+      var dataBindings = this.get('dataBindings');
+
+      var attr;
+      var dataBinding;
+
+      this._destroyDataBindings();
+
+      for (var d = 0; d < dataBindings.length; d++) {
+        attr = dataBindings[d];
+        attr.context = this;
+
+        dataBinding = new DataBinding(attr);
+        this._dataBindings.push(dataBinding);
+      }
+    },
+
+
+    _destroyDataBindings: function () {
+      for (var d = 0; d < this._dataBindings.length; d++) {
+        this._dataBindings[d].destroy();
+      }
+
+      this._dataBindings = [];
+    },
+
+
     _attrs: {
       container: {
         value: null
@@ -171,6 +205,10 @@ define([
       },
 
       domEvents: {
+        value: []
+      },
+
+      dataBindings: {
         value: []
       },
 
