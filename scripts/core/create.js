@@ -192,9 +192,11 @@ define(function () {
 
           this._attrs[obj].value[index] = value;
 
-          // Fire event on key name
-          key = obj;
+          // Fire event data.*Change
+          this._fireAttrChange(key)
 
+          // Update key to fire dataChange event
+          key = obj;
         }
 
         this._fireAttrChange(key);
