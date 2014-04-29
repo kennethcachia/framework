@@ -51,16 +51,16 @@ define([
 
 
     addChild: function (child, options) {
-      var container = this.get('container');
+      var childrenAnchor = this._getChildrenAnchor();
       var attrs = child.attrs || {};
 
       var childView;
 
       if (!child._name) {
-        attrs.anchor = container;
+        attrs.anchor = childrenAnchor;
         childView = new child.view(attrs);
       } else {
-        child.set('anchor', container);
+        child.set('anchor', childrenAnchor);
         childView = child;
       }
 
@@ -97,6 +97,20 @@ define([
     },
 
 
+    _getChildrenAnchor: function () {
+      var container = this.get('container');
+      var childrenAnchor = this.get('childrenAnchor');
+
+      if (!childrenAnchor) {
+        childrenAnchor = container;
+      } else {
+        childrenAnchor = container.one(childrenAnchor);
+      }
+
+      return childrenAnchor;
+    },
+
+
     _renderChildren: function () {
       var children = this.get('children');
 
@@ -116,6 +130,10 @@ define([
     _attrs: {
       children: {
         value: []
+      },
+
+      childrenAnchor: {
+        value: null
       }
     }
 
