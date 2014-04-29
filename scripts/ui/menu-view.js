@@ -2,9 +2,9 @@
 define([
 
   'core/create',
-  'mv/parent-view'
+  'ui/toggle-view'
 
-], function (Create, ParentView) {
+], function (Create, ToggleView) {
 
   /**
    * Menu
@@ -12,45 +12,12 @@ define([
   var MenuView = Create('MenuView', {
 
     initializer: function () {
-      this._activeItem = null;
-      this._currentAction = null;
-
-      this.on('menuItemClick', this._onMenuItemClick, this);
+      this.on('menuItemClick', this._changeView, this);
     },
 
 
-    destructor: function () {
-      this.reset();
-    },
-
-
-    reset: function () {
-      this._activeItem = null;
-
-      if (this._currentAction) {
-        this._currentAction.destroy();
-      }
-    },
-
-
-    _onMenuItemClick: function (e) {
-      var menuItem = e.source;
-      var data = e.data;
-
-      if (menuItem !== this._activeItem) {
-
-        this.reset();
-        this._activeItem = menuItem;
-
-        var action = data.action;
-
-        if (typeof action === 'function') {
-          this._currentAction = action.call(this);
-        }
-
-      } else {
-        console.log('Same action -- SKIPPING.');
-      }
+    _changeView: function (e) {
+      this.set('activeView', e.source);
 
       return false;
     },
@@ -68,7 +35,7 @@ define([
       }
     }
 
-  }, ParentView);
+  }, ToggleView);
 
 
   return MenuView;
