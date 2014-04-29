@@ -15,6 +15,7 @@ define([
       this._currentView = null;
       this._currentAction = null;
 
+      this.on('triggerClick', this._changeView, this);
       this.on('activeViewChange', this._setView, this);
     },
 
@@ -31,6 +32,12 @@ define([
 
       this._currentView = null;
       this._currentAction = null;
+    },
+
+
+    _changeView: function (e) {
+      this.set('activeView', e.source);
+      return false;
     },
 
 
@@ -61,6 +68,10 @@ define([
     _attrs: {
       activeView: {
         value: null
+      },
+
+      container: {
+        value: '<div class="toggle-view"></div>'
       }
     }
 

@@ -7,21 +7,9 @@ define([
 ], function (Create, ToggleView) {
 
   /**
-   * Menu
+   * MenuView
    */
   var MenuView = Create('MenuView', {
-
-    initializer: function () {
-      this.on('menuItemClick', this._changeView, this);
-    },
-
-
-    _changeView: function (e) {
-      this.set('activeView', e.source);
-
-      return false;
-    },
-
 
     _attrs: {
       data: {
