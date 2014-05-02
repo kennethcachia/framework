@@ -16,7 +16,7 @@ define([
       this._currentAction = null;
 
       this.on('triggerClick', this._changeView, this);
-      this.on('activeViewChange', this._setView, this);
+      this.on(['rendered', 'activeViewChange'], this._setView, this);
     },
 
 
@@ -37,6 +37,7 @@ define([
 
     _changeView: function (e) {
       this.set('activeView', e.source);
+
       return false;
     },
 
@@ -49,19 +50,25 @@ define([
         this.reset();
 
         this._currentView = activeView;
-        this._performAction();
+        this._setAndPropagateAction();
 
       }
     },
 
 
-    _performAction: function () {
+    _setAndPropagateAction: function () {
       var activeView = this.get('activeView');
       var action = activeView.get('action');
 
-      if (typeof action === 'function') {
+      if (action) {
         this._currentAction = action.call(this);
+      } else {
+        this._currentAction = null;
       }
+
+      this.fire('action', {
+        action: this._currentAction
+      });
     },
 
 
