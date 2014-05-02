@@ -122,6 +122,8 @@ define(function () {
       /*for (var a in this._attrs) {
         this._fireAttrChange(a);
       }*/
+
+      this.fire('initReady');
     };
 
 
