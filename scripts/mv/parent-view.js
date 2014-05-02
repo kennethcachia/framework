@@ -56,7 +56,7 @@ define([
 
       var childView;
 
-      if (!child._name) {
+      if (!child['getName']) {
         attrs.anchor = childrenAnchor;
         childView = new child.view(attrs);
       } else {
@@ -64,8 +64,8 @@ define([
         childView = child;
       }
 
-      childView.render(options);
       childView.propagateEventsTo(this);
+      childView.render(options);
       childView.on('dataChange', this._propagateChildDataChange, this);
 
       this._renderedChildren.push(childView);
