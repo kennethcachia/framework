@@ -119,9 +119,9 @@ define(function () {
 
       this._callInitializers();
 
-      for (var a in this._attrs) {
+      /*for (var a in this._attrs) {
         this._fireAttrChange(a);
-      }
+      }*/
     };
 
 
@@ -167,14 +167,13 @@ define(function () {
 
 
       on: function (eventName, callback, context) {
-        if (this._listeners[eventName] === undefined) {
-          this._listeners[eventName] = [];
+        if (!Array.isArray(eventName)) {
+          eventName = [eventName];
         }
 
-        this._listeners[eventName].push({
-          callback: callback,
-          context: context
-        });
+        for (var e = 0; e < eventName.length; e++) {
+          this._on(eventName[e], callback, context);
+        }
       },
 
 
@@ -201,6 +200,23 @@ define(function () {
 
         this._fireAttrChange(key);
 
+      },
+
+
+      getName: function () {
+        return this._name;
+      },
+
+
+      _on: function (eventName, callback, context) {
+        if (this._listeners[eventName] === undefined) {
+          this._listeners[eventName] = [];
+        }
+
+        this._listeners[eventName].push({
+          callback: callback,
+          context: context
+        });
       },
 
 
