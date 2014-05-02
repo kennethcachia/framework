@@ -17,11 +17,17 @@ define([
     },
 
 
-    _activateFirstTab: function () {
+    setActiveTabByIndex: function (index) {
       var children = this.getRenderedChildren();
-      var first = children[0];
+      var activeChild = children[index - 1];
 
-      this.set('activeView', first);      
+      if (activeChild) {
+        this.set('activeView', activeChild);
+      }
+    },
+
+    _activateFirstTab: function () {
+      this.setActiveTabByIndex(1);
     },
 
 
