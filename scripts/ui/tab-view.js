@@ -26,6 +26,7 @@ define([
       }
     },
 
+
     _activateFirstTab: function () {
       this.setActiveTabByIndex(1);
     },
