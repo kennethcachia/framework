@@ -11,18 +11,6 @@ define([
    */
   var ViewGrid = Create('ViewGrid', {
 
-    initializer: function () {
-      this.on('data.itemsChange', this._onItemsChange, this);
-    },
-
-
-    _onItemsChange: function () {
-      var items = this.get('data').items;
-
-      this.set('children', items);
-    },
-
-
     _attrs: {
       data: {
         value: {
