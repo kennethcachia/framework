@@ -74,6 +74,11 @@ define([
     },
 
 
+    isRendered: function () {
+      return this._rendered;
+    },
+
+
     _render: function (options) {
       var container = this.get('container');
 
