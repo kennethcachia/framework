@@ -223,6 +223,12 @@ define(function () {
 
 
       _set: function (attrs, key, value) {
+        // Allow attributes to be 
+        // added dynamically
+        if (!attrs[key]) {
+          attrs[key] = {};
+        }
+
         if (attrs[key].setter) {
           attrs[key].value = attrs[key].setter.call(this, value);
         } else {
@@ -232,13 +238,16 @@ define(function () {
 
 
       get: function (key) {
-        var getter = this._attrs[key].getter;
-        var val;
+        var val = null;
 
-        if (getter) {
-          val = getter.call(this);
-        } else {
-          val = this._attrs[key].value;
+        if (this._attrs[key]) {
+          var getter = this._attrs[key].getter;
+
+          if (getter) {
+            val = getter.call(this);
+          } else {
+            val = this._attrs[key].value;
+          }
         }
 
         return val;
