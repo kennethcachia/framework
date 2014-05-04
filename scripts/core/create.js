@@ -137,28 +137,26 @@ define(function () {
 
       fire: function (eventName, data, propagate) {
         var listeners = this._listeners[eventName];
-        var stopPropagation = false;
+        var resumePropagation;
 
         data = data || {};
         data.source = data.source || this;
 
         if (listeners) {
           var listener;
-          var resumePropagation;
 
           for (var l = 0; l < listeners.length; l++) {
             listener = listeners[l];
-
             resumePropagation = listener.callback.call(listener.context, data);
 
             if (resumePropagation === false) {
-              stopPropagation = true;
+              propagate = false;
             }
           }
         }
 
         // Pass it on
-        if (propagate == true && stopPropagation !== true) {
+        if (propagate === true) {
           var propagateEvents = this._propagateEvents;
 
           if (propagateEvents) {
