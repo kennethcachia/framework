@@ -2,9 +2,9 @@
 define([
 
   'core/create',
-  'mv/view'
+  'ui/activated-view'
 
-], function (Create, View) {
+], function (Create, ActivatedView) {
 
   /**
    * ToggleTriggerView
@@ -17,12 +17,22 @@ define([
 
 
     _attrs: {
+      data: {
+        value: {
+          label: null
+        }
+      },
+
+      activeClassName: {
+        value: 'toggle-trigger-view--active'
+      },
+
       action: {
         value: null
       },
 
       container: {
-        value: '<div class="toggle-trigger-view"></div>'
+        value: '<div class="toggle-trigger-view"><span>{{label}}</span></div>'
       },
 
       domEvents: {
@@ -33,7 +43,7 @@ define([
       }
     }
 
-  }, View);
+  }, ActivatedView);
 
 
   return ToggleTriggerView;
