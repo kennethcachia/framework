@@ -14,6 +14,24 @@
 }
 
 
+.clear-fix() {
+  zoom: 1;
+
+  &:after {
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    content: ".";
+  }
+}
+
+
+/* ==========================================================================
+   Sizing and Positioning
+   ========================================================================== */
+
 .box-sizing() {
   box-sizing:border-box;
   -moz-box-sizing:border-box;
@@ -21,6 +39,7 @@
 
 
 .center-horiz() {
+  position: relative;
   left: 50%;
 
   -webkit-transform: translateX(-50%);
@@ -32,6 +51,7 @@
 
 
 .center-vert() {
+  position: relative;
   top: 50%;
 
   -webkit-transform: translateY(-50%);
@@ -43,6 +63,7 @@
 
 
 .center() {
+  position: relative;
   left: 50%;
   top: 50%;
 
