@@ -23,7 +23,7 @@ define([
         this._events[e].destroy();
       }
 
-      this._deactivate();
+      this.deactivate();
     },
 
 
@@ -88,7 +88,7 @@ define([
       }
 
       if (!chosen) {
-        this._deactivate();
+        this.deactivate();
       } else {
         this._mouseDown = true;  
       }
@@ -122,7 +122,7 @@ define([
 
 
     _activate: function (child) {
-      this._deactivate();
+      this.deactivate();
       this._activeView = child;
       this._boundingBox = this.get('boundingBox');
 
@@ -139,7 +139,7 @@ define([
     },
 
 
-    _deactivate: function () {
+    deactivate: function () {
       if (this._boundingBox) {
         this._boundingBox.destroy();
         this._boundingBox = null;
