@@ -21,6 +21,12 @@ define([
 
 
     _attrs: {
+      data: {
+        value: {
+          content: null
+        }
+      },
+
       domEvents: {
         value: [{
           matchClass: '.ui-grid-item',
@@ -35,7 +41,7 @@ define([
 
       template: {
         value: '<div class="ui-grid-item-ratio">' +
-                  '<div class="ui-grid-item-content"></div>' +
+                  '<div class="ui-grid-item-content">{{{content}}}</div>' +
                 '</div>'
       }
     }
