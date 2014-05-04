@@ -51,11 +51,9 @@ define([
 
     addShape: function (shape) {
       var data = shape.data;
-      var view;
+      var view = this.getShapeByType(data.type);
 
-      view = this.getShapeByType(data.type);
-
-      this.addChild({
+      return this.addChild({
         view: view,
         attrs: {
           data: data
