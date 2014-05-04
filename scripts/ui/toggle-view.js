@@ -28,10 +28,13 @@ define([
     reset: function () {
       if (this._currentAction) {
         this._currentAction.destroy();
+        this._currentAction = null;
       }
 
-      this._currentView = null;
-      this._currentAction = null;
+      if (this._currentView) {
+        this._currentView.deactivate();
+        this._currentView = null;
+      }
     },
 
 
@@ -50,6 +53,8 @@ define([
         this.reset();
 
         this._currentView = activeView;
+        this._currentView.activate();
+
         this._setAndPropagateAction();
 
       }
