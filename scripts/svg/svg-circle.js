@@ -2,10 +2,9 @@
 define([
 
   'core/create',
-  'svg/svg-shape-view',
-  'svg/svg-types'
+  'svg/svg-shape-view'
 
-], function (Create, SVGShape, SVGTypes) {
+], function (Create, SVGShape) {
 
   /**
    * SVGCircle
@@ -17,11 +16,25 @@ define([
         value: {
           cx: null,
           cy: null,
-          radius: null,
-          fill: null,
-          strokeWidth: 0,
-          stroke: null
+          radius: null
         }
+      },
+
+      dataBindings: {
+        value: [
+          {
+            key: 'cx',
+            attribute: 'cx'
+          },
+          {
+            key: 'cy',
+            attribute: 'cy'
+          },
+          {
+            key: 'radius',
+            attribute: 'radius'
+          }
+        ]
       },
 
       position: {
@@ -61,10 +74,6 @@ define([
                  '{{#strokeWidth}}stroke-width:{{strokeWidth}};{{/strokeWidth}}' +
                  '{{#stroke}}stroke:{{stroke}};{{/stroke}}' +
                '"></circle>'
-      },
-
-      type: {
-        value: SVGTypes.CIRCLE
       }
     }
 

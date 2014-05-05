@@ -2,10 +2,9 @@
 define([
 
   'core/create',
-  'svg/svg-shape-view',
-  'svg/svg-types'
+  'svg/svg-shape-view'
 
-], function (Create, SVGShapeView, SVGTypes) {
+], function (Create, SVGShapeView) {
 
   /**
    * SVGRect
@@ -18,11 +17,29 @@ define([
           x: null,
           y: null,
           width: null,
-          height: null,
-          fill: null,
-          strokeWidth: 0,
-          stroke: null
+          height: null
         }
+      },
+
+      dataBindings: {
+        value: [
+          {
+            key: 'x',
+            attribute: 'x'
+          },
+          {
+            key: 'y',
+            attribute: 'y'
+          },
+          {
+            key: 'width',
+            attribute: 'width'
+          },
+          {
+            key: 'height',
+            attribute: 'height'
+          }
+        ]
       },
 
       position: {
@@ -59,10 +76,6 @@ define([
                  '{{#strokeWidth}}stroke-width:{{strokeWidth}};{{/strokeWidth}}' +
                  '{{#stroke}}stroke:{{stroke}};{{/stroke}}' +
                '"></rect>'
-      },
-
-      type: {
-        value: SVGTypes.RECT
       }
     }
 

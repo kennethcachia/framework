@@ -12,30 +12,62 @@ define([
    */
   var SVGShape = Create('SVGShape', {
 
-    initializer: function () {
-      this.on('dataChange', this._syncAttribute, this);
+    _updateStyle: function () {
+      var data = this.get('data');
+
+      var fill = data.fill;
+      var strokeWidth = data.strokeWidth;
+      var stroke = data.stroke;
+
+      var style = '';
+
+      style += this._appendStyle('fill', fill);
+      style += this._appendStyle('stroke-width', strokeWidth);
+      style += this._appendStyle('stroke', stroke);
+
+      return style;
     },
 
 
-    _syncAttribute: function () {
-      var container = this.get('container');
-      var data = this.get('data');
-
-      if (this._rendered) {
-        for (var d in data) {
-          if (data[d] && container._node.hasOwnProperty(d)) {
-            container.setAttribute(d, data[d]);
-          }
-        }
-      }
+    _appendStyle: function (label, value) {
+      return label + ': ' + value + ';';
     },
 
 
     _attrs: {
       data: {
         value: {
+          fill: null,
+          strokeWidth: 0,
+          stroke: null,
           type: null
         }
+      },
+
+      dataBindings: {
+        value: [
+          {
+            key: 'fill',
+            attribute: 'style',
+            setElementValue: function () {
+              return this._updateStyle();
+            }
+          },
+          {
+            key: 'stroke',
+            attribute: 'style',
+            setElementValue: function () {
+              return this._updateStyle();
+            }
+          },
+          {
+            key: 'strokeWidth',
+            attribute: 'style',
+            setElementValue: function () {
+              return this._updateStyle();
+            }
+          }
+        ]
       },
 
       position: {
