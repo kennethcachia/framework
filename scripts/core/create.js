@@ -25,6 +25,23 @@ define(function () {
     }
 
 
+    function mergeArrays(a, b) {
+      var concat = a.concat(b);
+
+      // Dedupe
+      // TODO: improve?
+      for (var i = 0; i < concat.length; i++) {
+        for (var j = i + 1; j < concat.length; j++) {
+          if (concat[i] === concat[j]) {
+            concat.splice(j--, 1);
+          }
+        }
+      }
+
+      return concat;
+    }
+
+
     function mergeObjects(a, b) {
       var na = clone(a);
       var nb = clone(b);
@@ -37,7 +54,12 @@ define(function () {
           if (na[key] && !na[key]._name && na[key].constructor.name === 'Object') {
             merged[key] = mergeObjects(na[key], merged[key]);
           } else {
-            merged[key] = na[key];
+
+            if (Array.isArray(merged[key]) && Array.isArray(na[key])) {
+              merged[key] = mergeArrays(merged[key], na[key]);
+            } else {
+              merged[key] = na[key];
+            }
           }
         }
 
