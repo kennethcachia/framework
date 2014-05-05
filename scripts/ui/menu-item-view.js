@@ -12,13 +12,8 @@ define([
   var MenuItemView = Create('MenuItemView', {
 
     _attrs: {
-      data: {
-        value: {
-          label: null
-        }
-      },
-
       container: {
+        // Use data-label as a CSS hook.
         value: '<div class="menu-item" data-label="{{label}}"></div>'
       },
 
