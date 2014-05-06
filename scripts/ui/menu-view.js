@@ -2,9 +2,9 @@
 define([
 
   'core/create',
-  'ui/toggle-view'
+  'ui/action-view'
 
-], function (Create, ToggleView) {
+], function (Create, ActionView) {
 
   /**
    * MenuView
@@ -23,7 +23,7 @@ define([
       }
     }
 
-  }, ToggleView);
+  }, ActionView);
 
 
   return MenuView;

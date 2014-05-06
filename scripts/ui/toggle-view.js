@@ -2,9 +2,9 @@
 define([
 
   'core/create',
-  'mv/parent-view'
+  'ui/action-view'
 
-], function (Create, ParentView) {
+], function (Create, ActionView) {
 
   /**
    * ToggleView
@@ -13,24 +13,18 @@ define([
 
     initializer: function () {
       this._currentView = null;
-      this._currentAction = null;
 
-      this.on('triggerClick', this._changeView, this);
-      this.on(['rendered', 'activeViewChange'], this._setView, this);
+      this.on('action', this._onAction, this);
+      this.on('activeViewChange', this._setView, this);
     },
 
 
     destructor: function () {
-      this.reset();
+      this._reset();
     },
 
 
-    reset: function () {
-      if (this._currentAction) {
-        this._currentAction.destroy();
-        this._currentAction = null;
-      }
-
+    _reset: function () {
       if (this._currentView) {
         this._currentView.deactivate();
         this._currentView = null;
@@ -38,8 +32,9 @@ define([
     },
 
 
-    _changeView: function (e) {
-      this.set('activeView', e.source);
+    _onAction: function (data) {
+      this.set('currentAction', data.action);
+      this.set('activeView', data.source);
 
       return false;
     },
@@ -47,33 +42,20 @@ define([
 
     _setView: function () {
       var activeView = this.get('activeView');
+      var currentAction = this.get('currentAction');
 
       if (activeView && activeView !== this._currentView) {
 
-        this.reset();
+        this._reset();
 
         this._currentView = activeView;
         this._currentView.activate();
 
-        this._setAndPropagateAction();
+        this.fire('toggle', {
+          action: currentAction
+        });
 
       }
-    },
-
-
-    _setAndPropagateAction: function () {
-      var activeView = this.get('activeView');
-      var action = activeView.get('action');
-
-      if (action) {
-        this._currentAction = action.call(this);
-      } else {
-        this._currentAction = null;
-      }
-
-      this.fire('action', {
-        action: this._currentAction
-      });
     },
 
 
@@ -82,12 +64,20 @@ define([
         value: null
       },
 
+      currentAction: {
+        value: null
+      },
+
+      repeatAction: {
+        value: false
+      },
+
       container: {
         value: '<div class="toggle-view"></div>'
       }
     }
 
-  }, ParentView);
+  }, ActionView);
 
 
   return ToggleView;

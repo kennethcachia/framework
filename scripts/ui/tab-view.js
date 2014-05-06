@@ -12,27 +12,22 @@ define([
   var TabView = Create('TabView', {
 
     initializer: function () {
-      this.on('action', this._onAction, this);
+      this.on('toggle', this._onToggle, this);
       this.on('rendered', this._activateFirstTab, this);
     },
 
 
     setActiveTabByIndex: function (index) {
-      var children = this.getRenderedChildren();
-      var activeChild = children[index - 1];
-
-      if (activeChild) {
-        this.set('activeView', activeChild);
-      }
+      this.performActionByIndex(index);
     },
 
 
     _activateFirstTab: function () {
-      this.setActiveTabByIndex(1);
+      this.performActionByIndex(1);
     },
 
 
-    _onAction: function (data) {
+    _onToggle: function (data) {
       var action = data.action;
 
       if (action) {
