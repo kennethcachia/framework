@@ -7,9 +7,9 @@ define([
 ], function (Create, View) {
 
   /**
-   * Input Box
+   * InputView
    */
-  var ViewInput = Create('ViewInput', {
+  var InputView = Create('InputView', {
 
     _attrs: {
       data: {
@@ -41,6 +41,6 @@ define([
   }, View);
 
 
-  return ViewInput;
+  return InputView;
 
 });

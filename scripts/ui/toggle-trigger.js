@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'ui/activated-view'
+  'ui/activated'
 
 ], function (Create, ActivatedView) {
 

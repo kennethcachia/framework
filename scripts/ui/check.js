@@ -2,14 +2,14 @@
 define([
 
   'core/create',
-  'ui/input-view'
+  'ui/input'
 
-], function (Create, ViewInput) {
+], function (Create, InputView) {
 
   /**
    * Checkbox
    */
-  var ViewCheck = Create('ViewCheck', {
+  var CheckView = Create('CheckView', {
 
     _attrs: {
       data: {
@@ -28,9 +28,9 @@ define([
       }
     }
 
-  }, ViewInput);
+  }, InputView);
 
 
-  return ViewCheck;
+  return CheckView;
 
 });

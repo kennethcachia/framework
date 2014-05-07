@@ -8,7 +8,7 @@ define([
   'svg/svg-rect',
   'svg/svg-circle'
 
-], function (Create, SVG, ParentView, SVGTypes, SVGRect, SVGCircle) {
+], function (Create, SVGElement, ParentView, SVGTypes, SVGRectView, SVGCircleView) {
 
   /**
    * SVG View
@@ -19,7 +19,7 @@ define([
       var container = this.get('container');
 
       if (!container) {
-        container = new SVG();
+        container = new SVGElement();
         this.set('container', container);
       }
 
@@ -37,11 +37,11 @@ define([
 
       switch (type) {
         case types.RECT:
-          shape = SVGRect;
+          shape = SVGRectView;
           break;
 
         case types.CIRCLE:
-          shape = SVGCircle;
+          shape = SVGCircleView;
           break;
       }
 

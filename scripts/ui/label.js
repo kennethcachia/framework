@@ -7,9 +7,9 @@ define([
 ], function (Create, View) {
 
   /**
-   * Label
+   * LabelView
    */
-  var ViewLabel = Create('ViewLabel', {
+  var LabelView = Create('LabelView', {
 
     _attrs: {
       data: {
@@ -30,6 +30,6 @@ define([
   }, View);
 
 
-  return ViewLabel;
+  return LabelView;
 
 });

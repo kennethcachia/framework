@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'ui/action-view'
+  'ui/action'
 
 ], function (Create, ActionView) {
 

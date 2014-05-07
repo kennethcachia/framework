@@ -7,9 +7,9 @@ define([
 ], function (Create, View) {
 
   /**
-   * Grid
+   * GridItemView
    */
-  var ViewGridItem = Create('ViewGridItem', {
+  var GridItemView = Create('GridItemView', {
 
     _clickItem: function (domElement) {
       var data = this.get('data');
@@ -49,6 +49,6 @@ define([
   }, View);
 
 
-  return ViewGridItem;
+  return GridItemView;
 
 });

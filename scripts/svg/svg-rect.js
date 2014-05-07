@@ -2,14 +2,14 @@
 define([
 
   'core/create',
-  'svg/svg-shape-view'
+  'svg/svg-shape'
 
 ], function (Create, SVGShapeView) {
 
   /**
-   * SVGRect
+   * SVGRectView
    */
-  var SVGRect = Create('SVGRect', {
+  var SVGRectView = Create('SVGRectView', {
 
     _attrs: {
       data: {
@@ -82,6 +82,6 @@ define([
   }, SVGShapeView);
 
 
-  return SVGRect;
+  return SVGRectView;
 
 });

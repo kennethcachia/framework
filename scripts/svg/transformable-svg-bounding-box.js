@@ -4,12 +4,12 @@ define([
   'core/create',
   'svg/svg-rect'
 
-], function (Create, SVGRect) {
+], function (Create, SVGRectView) {
 
   /**
-   * Transformable SVG Bounding Box
+   * TransformableSVGBoundingBoxView
    */
-  var TransformableSVGBoundingBox = Create('TransformableSVGBoundingBox', {
+  var TransformableSVGBoundingBoxView = Create('TransformableSVGBoundingBoxView', {
 
     _attrs: {
       data: {
@@ -21,9 +21,9 @@ define([
       }
     }
 
-  }, SVGRect);
+  }, SVGRectView);
 
 
-  return TransformableSVGBoundingBox;
+  return TransformableSVGBoundingBoxView;
 
 });

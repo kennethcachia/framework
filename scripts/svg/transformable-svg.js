@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'svg/svg-view',
+  'svg/svg',
   'svg/transformable-svg-bounding-box',
   'core/dom-element'
 

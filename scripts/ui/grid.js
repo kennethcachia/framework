@@ -7,9 +7,9 @@ define([
 ], function (Create, ParentView) {
 
   /**
-   * Grid
+   * GridView
    */
-  var ViewGrid = Create('ViewGrid', {
+  var GridView = Create('GridView', {
 
     _attrs: {
       data: {
@@ -26,6 +26,6 @@ define([
   }, ParentView);
 
 
-  return ViewGrid;
+  return GridView;
 
 });

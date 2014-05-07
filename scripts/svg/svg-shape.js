@@ -8,9 +8,9 @@ define([
 ], function (Create, View, SVGElement) {
 
   /**
-   * SVGShape
+   * SVGShapeView
    */
-  var SVGShape = Create('SVGShape', {
+  var SVGShapeView = Create('SVGShapeView', {
 
     _updateStyle: function () {
       var data = this.get('data');
@@ -92,6 +92,6 @@ define([
   }, View);
 
 
-  return SVGShape;
+  return SVGShapeView;
 
 });

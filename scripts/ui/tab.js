@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'ui/toggle-view'
+  'ui/toggle'
 
 ], function (Create, ToggleView) {
 

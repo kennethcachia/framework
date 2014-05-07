@@ -2,7 +2,7 @@
 define([
 
   'core/create',
-  'ui/toggle-trigger-view'
+  'ui/toggle-trigger'
 
 ], function (Create, ToggleTriggerView) {
 
