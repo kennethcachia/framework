@@ -11,11 +11,23 @@ define([
    */
   var ButtonView = Create('ButtonView', {
 
+    _clickItem: function () {
+      this.fire('buttonClicked');
+    },
+
+
     _attrs: {
       data: {
         value: {
           label: null
         }
+      },
+
+      domEvents: {
+        value: [{
+          eventName: 'click',
+          callback: '_clickItem'
+        }],
       },
 
       container: {
