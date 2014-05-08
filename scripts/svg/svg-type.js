@@ -7,9 +7,9 @@ define([
 ], function (Create, Enum) {
 
   /**
-   * SVGTypes
+   * SVGType
    */
-  var SVGTypes = Create('SVGTypes', {
+  var SVGType = Create('SVGType', {
 
     _attrs: {
       keys: {
@@ -20,6 +20,6 @@ define([
   }, Enum);
 
 
-  return new SVGTypes();
+  return new SVGType();
 
 });

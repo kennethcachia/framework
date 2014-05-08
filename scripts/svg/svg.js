@@ -4,11 +4,11 @@ define([
   'core/create',
   'svg/svg-element', 
   'mv/parent-view',
-  'svg/svg-types',
+  'svg/svg-type',
   'svg/svg-rect',
   'svg/svg-circle'
 
-], function (Create, SVGElement, ParentView, SVGTypes, SVGRectView, SVGCircleView) {
+], function (Create, SVGElement, ParentView, SVGType, SVGRectView, SVGCircleView) {
 
   /**
    * SVG View
@@ -87,7 +87,7 @@ define([
         value: null,
 
         default: function () {
-          return SVGTypes;
+          return SVGType;
         }
       }
     }
