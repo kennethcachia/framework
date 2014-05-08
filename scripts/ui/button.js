@@ -11,7 +11,7 @@ define([
    */
   var ButtonView = Create('ButtonView', {
 
-    _clickItem: function () {
+    _click: function () {
       this.fire('buttonClicked');
     },
 
@@ -26,7 +26,7 @@ define([
       domEvents: {
         value: [{
           eventName: 'click',
-          callback: '_clickItem'
+          callback: '_click'
         }],
       },
 
