@@ -7,16 +7,16 @@ define([
 ], function (Create, View) {
 
   /**
-   * DropzoneView
+   * UploadView
    */
-  var DropzoneView = Create('DropzoneView', {
+  var UploadView = Create('UploadView', {
 
     _onChange: function (event, e) {
       var files = e.target.files;
 
       this.fire('filesSelected', {
         files: files
-      });
+      }, true);
     },
 
 
@@ -35,7 +35,7 @@ define([
       },
 
       container: {
-        value: '<div class="ui-dropzone"></div>'
+        value: '<div class="ui-upload"></div>'
       },
 
       template: {
@@ -46,6 +46,6 @@ define([
   }, View);
 
 
-  return DropzoneView;
+  return UploadView;
 
 });

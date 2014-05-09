@@ -51,16 +51,16 @@
 
 
 /* ==========================================================================
-   Dropzone
+   Upload
    ========================================================================== */
 
-.ui-dropzone {
+.ui-upload {
   overflow: hidden;
-  position: relative;
-  width: 200px;
-  height: 200px;
-  background: #fff;
-  border: 5px solid #aaa;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   
   // Move the input out of the way as hovering 
   // over the original 'Choose File' button 
@@ -73,6 +73,11 @@
     left: -100%;
     width: 200%;
     height: 200%;
+  }
+
+  &--button {
+    overflow: hidden;
+    position: relative;
   }
 }
 
