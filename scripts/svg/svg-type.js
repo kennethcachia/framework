@@ -13,7 +13,7 @@ define([
 
     _attrs: {
       keys: {
-        value: ['RECT', 'CIRCLE']
+        value: ['RECT', 'CIRCLE', 'PATH']
       }
     }
 

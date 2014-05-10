@@ -6,9 +6,10 @@ define([
   'mv/parent-view',
   'svg/svg-type',
   'svg/svg-rect',
-  'svg/svg-circle'
+  'svg/svg-circle',
+  'svg/svg-path'
 
-], function (Create, SVGElement, ParentView, SVGType, SVGRectView, SVGCircleView) {
+], function (Create, SVGElement, ParentView, SVGType, SVGRectView, SVGCircleView, SVGPathView) {
 
   /**
    * SVG View
@@ -42,6 +43,10 @@ define([
 
         case types.CIRCLE:
           shape = SVGCircleView;
+          break;
+
+        case types.PATH:
+          shape = SVGPathView;
           break;
       }
 
