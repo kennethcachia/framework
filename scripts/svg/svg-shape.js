@@ -12,6 +12,79 @@ define([
    */
   var SVGShapeView = Create('SVGShapeView', {
 
+    initializer: function () {
+      this._addCoreAttributes();
+    },
+
+
+    // Gets the bounding box, in current user space,
+    // of the geometry of all contained graphics elements.
+    getBoundingBox: function () {
+      var container = this.get('container');
+      var bbox = container._node.getBBox();
+
+      return bbox;
+    },
+
+
+    translate: function () {
+      var data = this.get('data');
+      var bb = this.getBoundingBox();
+
+      var x = data.x - bb.x;
+      var y = data.y - bb.y;
+
+      var translate = 'translate(' + x + ',' + y + ')';
+
+      return translate;
+    },
+
+
+    _addCoreAttributes: function () {
+      var attributes = [];
+
+      attributes.push({
+        name: 'style',
+        value: this._updateStyle()
+      });
+
+      var attr = this._flattenAttributes(attributes);
+
+      this._writeAttributes(attr);
+    },
+
+
+    _flattenAttributes: function (attributes) {
+      var attr;
+      var flat = '';
+
+      for (var a = 0; a < attributes.length; a++) {
+        attr = attributes[a];
+
+        if (attr.value) {
+          flat += ' ' + attr.name + '="' + attr.value + '"';
+        }
+      }
+
+      return flat;
+    },
+
+
+    _writeAttributes: function (attributes) {
+      var container = this.get('container');
+
+      var closing = /\/>|>/;
+      var pos = container.search(closing) - 1;
+
+      var prefix = container.slice(0, pos);
+      var suffix = container.slice(pos);
+
+      container = prefix + attributes + suffix;
+
+      this.set('container', container);
+    },
+
+
     _updateStyle: function () {
       var data = this.get('data');
 
@@ -30,16 +103,28 @@ define([
 
 
     _appendStyle: function (label, value) {
-      return label + ': ' + value + ';';
+      var str = '';
+
+      if (value) {
+        str = label + ':' + value + '; ';
+      }
+
+      return str;
     },
 
 
     _attrs: {
       data: {
         value: {
+          x: null,
+          y: null,
+          width: null,
+          height: null,
+
           fill: null,
           strokeWidth: 0,
           stroke: null,
+
           type: null
         }
       },
@@ -71,13 +156,33 @@ define([
       },
 
       position: {
-        setter: function (pos) {},
-        getter: function () {}
+        setter: function (pos) {
+          this.set('data.x', pos.x);
+          this.set('data.y', pos.y);
+        },
+
+        getter: function () {
+          return {
+            x: this.get('data').x,
+            y: this.get('data').y
+          };
+        }
       },
 
       size: {
-        setter: function (size) {},
-        getter: function () {}
+        setter: function (size) {
+          this.set('data.width', size.width);
+          this.set('data.height', size.height);
+        },
+
+        getter: function () {
+          var bb = this.getBoundingBox();
+
+          return {
+            width: bb.width,
+            height: bb.height
+          };
+        }
       },
 
       container: {
