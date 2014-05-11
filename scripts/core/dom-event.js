@@ -15,7 +15,7 @@ define([
 
 
   /**
-   * DOM Event
+   * DOMEvent
    */
   var DOMEvent = Create('DOMEvent', {
 

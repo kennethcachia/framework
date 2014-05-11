@@ -8,7 +8,7 @@ define([
 ], function (Create, DOM, DOMEvent) {
 
   /**
-   * Wrapper for an HTML Node
+   * DOMElement
    */
   var DOMElement = Create('DOMElement', {
 

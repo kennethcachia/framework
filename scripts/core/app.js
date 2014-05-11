@@ -7,7 +7,7 @@ define([
 ], function (Create, DomReady) {
 
   /**
-   * Main Application wrapper
+   * App
    */
   var App = Create('App', {
 

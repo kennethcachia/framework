@@ -9,7 +9,7 @@ define([
   // TODO: Extend to support ID's and attributes
 
   /**
-   * DOM Query
+   * DOMQuery
    */
   var DOMQuery = Create('DOMQuery', {
 

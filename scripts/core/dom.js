@@ -6,7 +6,7 @@ define([
 ], function (Create) {
 
   /**
-   * DOM interactions
+   * DOM
    */
   var DOM = {
 
