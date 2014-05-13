@@ -2,28 +2,23 @@
 define([
 
   'core/create',
-  'file/reader'
+  'file/reader',
+  'file/reader-type'
 
-], function (Create, Reader) {
+], function (Create, Reader, ReaderType) {
 
   /**
    * SVGReader
    */
   var SVGReader = Create('SVGReader', {
 
-    initializer: function () {
-      this.on('fileLoaded', this._onFileLoaded, this);
-    },
-
-
-    _onFileLoaded: function (data) {
-      console.log(data.raw);
-    },
-
-
     _attrs: {
       acceptType: {
         value: 'image/svg+xml'
+      },
+
+      type: {
+        value: ReaderType.TEXT
       }
     }
 
