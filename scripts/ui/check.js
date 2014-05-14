@@ -2,14 +2,28 @@
 define([
 
   'core/create',
-  'ui/input'
+  'mv/view'
 
-], function (Create, InputView) {
+], function (Create, View) {
 
   /**
    * Checkbox
    */
   var CheckView = Create('CheckView', {
+
+    initializer: function () {
+      this.on('data.checkedChange', this._onChange, this);
+    },
+
+
+    _onChange: function () {
+      var data = {
+        checked: this.get('data').checked
+      };
+
+      this.fire('checkChanged', data, true);
+    },
+
 
     _attrs: {
       data: {
@@ -17,6 +31,17 @@ define([
           value: null,
           checked: false
         }
+      },
+
+      dataBindings: {
+        value: [
+          {
+            key: 'checked',
+            attribute: 'checked',
+            element: 'input',
+            event: 'change'
+          }
+        ]
       },
 
       container: {
@@ -28,7 +53,7 @@ define([
       }
     }
 
-  }, InputView);
+  }, View);
 
 
   return CheckView;
