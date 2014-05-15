@@ -52,7 +52,9 @@ define([
 
     on: function (element, eventName, callback, context) {
       var pointer = callback.bind(context);
+
       element.addEventListener(eventName, pointer, true);
+
       return pointer;
     },
 
@@ -74,6 +76,7 @@ define([
 
     hasClass: function (element, className) {
       className = className.replace('.', '');
+
       return element.classList.contains(className);
     },
 
