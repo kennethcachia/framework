@@ -24,8 +24,9 @@ define([
 
       this._rendered = false;
       this._visible = false;
-
       this._dataBindings = [];
+
+      this.on('rendered', this._bindEvents, this);
     },
 
 
@@ -76,6 +77,16 @@ define([
 
     isRendered: function () {
       return this._rendered;
+    },
+
+
+    bindEvents: function () {
+      // TODO: Handle superclass events?
+    },
+
+
+    _bindEvents: function () {
+      this.bindEvents();
     },
 
 

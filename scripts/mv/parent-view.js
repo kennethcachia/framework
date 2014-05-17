@@ -29,6 +29,11 @@ define([
     },
 
 
+    _bindEvents: function () {
+      this.on('childrenRendered', this.bindEvents, this);
+    },
+
+
     _onChildrenChange: function () {
       if (this._rendered) {
         this._destroyChildren();
