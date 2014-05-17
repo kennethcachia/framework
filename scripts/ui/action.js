@@ -38,6 +38,8 @@ define([
       var source = data.source;
 
       this._performAction(source);
+
+      return false;
     },
 
 
