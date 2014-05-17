@@ -32,7 +32,7 @@ define([
       },
 
       container: {
-        value: '<div class="toggle-trigger-view"><span>{{label}}</span></div>'
+        value: '<div class="toggle-trigger-view" data-label="{{label}}"><span>{{label}}</span></div>'
       },
 
       domEvents: {
