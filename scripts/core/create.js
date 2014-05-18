@@ -315,7 +315,7 @@ define(function () {
 
     if (extension) {
       mergeProtos(extension.prototype, Base.prototype);
-      Base.prototype.super = extension.prototype;
+      Base.super = extension.prototype;
     }
 
     Base.prototype._initializers = _initializers;
