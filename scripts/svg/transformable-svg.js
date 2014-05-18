@@ -13,11 +13,6 @@ define([
    */
   var TransformableSVGView = Create('TransformableSVGView', {
 
-    initializer: function () {
-      this._bindEvents();
-    },
-
-
     destructor: function () {
       for (var e = 0; e < this._events.length; e++) {
         this._events[e].destroy();
@@ -27,7 +22,9 @@ define([
     },
 
 
-    _bindEvents: function () {
+    bindEvents: function () {
+      TransformableSVGView.super.bindEvents.call(this);
+
       var container = this.get('container');
 
       this._events = [];
