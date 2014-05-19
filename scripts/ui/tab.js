@@ -11,9 +11,9 @@ define([
    */
   var TabView = Create('TabView', {
 
-    initializer: function () {
+    bindEvents: function () {
       this.on('toggle', this._onToggle, this);
-      this.on('rendered', this._activateFirstTab, this);
+      this.on('childrenRendered', this._activateFirstTab, this);
     },
 
 
