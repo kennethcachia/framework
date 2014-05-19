@@ -7,9 +7,10 @@ define([
 
 ], function (Create, DOM, DOMQuery) {
 
-  // TODO: Avoid this circular dep?
+  // Fix circular dependency.
   var DOMElement;
-  require(["core/dom-element"], function (domElement) {
+
+  require(['core/dom-element'], function (domElement) {
     DOMElement = domElement;
   });
 
