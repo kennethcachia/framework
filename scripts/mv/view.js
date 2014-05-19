@@ -50,7 +50,7 @@ define([
         this._visible = true;
 
       } else {
-        console.log('View not rendered yet');
+        throw new Error('View not rendered yet');
       }
     },
 
@@ -69,7 +69,7 @@ define([
         this._render(options);
 
       } else {
-        console.log('View already rendered -- Skipping');
+        throw new Error('View already rendered -- Skipping');
       }
 
     },
@@ -104,7 +104,7 @@ define([
         this._handleDataBindings();
 
       } else {
-        throw 'View has no container for rendering.';
+        throw new Error('View has no container for rendering');
       }
     },
 

@@ -34,7 +34,7 @@ define([
       var query = this.get('query');
 
       if (query.indexOf('.') === -1) {
-        throw 'Classname is required - Events/Query';
+        throw new Error('A classname is required');
       }
     },
 

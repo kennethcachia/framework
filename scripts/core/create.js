@@ -88,7 +88,7 @@ define(function () {
 
 
     if (!name || typeof name !== 'string') {
-      throw 'No Name';
+      throw new Error('No Name');
     }
 
 

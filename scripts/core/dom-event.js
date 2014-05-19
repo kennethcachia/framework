@@ -88,7 +88,7 @@ define([
         callbackFn.call(context, domElement, e);
 
       } else {
-        throw 'Callback does not exist - ' + callback;
+        throw new Error('Callback does not exist');
       }
     },
 
