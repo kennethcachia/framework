@@ -20,7 +20,7 @@ define([
       this.on('htmlChange', this._setNode, this);
 
       this._domEvents = new ObjectArray({
-        type: DOMEvent
+        defaultType: DOMEvent
       });
     },
 
