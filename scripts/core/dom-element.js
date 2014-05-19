@@ -3,9 +3,10 @@ define([
 
   'core/create',
   'core/dom',
+  'core/object-array',
   'core/dom-event'
 
-], function (Create, DOM, DOMEvent) {
+], function (Create, DOM, ObjectArray, DOMEvent) {
 
   /**
    * DOMElement
@@ -18,12 +19,14 @@ define([
       this.on('selectorChange', this._setNode, this);
       this.on('htmlChange', this._setNode, this);
 
-      this._domEvents = [];
+      this._domEvents = new ObjectArray({
+        type: DOMEvent
+      });
     },
 
 
     destructor: function () {
-      this._destroyDOMEvents();
+      this._domEvents.destroy();
       this._node.remove();
     },
 
@@ -35,8 +38,8 @@ define([
 
     one: function (selector) {
       var node = DOM.one(selector, this._node);
-
       var elem = new DOMElement();
+
       elem.fromNode(node);
 
       return elem;
@@ -91,10 +94,7 @@ define([
     addDOMEvent: function (e) {
       e.source = this._node;
 
-      var domEvent = new DOMEvent(e);
-      this._domEvents.push(domEvent);
-
-      return domEvent;
+      return this._domEvents.add(e);
     },
 
 
@@ -134,12 +134,17 @@ define([
     },
 
 
-    _destroyDOMEvents: function () {
-      var events = this._domEvents;
+    asString: function () {
+      var ns = this.get('namespaceURI');
 
-      for (var e = 0; e < events.length; e++) {
-        events[e].destroy();
-      }
+      var wrapper = DOM.create('<div></div>', ns);
+      var clone = DOM.create(this._node.outerHTML, ns);
+
+      clone.innerHTML = this._node.innerHTML;
+
+      DOM.appendChild(wrapper, clone);
+
+      return wrapper.innerHTML;
     },
 
 
