@@ -3,10 +3,11 @@ define([
 
   'core/Create',
   'core/dom-element',
+  'core/object-array',
   'mv/data-binding',
   'third-party/mustache'
 
-], function (Create, DOMElement, DataBinding, Mustache) {
+], function (Create, DOMElement, ObjectArray, DataBinding, Mustache) {
 
   /**
    * View
@@ -14,17 +15,14 @@ define([
   var View = Create('View', {
 
     initializer: function () {
-      var anchor = this.get('anchor');
-
-      if (!anchor) {
-        anchor = new DOMElement();
-        anchor.fromNode(document.body);
-        this.set('anchor', anchor);
-      }
-
       this._rendered = false;
       this._visible = false;
-      this._dataBindings = [];
+
+      this._dataBindings = new ObjectArray({
+        defaultType: DataBinding
+      });
+
+      this._initAnchor();
 
       this.on('rendered', this.bindEvents, this);
     },
@@ -39,7 +37,7 @@ define([
       this._rendered = false;
       this._visible = false;
 
-      this._destroyDataBindings();
+      this._dataBindings.destroy();
     },
 
 
@@ -62,7 +60,6 @@ define([
 
 
     render: function (options) {
-
       if (!this._rendered) {
 
         this._createContainer();
@@ -71,7 +68,6 @@ define([
       } else {
         throw new Error('View already rendered -- Skipping');
       }
-
     },
 
 
@@ -81,6 +77,18 @@ define([
 
 
     bindEvents: function () {},
+
+
+    _initAnchor: function () {
+      var anchor = this.get('anchor');
+
+      if (!anchor) {
+        anchor = new DOMElement();
+        anchor.fromNode(document.body);
+
+        this.set('anchor', anchor);
+      }
+    },
 
 
     _render: function (options) {
@@ -122,6 +130,7 @@ define([
 
     _renderFromTemplate: function (template) {
       var data = this.get('data');
+
       return Mustache.render(template, data);
     },
 
@@ -129,10 +138,6 @@ define([
     _createContainer: function () {
       var container = this.get('container');
       var containerType = this.get('containerType');
-
-      if (!containerType) {
-        containerType = DOMElement;
-      }
 
       if (typeof container === 'string') {
         var output = this._renderFromTemplate(container);
@@ -179,24 +184,14 @@ define([
       var attr;
       var dataBinding;
 
-      this._destroyDataBindings();
+      this._dataBindings.purge();
 
       for (var d = 0; d < dataBindings.length; d++) {
         attr = dataBindings[d];
         attr.context = this;
 
-        dataBinding = new DataBinding(attr);
-        this._dataBindings.push(dataBinding);
+        this._dataBindings.add(attr);
       }
-    },
-
-
-    _destroyDataBindings: function () {
-      for (var d = 0; d < this._dataBindings.length; d++) {
-        this._dataBindings[d].destroy();
-      }
-
-      this._dataBindings = [];
     },
 
 
@@ -206,7 +201,7 @@ define([
       },
 
       containerType: {
-        value: null
+        value: DOMElement
       },
 
       data: {
