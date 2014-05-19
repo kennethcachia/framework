@@ -2,9 +2,10 @@
 define([
 
   'core/create',
-  'mv/view'
+  'mv/view',
+  'core/object-array'
 
-], function (Create, View) {
+], function (Create, View, ObjectArray) {
 
   /**
    * Parent View
@@ -12,41 +13,42 @@ define([
   var ParentView = Create('ParentView', {
 
     initializer: function () {
-      this._renderedChildren = [];
+      this._renderedChildren = new ObjectArray();
+    },
 
-      this.on('rendered', this._renderChildren, this);
+
+    bindEvents: function () {
+      ParentView.super.bindEvents.call(this);
+
       this.on('childrenChange', this._onChildrenChange, this);
     },
 
 
     destructor: function () {
-      this._destroyChildren();
+      this._renderedChildren.destroy();
+    },
+
+
+    _render: function () {
+      try {
+        ParentView.super._render.call(this);
+        this._renderChildren();
+      } catch (e) {
+        throw new Error(e.message);
+      }
     },
 
 
     getRenderedChildren: function () {
-      return this._renderedChildren;
+      return this._renderedChildren.getItems();
     },
 
 
     _onChildrenChange: function () {
       if (this._rendered) {
-        this._destroyChildren();
+        this._renderedChildren.purge();
         this._renderChildren();
       }
-    },
-
-
-    _destroyChildren: function () {
-      var children = this.getRenderedChildren();
-
-      if (children) {
-        for (var c = 0; c < children.length; c++) {
-          children[c].destroy();
-        }
-      }
-
-      this._renderedChildren = [];
     },
 
 
@@ -68,7 +70,7 @@ define([
       childView.render(options);
       childView.on('dataChange', this._propagateChildDataChange, this);
 
-      this._renderedChildren.push(childView);
+      this._renderedChildren.addObject(childView);
 
       this.fire('appendedView', {
         child: childView
