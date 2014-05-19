@@ -69,12 +69,14 @@ define([
       if (callbackFn) {
 
         var matchClass = this.get('matchClass');
+        var checkAncestors = this.get('checkAncestors');
+
         var target = e.target;
 
         if (matchClass) {
           var isTarget = this._query.matches(target);
 
-          if (!isTarget) {
+          if (checkAncestors && !isTarget) {
             target = this._query.getMatchingAncestor(target);          
           }
         }
@@ -109,6 +111,10 @@ define([
 
       context: {
         value: null
+      },
+
+      checkAncestors: {
+        value: false
       }
     }
 
