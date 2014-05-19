@@ -51,6 +51,35 @@ define([
     },
 
 
+    activate: function (child) {
+      this.deactivate();
+      this._activeView = child;
+      this._boundingBox = this.get('boundingBox');
+
+      this.addChild(this._boundingBox, {
+        after: child
+      });
+
+      this._resizeBoundingBox();
+      this._alignBoundingBox();
+
+      this.fire('shapeSelected', {
+        shape: child
+      });
+    },
+
+
+    deactivate: function () {
+      if (this._boundingBox) {
+        this._boundingBox.destroy();
+        this._boundingBox = null;
+        this._activeView = null;
+
+        this.fire('shapeDeselected');
+      }
+    },
+
+
     _onRendered: function () {
       var container = this.get('container');
 
@@ -74,7 +103,8 @@ define([
 
           if (childContainer.isEqualTo(domElement)) {
             this._calculateOffset(child, e);
-            this._activate(child);
+            this.activate(child);
+
             chosen = true;
             break;
           }
@@ -115,35 +145,6 @@ define([
         x: e.layerX - coords.x,
         y: e.layerY - coords.y
       };
-    },
-
-
-    _activate: function (child) {
-      this.deactivate();
-      this._activeView = child;
-      this._boundingBox = this.get('boundingBox');
-
-      this.addChild(this._boundingBox, {
-        after: child
-      });
-
-      this._resizeBoundingBox();
-      this._alignBoundingBox();
-
-      this.fire('shapeSelected', {
-        shape: child
-      });
-    },
-
-
-    deactivate: function () {
-      if (this._boundingBox) {
-        this._boundingBox.destroy();
-        this._boundingBox = null;
-        this._activeView = null;
-
-        this.fire('shapeDeselected');
-      }
     },
 
 
