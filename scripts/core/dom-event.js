@@ -82,8 +82,8 @@ define([
         }
 
         var domElement = new DOMElement();
-        domElement.fromNode(target);
 
+        domElement.fromNode(target);
         callbackFn.call(context, domElement, e);
 
       } else {
