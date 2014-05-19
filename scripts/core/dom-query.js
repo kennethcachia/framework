@@ -6,8 +6,6 @@ define([
 
 ], function (Create, DOM) {
 
-  // TODO: Extend to support ID's and attributes
-
   /**
    * DOMQuery
    */
@@ -20,13 +18,14 @@ define([
 
     matches: function (element) {
       var query = this.get('query');
+
       return DOM.hasClass(element, query);
     },
 
 
     getMatchingAncestor: function (element) {
-      console.log('matching ancestor...');
       var query = this.get('query');
+
       return DOM.getAncestor(element, query);
     },
 
