@@ -11,23 +11,23 @@ define([
   var ObjectArray = Create('ObjectArray', {
 
     initializer: function () {
-      this._items = [];
+      this._init();
     },
 
 
     destructor: function () {
       this.purge();
       this._items = null;
+      this._index = null;
     },
 
 
     add: function (attrs, customType) {
       var defaultType = this.get('defaultType');
       var type = customType || defaultType;
-
       var obj = new type(attrs);
 
-      this._items.push(obj);
+      this.addObject(obj);
 
       return obj;
     },
@@ -35,6 +35,7 @@ define([
 
     addObject: function (obj) {
       this._items.push(obj);
+      this._addToIndex(obj);
     },
 
 
@@ -50,12 +51,41 @@ define([
         this._items[i].destroy();
       }
 
-      this._items = [];
+      this._init();
     },
 
 
     getItems: function () {
       return this._items;
+    },
+
+
+    getByPosition: function (position) {
+      return this._items[position];
+    },
+
+
+    getById: function (id) {
+      return this._index[id];
+    },
+
+
+    _addToIndex: function (obj) {
+      var id = obj.get('id');
+
+      if (id) {
+        if (this._index[id]) {
+          throw new Error('Id must be unique');
+        } else {
+          this._index[id] = obj;
+        }
+      }
+    },
+
+
+    _init: function () {
+      this._items = [];
+      this._index = {};
     },
 
 
