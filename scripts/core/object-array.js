@@ -38,10 +38,19 @@ define([
     },
 
 
+    each: function (fn, context) {
+      for (var i = 0; i < this._items.length; i++) {
+        fn.call(context, this._items[i]);
+      }
+    },
+
+
     purge: function () {
       for (var i = 0; i < this._items.length; i++) {
         this._items[i].destroy();
       }
+
+      this._items = [];
     },
 
 
