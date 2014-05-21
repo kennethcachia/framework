@@ -33,6 +33,19 @@ define([
     },
 
 
+    addFromList: function (list) {
+      var objects = [];
+      var object;
+
+      for (var i = 0; i < list.length; i++) {
+        object = this.add(list[i].attrs, list[i].type);
+        objects.push(object);
+      }
+
+      return objects;
+    },
+
+
     addObject: function (obj) {
       this._items.push(obj);
       this._addToIndex(obj);
