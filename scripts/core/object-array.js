@@ -17,8 +17,7 @@ define([
 
     destructor: function () {
       this.purge();
-      this._items = null;
-      this._index = null;
+      this._destroy();
     },
 
 
@@ -99,6 +98,12 @@ define([
     _init: function () {
       this._items = [];
       this._index = {};
+    },
+
+
+    _destroy: function () {
+      this._items = null;
+      this._index = null;
     },
 
 
