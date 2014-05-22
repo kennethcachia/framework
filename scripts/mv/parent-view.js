@@ -60,7 +60,7 @@ define([
 
       if (!child['getName']) {
         attrs.anchor = childrenAnchor;
-        childView = new child.view(attrs);
+        childView = new child.type(attrs);
       } else {
         child.set('anchor', childrenAnchor);
         childView = child;

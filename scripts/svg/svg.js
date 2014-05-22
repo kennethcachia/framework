@@ -59,7 +59,7 @@ define([
       var view = this.getShapeByType(data.type);
 
       return this.addChild({
-        view: view,
+        type: view,
         attrs: {
           data: data
         }
