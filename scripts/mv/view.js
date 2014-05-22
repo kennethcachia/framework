@@ -23,8 +23,6 @@ define([
       });
 
       this._initAnchor();
-
-      this.on('rendered', this.bindEvents, this);
     },
 
 
@@ -110,6 +108,7 @@ define([
         this.fire('rendered');
 
         this._handleDataBindings();
+        this.bindEvents();
 
       } else {
         throw new Error('View has no container for rendering');
@@ -158,8 +157,8 @@ define([
     _toggleVisibility: function (mode) {
       var container = this.get('container');
       var hiddenClassName = this.get('hiddenClassName');
-
       var action = mode + 'Class';
+
       container[action](hiddenClassName);
     },
 
