@@ -97,11 +97,6 @@ define([
     },
 
 
-    getName: function () {
-      return this._name;
-    },
-
-
     propagateEventsTo: function (dest) {
       this._propagateEvents = dest;
     },
