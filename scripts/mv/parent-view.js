@@ -59,8 +59,13 @@ define([
       var childView;
 
       if (!child.isBaseObject) {
+
+        var defaultChildType = this.get('defaultChildType');
+        var type = child.type || defaultChildType;
+
         attrs.anchor = childrenAnchor;
-        childView = new child.type(attrs);
+        childView = new type(attrs);
+
       } else {
         child.set('anchor', childrenAnchor);
         childView = child;
@@ -130,6 +135,10 @@ define([
 
 
     _attrs: {
+      defaultChildType: {
+        value: View
+      },
+
       children: {
         value: []
       },
