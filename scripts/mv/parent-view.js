@@ -58,7 +58,7 @@ define([
 
       var childView;
 
-      if (!child['getName']) {
+      if (!child.isBaseObject) {
         attrs.anchor = childrenAnchor;
         childView = new child.type(attrs);
       } else {

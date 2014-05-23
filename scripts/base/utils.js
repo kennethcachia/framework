@@ -13,7 +13,7 @@ define(function () {
       for (var key in object) {
 
         if (object.hasOwnProperty(key)) {
-          if (object[key] && !object[key]._name && object[key].constructor.name === 'Object') {
+          if (object[key] && !object[key].isBaseObject && object[key].constructor.name === 'Object') {
             output[key] = this.clone(object[key]);
           } else {
             output[key] = object[key]
@@ -51,7 +51,7 @@ define(function () {
       for (var key in na) {
 
         if (na.hasOwnProperty(key)) {
-          if (na[key] && !na[key]._name && na[key].constructor.name === 'Object') {
+          if (na[key] && !na[key].isBaseObject && na[key].constructor.name === 'Object') {
             merged[key] = this.mergeObjects(na[key], merged[key]);
           } else {
 
