@@ -38,6 +38,8 @@ define([
     BaseObject.prototype._attrs = attrs;
     BaseObject.prototype._name = name;
 
+    BaseObject.prototype.isBaseObject = true;
+
     return BaseObject;
   }
 
