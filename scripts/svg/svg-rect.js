@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'svg/svg-shape'
 
 ], function (Create, SVGShapeView) {

@@ -1,7 +1,7 @@
 
 define([
 
-  'core/attributes'
+  'base/attributes'
 
 ], function (Attributes) {
 

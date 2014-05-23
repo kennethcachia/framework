@@ -1,8 +1,8 @@
 
 define([
 
-  'core/base',
-  'core/utils'
+  'base/base',
+  'base/utils'
 
 ], function (Base, Utils) {
 

@@ -1,8 +1,8 @@
 
 define([
 
-  'core/Create',
-  'core/dom-element',
+  'base/create',
+  'dom/dom-element',
   'core/object-array',
   'mv/data-binding',
   'third-party/mustache'

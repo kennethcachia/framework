@@ -1,8 +1,8 @@
 
 define([
 
-  'core/create',
-  'core/dom-parser',
+  'base/create',
+  'dom/dom-parser',
   'svg/svg-type'
 
 ], function (Create, DOMParser, SVGType) {

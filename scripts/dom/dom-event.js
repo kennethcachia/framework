@@ -1,16 +1,16 @@
 
 define([
 
-  'core/create',
-  'core/dom',
-  'core/dom-query'
+  'base/create',
+  'dom/dom',
+  'dom/dom-query'
 
 ], function (Create, DOM, DOMQuery) {
 
   // Fix circular dependency.
   var DOMElement;
 
-  require(['core/dom-element'], function (domElement) {
+  require(['dom/dom-element'], function (domElement) {
     DOMElement = domElement;
   });
 

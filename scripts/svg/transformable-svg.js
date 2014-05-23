@@ -1,10 +1,10 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'svg/svg',
   'svg/transformable-svg-bounding-box',
-  'core/dom-element'
+  'dom/dom-element'
 
 ], function (Create, SVGView, SVGTransformableBoundingBox, DOMElement) {
 

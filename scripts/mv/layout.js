@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'core/object-array'
 
 ], function (Create, ObjectArray) {

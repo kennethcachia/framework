@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'svg/svg-element', 
   'mv/parent-view',
   'svg/svg-type',

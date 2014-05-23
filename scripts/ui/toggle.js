@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'ui/action'
 
 ], function (Create, ActionView) {

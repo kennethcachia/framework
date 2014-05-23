@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'third-party/domready'
 
 ], function (Create, DomReady) {

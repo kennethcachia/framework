@@ -1,8 +1,8 @@
 
 define([
 
-  'core/create',
-  'core/dom-element'
+  'base/create',
+  'dom/dom-element'
 
 ], function (Create, DOMElement) {
 

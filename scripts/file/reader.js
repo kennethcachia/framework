@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'file/reader-type'
 
 ], function (Create, ReaderType) {

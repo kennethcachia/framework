@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'ui/button',
   'ui/upload'
 
@@ -13,6 +13,7 @@ define([
   var UploadButtonView = Create('UploadButtonView', {
 
     initializer: function () {
+      // TODO: Move to bindEvents and test.
       this.on('rendered', this._onRendered, this);
     },
 

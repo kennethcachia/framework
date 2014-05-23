@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'svg/svg-rect'
 
 ], function (Create, SVGRectView) {

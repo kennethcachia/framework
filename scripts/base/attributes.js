@@ -1,7 +1,7 @@
 
 define([
 
-  'core/utils'
+  'base/utils'
 
 ], function (Utils) {
 

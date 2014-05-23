@@ -1,7 +1,7 @@
 
 define([
 
-  'core/create',
+  'base/create',
   'mv/parent-view'
 
 ], function (Create, ParentView) {

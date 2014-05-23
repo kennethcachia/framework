@@ -1,10 +1,10 @@
 
 define([
 
-  'core/create',
-  'core/dom',
+  'base/create',
+  'dom/dom',
   'core/object-array',
-  'core/dom-event'
+  'dom/dom-event'
 
 ], function (Create, DOM, ObjectArray, DOMEvent) {
 
