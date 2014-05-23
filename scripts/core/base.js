@@ -9,7 +9,6 @@ define([
    * Base
    */
   var Base = {
-
     init: function (attrs) {
       attrs = attrs || {};
       attrs.id = attrs.id || null;
@@ -103,6 +102,11 @@ define([
     },
 
 
+    propagateEventsTo: function (dest) {
+      this._propagateEvents = dest;
+    },
+
+
     _on: function (eventName, callback, context) {
       if (this._listeners[eventName] === undefined) {
         this._listeners[eventName] = [];
@@ -112,11 +116,6 @@ define([
         callback: callback,
         context: context
       });
-    },
-
-
-    propagateEventsTo: function (dest) {
-      this._propagateEvents = dest;
     },
 
 
@@ -149,7 +148,6 @@ define([
 
       this.fire(attr + 'Change', data);
     }
-
   };
 
 

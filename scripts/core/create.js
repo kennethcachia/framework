@@ -14,6 +14,8 @@ define([
       throw new Error('No Name');
     }
 
+    var BaseObject = createBaseObject();
+
     var initializers = [];
     var destructors = [];
     var attrs = own._attrs || {};
@@ -23,8 +25,6 @@ define([
       destructors = extension.prototype._destructors.slice(0);
       attrs = Utils.mergeObjects(attrs, extension.prototype._attrs);
     }
-
-    var BaseObject = createBaseObject();
 
     Utils.extend(own, BaseObject.prototype, initializers, destructors);
 
