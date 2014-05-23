@@ -2,9 +2,10 @@
 define([
 
   'base/create',
-  'ui/toggle'
+  'ui/toggle',
+  'ui/toggle-trigger'
 
-], function (Create, ToggleView) {
+], function (Create, ToggleView, ToggleTriggerView) {
 
   /**
    * TabView
@@ -50,6 +51,10 @@ define([
 
 
     _attrs: {
+      defaultChildType: {
+        value: ToggleTriggerView
+      },
+
       container: {
         value: '<div class="tab-view"></div>'
       },
