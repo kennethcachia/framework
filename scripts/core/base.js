@@ -11,9 +11,11 @@ define([
   var Base = {
 
     init: function (attrs) {
+      attrs = attrs || {};
+      attrs.id = attrs.id || null;
+
       this._attrs = new Attributes(attrs, this._attrs);
 
-      // Private objects
       this._propagateEvents = null;
       this._listeners = {};
 
@@ -70,15 +72,10 @@ define([
     },
 
 
-    // TODO: Move to Attributes
     set: function (key, value) {
-
       if (key.indexOf('.') === -1) {
-
         this._attrs.set(key, value, this);
-
       } else {
-
         var pos = key.indexOf('.');
         var obj = key.substr(0, pos);
         var index = key.substr(pos + 1);
@@ -93,7 +90,6 @@ define([
       }
 
       this._fireAttrChange(key);
-
     },
 
 
