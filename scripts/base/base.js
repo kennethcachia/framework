@@ -93,7 +93,11 @@ define([
 
 
     setFromObject: function (src, upsert) {
-      this._attrs.setFromObject(src, upsert);
+      for (var s in src) {
+        if (upsert === true || this._attrs.get(s) !== undefined) {
+          this.set(s, src[s]);
+        }
+      }
     },
 
 
