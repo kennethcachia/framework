@@ -41,7 +41,7 @@ define([
 
 
     get: function (key, context) {
-      var val = null;
+      var val = undefined;
 
       if (this._attrs[key]) {
         var getter = this._attrs[key].getter;

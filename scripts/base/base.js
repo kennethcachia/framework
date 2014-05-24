@@ -71,32 +71,36 @@ define([
     },
 
 
-    set: function (key, value) {
-      if (key.indexOf('.') === -1) {
-        this._attrs.set(key, value, this);
+    set: function (key, value, upsert) {
+      if (upsert === true || this._attrs.get(key) !== undefined) {
+
+        if (key.indexOf('.') === -1) {
+          this._attrs.set(key, value, this);
+        } else {
+          var pos = key.indexOf('.');
+          var obj = key.substr(0, pos);
+          var index = key.substr(pos + 1);
+
+          this._attrs.setObj(obj, index, value);
+
+          // Fire event data.*Change
+          this._fireAttrChange(key)
+
+          // Update key to fire dataChange event
+          key = obj;
+        }
+
+        this._fireAttrChange(key);
+
       } else {
-        var pos = key.indexOf('.');
-        var obj = key.substr(0, pos);
-        var index = key.substr(pos + 1);
-
-        this._attrs.setObj(obj, index, value);
-
-        // Fire event data.*Change
-        this._fireAttrChange(key)
-
-        // Update key to fire dataChange event
-        key = obj;
+        throw new Error('Upserts not allowed');
       }
-
-      this._fireAttrChange(key);
     },
 
 
     setFromObject: function (src, upsert) {
       for (var s in src) {
-        if (upsert === true || this._attrs.get(s) !== undefined) {
-          this.set(s, src[s]);
-        }
+        this.set(s, src[s], upsert);
       }
     },
 
