@@ -85,25 +85,6 @@ define([
     },
 
 
-    getData: function () {
-      var children = this.getRenderedChildren();
-
-      var childData = [];
-      var child;
-
-      for (var c = 0; c < children.length; c++) {
-        child = children[c];
-
-        childData.push(child.get('data'));
-      }
-
-      return {
-        own: this.get('data'),
-        children: childData
-      };
-    },
-
-
     _getChildrenAnchor: function () {
       var container = this.get('container');
       var childrenAnchor = this.get('childrenAnchor');
