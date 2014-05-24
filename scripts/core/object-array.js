@@ -58,10 +58,23 @@ define([
     },
 
 
+    find: function (key, value) {
+      var result = [];
+
+      this.each(function (item) {
+        if (item.get(key) === value) {
+          result.push(item);
+        }
+      });
+
+      return result;
+    },
+
+
     purge: function () {
-      for (var i = 0; i < this._items.length; i++) {
-        this._items[i].destroy();
-      }
+      this.each(function (item) {
+        item.destroy();
+      });
 
       this._init();
     },
