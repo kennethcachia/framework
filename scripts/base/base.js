@@ -25,6 +25,7 @@ define([
 
     destroy: function () {
       this._callDestructors();
+      this.fire('destroyed');
       this._destroyEvents();
     },
 
