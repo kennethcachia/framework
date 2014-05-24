@@ -46,6 +46,8 @@ define([
 
 
     addObject: function (obj) {
+      obj.on('destroyed', this._onItemDestroyed, this);
+
       this._items.push(obj);
       this._addToIndex(obj);
     },
@@ -92,6 +94,20 @@ define([
 
     getById: function (id) {
       return this._index[id];
+    },
+
+
+    _onItemDestroyed: function (data) {
+      var newList = [];
+      var deleted = data.source;
+
+      this.each(function (item) {
+        if (item !== deleted) {
+          newList.push(item);
+        }
+      });
+
+      this._items = newList;
     },
 
 
