@@ -18,6 +18,10 @@ define([
           strokeWidth: 5,
           fill: 'transparent'
         }
+      },
+
+      isBoundingBox: {
+        value: true
       }
     }
 
