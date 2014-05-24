@@ -15,6 +15,11 @@ define([
       console.log(this.get('name'));
       console.log('(version ' + this.get('version') + ')');
 
+      this._onDomReady();
+    },
+
+
+    _onDomReady: function () {
       var readyFn = this.get('domReady');
 
       if (readyFn) {
