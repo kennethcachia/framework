@@ -92,6 +92,11 @@ define([
     },
 
 
+    setFromObject: function (src, upsert) {
+      this._attrs.setFromObject(src, upsert);
+    },
+
+
     get: function (key) {
       return this._attrs.get(key, this);
     },

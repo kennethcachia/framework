@@ -35,6 +35,15 @@ define([
     },
 
 
+    setFromObject: function (src, upsert) {
+      for (var s in src) {
+        if (upsert === true || this._attrs[s] !== undefined) {
+          this.set(s, src[s]);
+        }
+      }
+    },
+
+
     setObj: function (obj, key, value) {
       this._attrs[obj].value[key] = value;
     },
