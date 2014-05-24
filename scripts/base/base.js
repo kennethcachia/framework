@@ -72,15 +72,22 @@ define([
 
 
     set: function (key, value, upsert) {
-      if (upsert === true || this._attrs.get(key) !== undefined) {
+      var success = true;
 
-        if (key.indexOf('.') === -1) {
+      if (key.indexOf('.') === -1) {
+
+        if (upsert === true || this._attrs.get(key, this) !== undefined) {
           this._attrs.set(key, value, this);
         } else {
-          var pos = key.indexOf('.');
-          var obj = key.substr(0, pos);
-          var index = key.substr(pos + 1);
+          success = false;
+        }
 
+      } else {
+        var pos = key.indexOf('.');
+        var obj = key.substr(0, pos);
+        var index = key.substr(pos + 1);
+
+        if (upsert === true || this._attrs.get(obj, this) !== undefined) {
           this._attrs.setObj(obj, index, value);
 
           // Fire event data.*Change
@@ -88,10 +95,13 @@ define([
 
           // Update key to fire dataChange event
           key = obj;
+        } else {
+          success = false;
         }
+      }
 
+      if (success) {
         this._fireAttrChange(key);
-
       } else {
         throw new Error('Upserts not allowed');
       }
