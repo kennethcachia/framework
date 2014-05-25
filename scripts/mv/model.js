@@ -12,17 +12,20 @@ define([
 
     load: function () {},
     save: function () {},
-    remove: function () {},
+    delete: function () {},
+
 
     parse: function (response) {
-      try {
-
-        var json = JSON.parse(response);
-        this.setFromObject(json, false);
-
-      } catch (e) {
-        throw new Error(e.message);
+      if (typeof response === 'string') {
+        response = this._parseRaw(response);
       }
+
+      this.setFromObject(response, false);
+    },
+
+
+    _parseRaw: function (raw) {
+      return JSON.parse(raw);
     }
 
   });
