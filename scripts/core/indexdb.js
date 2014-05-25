@@ -14,7 +14,6 @@ define([
 
     initializer: function () {
       this._db = null;
-      this._cursorOutput = [];
     },
 
 
@@ -87,7 +86,7 @@ define([
       var readFn = this._read.bind(this, store, keyRange);
 
       this._makeRequest(readFn, {
-        success: this._returnData.bind(this, callback, multiple)
+        success: this._returnData.bind(this, callback, multiple, [])
       });
     },
 
@@ -144,18 +143,17 @@ define([
     },
 
 
-    _returnData: function (callback, multiple, e) {
+    _returnData: function (callback, multiple, cursorOutput, e) {
       var result = e.target.result;
       var data = result ? result.value : null;
 
       if (multiple === true) {
 
         if (data) {
-          this._cursorOutput.push(data);
+          cursorOutput.push(data);
           result.continue();
         } else {
-          callback.call(this, this._cursorOutput);
-          this._cursorOutput = [];
+          callback.call(this, cursorOutput);
         }
 
       } else {
