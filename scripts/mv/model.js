@@ -10,11 +10,19 @@ define([
    */
   var Model = Create('Model', {
 
-    parse: function (response) {
-      var json = JSON.parse(response);
+    load: function () {},
+    save: function () {},
+    remove: function () {},
 
-      // Validate response against _attrs
-      this.setFromObject(json, false);
+    parse: function (response) {
+      try {
+
+        var json = JSON.parse(response);
+        this.setFromObject(json, false);
+
+      } catch (e) {
+        throw new Error(e.message);
+      }
     }
 
   });
