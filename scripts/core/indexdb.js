@@ -29,13 +29,13 @@ define([
 
 
     createObjectStore: function (name, key) {
-      if (!key) {
-        throw new Error('Key required');
-      }
+      var options = {};
 
-      var options = {
-        keyPath: key
-      };
+      if (!key) {
+        options.autoIncrement = true;
+      } else {
+        options.keyPath = key;
+      }
 
       var db = this._getDB();
       db.createObjectStore(name, options);
