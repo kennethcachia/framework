@@ -8,9 +8,9 @@ define([
   // TODO: Feature detection
 
   /**
-   * IndexDB
+   * IndexDBDataStore
    */
-  var IndexDB = Create('IndexDB', {
+  var IndexDBDataStore = Create('IndexDBDataStore', {
 
     initializer: function () {
       this._db = null;
@@ -217,6 +217,6 @@ define([
   });
 
 
-  return IndexDB;
+  return IndexDBDataStore;
 
 });
