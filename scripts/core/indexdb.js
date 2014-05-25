@@ -78,7 +78,7 @@ define([
 
       this._makeRequest(deleteFn, {
         success: callback
-      })
+      });
     },
 
 
@@ -88,7 +88,7 @@ define([
 
       this._makeRequest(readFn, {
         success: this._returnData.bind(this, callback, multiple)
-      })
+      });
     },
 
 
