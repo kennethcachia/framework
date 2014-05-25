@@ -110,6 +110,10 @@ define([
     _makeRequest: function (actionFn, callbacks) {
       var action = actionFn.call(this);
 
+      if (callbacks.success === undefined) {
+        callbacks.success = this._onSuccess.bind(this);
+      }
+
       for (var c in callbacks) {
         action['on' + c] = callbacks[c].bind(this);
       }
@@ -189,6 +193,9 @@ define([
     _setDB: function (e) {
       this._db = e.target.result;
     },
+
+
+    _onSuccess: function () {},
 
 
     _onError: function (e) {
