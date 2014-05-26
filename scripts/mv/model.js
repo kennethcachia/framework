@@ -12,7 +12,7 @@ define([
 
     load: function () {},
     save: function () {},
-    delete: function () {},
+    remove: function () {},
 
 
     parse: function (response) {

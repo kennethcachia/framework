@@ -40,12 +40,12 @@ define([
     },
 
 
-    delete: function (callback) {
+    remove: function (callback) {
       var dataStore = this.get('dataStore');
       var store = this.get('store');
       var id = this.get('id');
 
-      this._executeIfReady(dataStore.delete, [store, id, callback]);
+      this._executeIfReady(dataStore.remove, [store, id, callback]);
     },
 
 

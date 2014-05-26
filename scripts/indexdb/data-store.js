@@ -71,11 +71,11 @@ define([
     },
 
 
-    delete: function (name, id, callback) {
+    remove: function (name, id, callback) {
       var store = this._getStore(name);
-      var deleteFn = this._delete.bind(this, store, id);
+      var removeFn = this._remove.bind(this, store, id);
 
-      this._makeRequest(deleteFn, {
+      this._makeRequest(removeFn, {
         success: callback
       });
     },
@@ -142,8 +142,8 @@ define([
     },
 
 
-    _delete: function (store, id) {
-      return store.delete(id);
+    _remove: function (store, id) {
+      return store.remove(id);
     },
 
 
