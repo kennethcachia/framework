@@ -57,6 +57,17 @@ define([
     },
 
 
+    toJSON: function () {
+      var json = {};
+
+      for (var a in this._attrs) {
+        json[a] = this.get(a);
+      }
+
+      return json;
+    },
+
+
     // Convert to value: {..}
     _expandAttrs: function (attrs) {
       for (var a in attrs) {

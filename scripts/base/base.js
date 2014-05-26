@@ -121,6 +121,11 @@ define([
     },
 
 
+    toJSON: function () {
+      return this._attrs.toJSON();
+    },
+
+
     propagateEventsTo: function (dest) {
       this._propagateEvents = dest;
     },
