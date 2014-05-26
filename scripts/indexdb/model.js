@@ -11,13 +11,23 @@ define([
    */
   var IndexDBModel = Create('IndexDBModel', {
 
+    initializer: function () {
+      var dataStore = this.get('dataStore');
+      var isReady = dataStore.isReady();
+
+      if (isReady === false) {
+        dataStore.open();
+      }
+    },
+
+
     load: function (callback) {
       var dataStore = this.get('dataStore');
       var store = this.get('store');
       var id = this.get('id');
       var loadFn = this._onLoad.bind(this, callback);
 
-      dataStore.findOne(store, id, loadFn);
+      this._executeIfReady(dataStore.findOne, [store, id, loadFn]);
     },
 
 
@@ -26,7 +36,7 @@ define([
       var store = this.get('store');
       var data = this._cleanToJSON();
 
-      dataStore.insert(store, data, callback);
+      this._executeIfReady(dataStore.insert, [store, data, callback]);
     },
 
 
@@ -35,7 +45,21 @@ define([
       var store = this.get('store');
       var id = this.get('id');
 
-      dataStore.delete(store, id, callback);
+      this._executeIfReady(dataStore.delete, [store, id, callback]);
+    },
+
+
+    _executeIfReady: function (fn, args) {
+      var dataStore = this.get('dataStore');
+      var isReady = dataStore.isReady();
+
+      if (isReady === true) {
+        fn.apply(dataStore, args);
+      } else {
+        args = [dataStore].concat(args);
+        fn = Function.prototype.bind.apply(fn, args);
+        dataStore.on('opened', fn);
+      }
     },
 
 
@@ -51,11 +75,7 @@ define([
 
     _onLoad: function (callback, data) {
       this.parse(data);
-      this._executeCallback(callback);
-    },
 
-
-    _executeCallback: function (callback) {
       if (callback) {
         callback();
       }
