@@ -81,6 +81,11 @@ define([
     },
 
 
+    isReady: function () {
+      return this._db ? true : false;
+    },
+
+
     _find: function (name, keyRange, callback, multiple) {
       var store = this._getStore(name);
       var readFn = this._read.bind(this, store, keyRange);
@@ -174,6 +179,7 @@ define([
 
     _onOpenSuccess: function (callback, e) {
       this._setDB(e);
+      this.fire('opened');
 
       if (callback) {
         callback();
