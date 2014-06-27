@@ -13,11 +13,6 @@ require.config({
   // Base path
   baseUrl: '/base',
 
-  paths: {
-    'lib': 'lib/scripts',
-    'src': 'src/scripts'
-  },
-
   // ask Require.js to load these files (all our tests)
   deps: tests,
 
