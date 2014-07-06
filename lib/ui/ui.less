@@ -19,11 +19,29 @@
    ========================================================================== */
 
 .ui-tabs {
-  &-content {
-    display: none;
+  &-triggers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
-  &-content.ui-tabs-active {
-    display: block;
+  &-triggers li {
+    cursor: pointer;
+    display: inline-block;
+    background: #666;
+    width: 50px;
+    height: 50px;
+
+    &.ui-tabs-active {
+      background: #fff;
+    }
+  }
+
+  &-content {
+    display: none;
+
+    &.ui-tabs-active {
+      display: block;
+    }
   }
 }
