@@ -11,8 +11,25 @@
    Input
    ========================================================================== */
 
-.ui-input-box {}
-.ui-input-range {}
+.ui-input-box,
+.ui-input-range {
+  input {
+    width: 100%;
+    .border-box();
+  }
+}
+
+.ui-input-range {
+  .clear-fix();
+
+  .ui-input-range-min {
+    float: left;
+  }
+
+  .ui-input-range-max {
+    float: right;
+  }
+}
 
 
 /* ==========================================================================
