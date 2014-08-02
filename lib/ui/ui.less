@@ -97,8 +97,14 @@
     width: 33%;
 
     &-intrinsic {
+      position: relative;
       padding-bottom: 100%;
       background: #fff;
+
+      &-content,
+      &-cover {
+        .fill-space();
+      }
     }
   }
 }
