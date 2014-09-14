@@ -1,0 +1,33 @@
+{
+  "white": true,
+  "indent": 2,
+  "curly": true,
+  "eqnull": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "eqeqeq": true,
+  "immed": true,
+  "undef": true,
+  "unused": true,
+  "browser": true,
+  "globals": {
+    // browser
+    "console": false,
+    "Event": false,
+    "Promise": false,
+    // require
+    "define": false,
+    "require": false,
+    // jasmine
+    "describe": false,
+    "xdescribe": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "it": false,
+    "xit": false,
+    "expect": false,
+    "spyOn": false,
+    "jasmine": false
+  }
+}
